@@ -1,4 +1,6 @@
 'use strict';
+
+const { Model, Validator } = require('sequelize');
 const {
   Model
 } = require('sequelize');
@@ -21,7 +23,7 @@ module.exports = (sequelize, DataTypes) => {
       validate: {
         len: [4, 30],
         isNotEmail(value) {
-          if(validator.isEmail(value)) throw new Error("Cannot be an email.")
+          if(Validator.isEmail(value)) throw new Error("Cannot be an email.");
         }
       },
     },
@@ -44,6 +46,11 @@ module.exports = (sequelize, DataTypes) => {
   },{
     sequelize,
     modelName: 'User',
+    defaultScope: {
+      attributes: {
+        exclude: ["hashedPassword", "email", "createdAt", "updatedAt"]
+      }
+    }
   }, );
   return User;
 };
