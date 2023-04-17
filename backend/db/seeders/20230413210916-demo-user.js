@@ -22,18 +22,18 @@ module.exports = {
     options.tableName = 'Users';
     return queryInterface.bulkInsert(options, [
       {
-        email: 'egg@user.io',
-        username: 'Egg-the-best',
+        email: 'demo@user.io',
+        username: 'Demo-lition',
         hashedPassword: bcrypt.hashSync('password')
       },
       {
-        email: 'xiaoJi@user.io',
-        username: 'XiaoJi-the-sweetest',
+        email: 'user1@user.io',
+        username: 'FakeUser1',
         hashedPassword: bcrypt.hashSync('password2')
       },
       {
-        email: 'bowski@user.io',
-        username: 'Bowski-ugly-cute',
+        email: 'user2@user.io',
+        username: 'FakeUser2',
         hashedPassword: bcrypt.hashSync('password3')
       }
     ], {});
@@ -49,7 +49,7 @@ module.exports = {
     options.tableName = 'Users';
     const Op = Sequelize.Op;
     return queryInterface.bulkDelete(options, {
-      username: { [Op.in]: ['Egg-the-best', 'XiaoJi-the-sweetest', 'Bowski-ugly-cute'] }
+      username: { [Op.in]: ['Demo-lition', 'FakeUser1', 'FakeUser2'] }
     }, {});
   }
 };
