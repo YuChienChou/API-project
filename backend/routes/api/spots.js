@@ -28,7 +28,7 @@ router.get('/', async (req, res, next) => {
             }
         });
         
-        avgRating = totalRating / totalSpots;
+        const avgRating = totalRating / totalSpots;
 
         const spotData = {
             id: spot.id,
@@ -56,9 +56,71 @@ router.get('/', async (req, res, next) => {
     });
 });
 
+router.get('/current', requireAuth, async(req, res, next) => {
+   const spots = await Spot.findAll({
+    where: {
+        ownerId: req.user.id
+    }
+   });
+   const payload = [];
+
+   for (let i = 0; i < spots.length; i++) {
+    const spot = spots[i];
+
+    const totalSpots = await Review.count({
+        where: {
+            spotId: spot.id
+        }
+    });
+
+    const totalRating = await Review.sum('stars', {
+        where: {spotId: spot.id}
+    });
+
+    const avgRating = totalRating / totalSpots;
+
+    const previewImage = await SpotImage.findByPk(spot.id, {
+        attributes: ['url']
+    });
+
+    const spotData = {
+        id: spot.id,
+        ownerId: spot.ownerId,
+        address: spot.address,
+        city: spot.city,
+        state: spot.state,
+        country: spot.country,
+        lat: spot.lat,
+        lng: spot.lng,
+        name: spot.name,
+        description: spot.description,
+        price: spot.price,
+        createdAt: spot.createdAt,
+        updatedAt: spot.updatedAt,
+        avgRating,
+        previewImage: previewImage.url,
+    };
+
+    payload.push(spotData);
+
+   }
+
+   return res.status(200).json({
+    Spots: payload
+   })
+});
+
 router.get('/:id', async (req, res, next) => {
     const spotId = req.params.id;
     const spot = await Spot.findByPk(spotId);
+
+    if(!spot) {
+        const err = new Error('Spot couldn\'t be found');
+        err.status = 404;
+
+        err.errors = { credential: 'The provided credentials were invalid.' };
+        return next(err);
+    }
 
     const numReviews = await Review.count({
         where: {
@@ -115,7 +177,11 @@ router.get('/:id', async (req, res, next) => {
     return res.status(200).json({
         ...spotData
     });
-} )
+} );
+
+// router.post('/', requireAuth, async (req, res, next) => {
+
+// })
 
 
 
