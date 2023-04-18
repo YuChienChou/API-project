@@ -37,7 +37,7 @@ router.post(
             email: credential
           }
         }
-      });
+      });    
   
       if (!user || !bcrypt.compareSync(password, user.hashedPassword.toString())) {
         const err = new Error('Login failed');
@@ -49,10 +49,11 @@ router.post(
   
       const safeUser = {
         id: user.id,
+        firstName: user.firstName,
+        lastName: user.lastName,
         email: user.email,
         username: user.username,
-        firstName: user.firstName,
-        lastName: user.lastName
+        
       };
   
       await setTokenCookie(res, safeUser);
@@ -82,8 +83,11 @@ router.get(
     if (user) {
       const safeUser = {
         id: user.id,
+        firstName: user.firstName,//added
+        lastName: user.lastName, //added
         email: user.email,
-        username: user.username,
+        username: user.username, //comment out
+        // Token: user.token
       };
       return res.json({
         user: safeUser
