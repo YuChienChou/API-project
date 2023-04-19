@@ -1,5 +1,5 @@
 const express = require('express');
-const { Sequelize } = require('sequelize');
+const { Sequelize, json } = require('sequelize');
 const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
 
@@ -317,6 +317,25 @@ router.put('/:spotId', requireAuth, validateSpot, async (req, res, next) => {
 
     return res.status(200).json(spot);
 
+});
+
+//Delete a Spot
+router.delete('/:spotId', requireAuth, async (req, res, next) => {
+    const spot = await Spot.findByPk(req.params.spotId);
+
+    if(!spot) {
+        return res.status(404).json({message: "Spot couldn't be found"});
+    };
+
+    if(spot.ownerId !== req.user.id) {
+        const err = new Error('Authentication required');
+        err.status = 400;
+        return next(err);
+    };
+
+    await spot.destroy();json
+    
+    return res.status(200).json({message: "Successfully deleted"});
 });
 
 
