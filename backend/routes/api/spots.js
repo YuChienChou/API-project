@@ -64,7 +64,6 @@ router.get('/', async (req, res, next) => {
             previewImage = null;
         }
 
-
         const totalRating = await Review.sum('stars', {
             where: {
                 spotId: spot.id
@@ -129,9 +128,18 @@ router.get('/current', requireAuth, async(req, res, next) => {
 
     const avgRating = totalRating / totalSpots;
 
-    const previewImage = await SpotImage.findByPk(spot.id, {
+    let previewImage = await SpotImage.findOne({
+        where: {
+            spotId: spot.id,
+            preview: true},
         attributes: ['url']
     });
+
+    if(previewImage) {
+        previewImage = previewImage.url;
+    } else {
+        previewImage = null;
+    }
 
     const spotData = {
         id: spot.id,
@@ -248,6 +256,34 @@ router.post('/', requireAuth, validateSpot, async (req, res, next) => {
 
     return res.status(201).json(newSpot);
 })
+
+//Add an Image to a Spot based on the Spot's id
+router.post('/:spotId/images', requireAuth, async(req, res, next) => {
+    const { url, preview } = req.body;
+    const spot = await Spot.findByPk(req.params.spotId);
+
+    if(!spot) {
+        return res.status(404).json({message: 'Spot couldn\'t be found'});
+    };
+
+    if (spot.ownerId !== req.user.id) {
+        const err = new Error('Authentication required');
+        err.status = 400;
+        return next(err);
+    };
+    
+    const newImage = await SpotImage.create({
+        spotId: spot.id,
+        url, 
+        preview
+    });
+
+    return res.status(200).json({
+        id: newImage.id,
+        url: newImage.url,
+        preview: newImage.preview
+    });
+});
 
 
 
