@@ -8,6 +8,16 @@ const { setTokenCookie, restoreUser, requireAuth } = require('../../utils/auth')
 const { Spot, SpotImage, Review, ReviewImage, User } = require('../../db/models');
 const router = express.Router();
 
+const validateReview = [
+    check('review')
+    .exists({ checkFalsy: true })
+    .withMessage('Review text is required'),
+    check('stars')
+    .isInt({ min: 1, max: 5 })
+    .withMessage('Stars must be an integer from 1 to 5'),
+    handleValidationErrors
+  ];
+
 
 //Get all Reviews of the Current User
 router.get('/current', requireAuth, async (req, res, next) => {
@@ -90,10 +100,36 @@ router.post('/:reviewId/images', requireAuth, async(req, res, next) => {
         });
     }
 
+});
+
+
+//Edit a Review
+
+router.put('/:reviewId', requireAuth, validateReview, async (req, res, next) => {
+    const { review, stars } = req.body;
+
+    const reviewToBeUpdated = await Review.findByPk(req.params.reviewId);
     
-})
+    if(!reviewToBeUpdated) {
+        return res.status(404).json({
+            message: "Review couldn't be found"
+        });
+    };
 
+    if(reviewToBeUpdated.userId !== req.user.id ) {
+        const err = new Error('Authentication required');
+        err.status = 400;
+        return next(err);
+    };
 
+    if(review) reviewToBeUpdated.review = review;
+    if(stars) reviewToBeUpdated.stars = stars;
+
+    await reviewToBeUpdated.save();
+
+    return res.status(200).json(reviewToBeUpdated);
+
+});
 
 
 
