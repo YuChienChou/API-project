@@ -429,7 +429,7 @@ router.get('/:spotId/bookings', requireAuth, async(req, res, next) => {
             attributes: ['spotId', 'startDate', 'endDate']
         });
 
-        return res.status(200).json({Booking: bookings});
+        return res.status(200).json({Bookings: bookings});
     } 
 
     if(spot.ownerId === req.user.id) {
