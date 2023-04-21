@@ -27,9 +27,9 @@ router.delete('/:imageId', requireAuth, async(req, res, next) => {
 
     // console.log(spot); 
     if(spot.ownerId !== req.user.id) {
-        const err = new Error('Authentication required');
-        err.status = 400;
-        return next(err);
+        return res.status(403).json({
+            message: "Forbidden"
+        });
     };
 
     await image.destroy();

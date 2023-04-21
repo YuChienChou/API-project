@@ -289,9 +289,9 @@ router.post('/:spotId/images', requireAuth, async(req, res, next) => {
     };
 
     if (spot.ownerId !== req.user.id) {
-        const err = new Error('Authentication required');
-        err.status = 400;
-        return next(err);
+        return res.status(403).json({
+            message: "Forbidden"
+        })
     };
     
     const newImage = await SpotImage.create({
@@ -320,9 +320,9 @@ router.put('/:spotId', requireAuth, validateSpot, async (req, res, next) => {
     };
 
     if (spot.ownerId !== req.user.id) {
-        const err = new Error('Authentication required');
-        err.status = 400;
-        return next(err);
+        return res.status(403).json({
+            message: "Forbidden"
+        })
     };
 
     if(address) spot.address = address;
@@ -350,7 +350,9 @@ router.delete('/:spotId', requireAuth, async (req, res, next) => {
     };
 
     if(spot.ownerId !== req.user.id) {
-      k
+        return res.status(403).json({
+            message: "Forbidden"
+        })
     };
 
     await spot.destroy();//json
@@ -538,6 +540,92 @@ router.post('/:spotId/bookings', requireAuth, async(req, res, next) => {
     return res.status(200).json(newBooking)
 
 });
+
+
+//Add Query Filters to Get All Spots
+router.get('/', async (req, res, next) => {
+    let query = {
+        where: {},
+    };
+
+    const {page, size, minLat, maxLat, minLng, maxLng, minPrice, maxPrice} = req.query;
+
+    if(!page) page = 1;
+    if(!size) size = 1; 
+    if(page > 10) page = 10;
+    if(size > 20) size = 20;
+
+    page = parseInt(page);
+    size = parseInt(size);
+
+    if(page >= 1 && size >= 1) {
+        query.where.limit = size;
+        query.where.offset = size * (page -1);
+    };
+
+    if (Number.isInteger(minLat)) res.status(400).json({message: "Minimum latitude is invalid"});
+    if (Number.isInteger(maxLat)) res.status(400).json({message: "Maximum latitude is invalid"});
+    if (Number.isInteger(minLng)) res.status(400).json({message: "Minimum longitude is invalid"});
+    if (Number.isInteger(maxLng)) res.status(400).json({message: "Maximum longitude is invalid"});
+    if(minPrice < 0) res.status(400).json({message: "Minimum price must be greater than or equal to 0"});
+    if(maxPrice < 0) res.status(400).json({message: "Minimum price must be greater than or equal to 0"});
+
+    if(minLat && maxLat) query.where.lat = {[Op.between]: minLat, maxLat};
+    if(minLng && maxLng) query.where.lat = {[Op.between]: minLng, maxLng};
+    if(minPrice && maxPrice) query.where.price = {[Op.between]: minPrice, maxPrice} ;
+
+    const spots = Spot.findAll(query);
+
+    let payload = [];
+
+    for (let i = 0; i < spots.length; i++) {
+        const spot = spots[i]; 
+
+        let previewImage = await SpotImage.findOne({
+            where: {
+                spotId: spot.id,
+                preview: true},
+            attributes: ['url']
+        });
+    
+        if(previewImage) {
+            previewImage = previewImage.url;
+        } else {
+            previewImage = null;
+        };
+
+        
+        const spotData = {
+            id: spot.id,
+            ownerId: spot.ownerId,
+            address: spot.address,
+            city: spot.city,
+            state: spot.state,
+            country: spot.country,
+            lat: spot.lat,
+            lng: spot.lng,
+            name: spot.name,
+            description: spot.description,
+            price: spot.price,
+            createdAt: spot.createdAt,
+            updatedAt: spot.updatedAt,
+            avgRating,
+            previewImage: previewImage,
+        };
+
+        payload.push(spotData);
+    };
+
+    return res.status(200).json({
+        Spots: payload,
+        page: page,
+        message: 'hello',
+        size: size
+    });
+
+});
+
+
 
 
 
