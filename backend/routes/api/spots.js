@@ -25,11 +25,13 @@ const validateSpot = [
       .withMessage('Country is required'),
     check('lat')
       .exists({ checkFalsy: true })
-      .isDecimal({force_decimal: true})
+    //   .isDecimal({force_decimal: true})
+      .isFloat({min: 90, max: 90})
       .withMessage('Latitude is not valid'),
     check('lng')
       .exists({ checkFalsy: true })
-      .isDecimal({force_decimal: true})
+    //   .isDecimal({force_decimal: true})
+      .isFloat({min: 90, max: 90})
       .withMessage('Longitude is not valid'),
     check('name')
       .exists({ checkFalsy: true })
@@ -54,19 +56,76 @@ const validateSpot = [
     handleValidationErrors
   ];
 
-//   const validateDate = [
-//     check('startDate')
-//     .isLocale()
-//     .withMessage('Start date conflicts with an existing booking'),
-//     check('endDate')
-//     .contains({ignoreCase: false, minOccurrences: 1})
-//     .withMessage('End date conflicts with an existing booking'),
-//     handleValidationErrors
-//   ];
+
 
 //get all spots
 router.get('/', async (req, res, next) => {
-    const spots = await Spot.findAll();
+    let query = {
+        where: {},
+    };
+
+    let {page, size, minLat, maxLat, minLng, maxLng, minPrice, maxPrice} = req.query;
+
+    if(!page) page = 1;
+    if(!size) size = 20; 
+    if(page > 10) page = 10;
+    if(size > 20) size = 20;
+
+    page = parseInt(page);
+    size = parseInt(size);
+
+    if(page >= 1 && size >= 1) {
+        query.limit = size;
+        query.offset = size * (page -1);
+    };
+
+
+    let errors = {};
+    if(minLat) {
+        if (isNaN(minLat)) errors.minLat = {message: "Minimum latitude is invalid"};
+    };
+
+    if(maxLat) {
+        if (isNaN(maxLat)) errors.maxLat ={message: "Maximum latitude is invalid"};
+    };
+    
+    if(minLng) {
+        if (isNaN(minLng)) errors.minLng ={message: "Minimum longitude is invalid"};
+    };
+    
+    if(maxLng) {
+        if (isNaN(maxLng)) errors.maxLg ={message: "Maximum longitude is invalid"};
+    };
+    
+    if(minPrice) {
+       if(isNaN(minPrice) || minPrice < 0) errors.minPrice = {message: "Minimum price must be greater than or equal to 0"}; 
+    };
+
+    if(maxPrice) {
+        if(isNaN(maxPrice) || maxPrice < 0) errors.maxPrice = {message: "Maximum price must be greater than or equal to 0"};
+    }; 
+    
+    if(Object.keys(errors).length > 0) {
+        return res.status(400).json({
+            errors
+        });
+    }; 
+    
+    if(minLat) query.where.lat = {[Op.gte]: parseInt(minLat)};
+    if(maxLat) query.where.lat = {[Op.lte]: parseInt(maxLat)};
+    if(minLat && maxLat) query.where.lat = {[Op.between]: [parseInt(minLat), parseInt(maxLat)]};
+    
+    if(minLng) query.where.lng = {[Op.gte]: parseInt(minLng)};
+    if(maxLng) query.where.lng = {[Op.lte]: parseInt(maxLng)};
+    if(minLng && maxLng) query.where.lng = {[Op.between]: [parseInt(minLng), parseInt(maxLng)]};
+
+    if(minPrice) query.where.price = {[Op.gte]: parseInt(minPrice)} ;
+    if(maxPrice) query.where.price = {[Op.lte]: parseInt(maxPrice)} ;
+    if(minPrice && maxPrice) query.where.price = {[Op.between]: [parseInt(minPrice), parseInt(maxPrice)]};
+
+
+
+    const spots = await Spot.findAll(query);
     const payload = [];
 
     for(let i = 0; i <spots.length; i++) {
@@ -122,7 +181,9 @@ router.get('/', async (req, res, next) => {
     }
     
     return res.status(200).json({
-        Spots: payload
+        Spots: payload,
+        page,
+        size
     });
 });
 
@@ -437,7 +498,7 @@ router.get('/:spotId/bookings', requireAuth, async(req, res, next) => {
             where: {
                 spotId: spot.id
             },
-            // attributes: ['spotId', 'startDate', 'endDate']
+            attributes: ['spotId', 'startDate', 'endDate']
         });
 
         return res.status(200).json({Bookings: bookings});
@@ -540,93 +601,6 @@ router.post('/:spotId/bookings', requireAuth, async(req, res, next) => {
     return res.status(200).json(newBooking)
 
 });
-
-
-//Add Query Filters to Get All Spots
-router.get('/', async (req, res, next) => {
-    let query = {
-        where: {},
-    };
-
-    const {page, size, minLat, maxLat, minLng, maxLng, minPrice, maxPrice} = req.query;
-
-    if(!page) page = 1;
-    if(!size) size = 1; 
-    if(page > 10) page = 10;
-    if(size > 20) size = 20;
-
-    page = parseInt(page);
-    size = parseInt(size);
-
-    if(page >= 1 && size >= 1) {
-        query.where.limit = size;
-        query.where.offset = size * (page -1);
-    };
-
-    if (Number.isInteger(minLat)) res.status(400).json({message: "Minimum latitude is invalid"});
-    if (Number.isInteger(maxLat)) res.status(400).json({message: "Maximum latitude is invalid"});
-    if (Number.isInteger(minLng)) res.status(400).json({message: "Minimum longitude is invalid"});
-    if (Number.isInteger(maxLng)) res.status(400).json({message: "Maximum longitude is invalid"});
-    if(minPrice < 0) res.status(400).json({message: "Minimum price must be greater than or equal to 0"});
-    if(maxPrice < 0) res.status(400).json({message: "Minimum price must be greater than or equal to 0"});
-
-    if(minLat && maxLat) query.where.lat = {[Op.between]: minLat, maxLat};
-    if(minLng && maxLng) query.where.lat = {[Op.between]: minLng, maxLng};
-    if(minPrice && maxPrice) query.where.price = {[Op.between]: minPrice, maxPrice} ;
-
-    const spots = Spot.findAll(query);
-
-    let payload = [];
-
-    for (let i = 0; i < spots.length; i++) {
-        const spot = spots[i]; 
-
-        let previewImage = await SpotImage.findOne({
-            where: {
-                spotId: spot.id,
-                preview: true},
-            attributes: ['url']
-        });
-    
-        if(previewImage) {
-            previewImage = previewImage.url;
-        } else {
-            previewImage = null;
-        };
-
-        
-        const spotData = {
-            id: spot.id,
-            ownerId: spot.ownerId,
-            address: spot.address,
-            city: spot.city,
-            state: spot.state,
-            country: spot.country,
-            lat: spot.lat,
-            lng: spot.lng,
-            name: spot.name,
-            description: spot.description,
-            price: spot.price,
-            createdAt: spot.createdAt,
-            updatedAt: spot.updatedAt,
-            avgRating,
-            previewImage: previewImage,
-        };
-
-        payload.push(spotData);
-    };
-
-    return res.status(200).json({
-        Spots: payload,
-        page: page,
-        message: 'hello',
-        size: size
-    });
-
-});
-
-
-
 
 
 module.exports = router;
