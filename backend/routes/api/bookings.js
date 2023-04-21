@@ -64,7 +64,7 @@ router.put('/:bookingId', requireAuth, async(req, res, next) => {
     if(bookingToUpdate.userId !== req.user.id) {
         return res.status(403).json({
             message: "Forbidden"
-        })
+        });
     };
 
     const currentDate = new Date();

@@ -73,9 +73,9 @@ router.post('/:reviewId/images', requireAuth, async(req, res, next) => {
     }
 
     if(review.userId !== req.user.id) {
-        const err = new Error('Authentication required');
-        err.status = 400;
-        return next(err);
+        return res.status(403).json({
+            message: "Forbidden"
+        });
     };
 
     const allImages = await ReviewImage.findAll({
@@ -117,9 +117,9 @@ router.put('/:reviewId', requireAuth, validateReview, async (req, res, next) => 
     };
 
     if(reviewToBeUpdated.userId !== req.user.id ) {
-        const err = new Error('Authentication required');
-        err.status = 400;
-        return next(err);
+        return res.status(403).json({
+            message: "Forbidden"
+        });
     };
 
     if(review) reviewToBeUpdated.review = review;
@@ -143,9 +143,9 @@ router.delete('/:reviewId', requireAuth, async(req, res, next) => {
     };
 
     if(review.userId !== req.user.id) {
-        const err = new Error('Authentication required');
-        err.status = 400;
-        return next(err);
+        return res.status(403).json({
+            message: "Forbidden"
+        });
     };
 
     await review.destroy();
