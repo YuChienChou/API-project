@@ -508,6 +508,26 @@ router.post('/:spotId/bookings', requireAuth, async(req, res, next) => {
         });
     }
 
+    const checkBothDate = await Booking.findOne({
+        where: {
+            spotId: spot.id,
+            startDate: {[Op.gte]: startDate},
+            endDate: {[Op.lte]: endDate}
+        }
+    });
+
+    if(checkBothDate) {
+        const err = new Error('Sorry, this spot is already booked for the specified dates');
+        err.error = {
+            startDate: "schedule conflict with an existing booking",
+        }
+
+        return res.status(403).json({
+            message: err.message,
+            errors: err.error
+        });
+    };
+
     const newBooking = await Booking.create({
         spotId: spot.id,
         userId: req.user.id,
