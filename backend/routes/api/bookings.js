@@ -62,9 +62,9 @@ router.put('/:bookingId', requireAuth, async(req, res, next) => {
     };
 
     if(bookingToUpdate.userId !== req.user.id) {
-        const err = new Error('Authentication required');
-        err.status = 400;
-        return next(err);
+        return res.status(403).json({
+            message: "Forbidden"
+        })
     };
 
     const currentDate = new Date();
@@ -164,9 +164,9 @@ router.delete('/:bookingId', requireAuth, async (req, res, next) =>{
     };
 
     if(bookingToDelete.userId !== req.user.id) {
-        const err = new Error('Authentication required');
-        err.status = 400;
-        return next(err);
+        return res.status(403).json({
+            message: "Forbidden"
+        })
     };
 
     const currentDate = new Date();
