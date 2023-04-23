@@ -26,15 +26,15 @@ const validateSpot = [
     check('lat')
       .exists({ checkFalsy: true })
     //   .isDecimal({force_decimal: true})
-      .isFloat({min: 90, max: 90})
+    //   .isFloat({min: 90, max: 90})
       .withMessage('Latitude is not valid'),
     check('lng')
       .exists({ checkFalsy: true })
     //   .isDecimal({force_decimal: true})
-      .isFloat({min: 90, max: 90})
+    //   .isFloat({min: 90, max: 90})
       .withMessage('Longitude is not valid'),
     check('name')
-      .exists({ checkFalsy: true })
+    //   .exists({ checkFalsy: true })
       .isLength({max: 50})
       .withMessage('Name must be less than 50 characters'),
     check('description')
@@ -110,18 +110,23 @@ router.get('/', async (req, res, next) => {
             errors
         });
     }; 
-    
-    if(minLat) query.where.lat = {[Op.gte]: parseInt(minLat)};
-    if(maxLat) query.where.lat = {[Op.lte]: parseInt(maxLat)};
-    if(minLat && maxLat) query.where.lat = {[Op.between]: [parseInt(minLat), parseInt(maxLat)]};
-    
-    if(minLng) query.where.lng = {[Op.gte]: parseInt(minLng)};
-    if(maxLng) query.where.lng = {[Op.lte]: parseInt(maxLng)};
-    if(minLng && maxLng) query.where.lng = {[Op.between]: [parseInt(minLng), parseInt(maxLng)]};
 
-    if(minPrice) query.where.price = {[Op.gte]: parseInt(minPrice)} ;
-    if(maxPrice) query.where.price = {[Op.lte]: parseInt(maxPrice)} ;
-    if(minPrice && maxPrice) query.where.price = {[Op.between]: [parseInt(minPrice), parseInt(maxPrice)]};
+    if(minLat) minLat = parseInt(minLat);
+    if(maxLat) maxLat = parseInt(maxLat);
+    if(minLng) minLng = parseInt(minLng);
+    if(maxLng) maxLng = parseInt(maxLng);
+    
+    if(minLat) query.where.lat = {[Op.gte]: (minLat)};
+    if(maxLat) query.where.lat = {[Op.lte]: (maxLat)};
+    if(minLat && maxLat) query.where.lat = {[Op.between]: [(minLat), (maxLat)]};
+    
+    if(minLng) query.where.lng = {[Op.gte]: (minLng)};
+    if(maxLng) query.where.lng = {[Op.lte]: (maxLng)};
+    if(minLng && maxLng) query.where.lng = {[Op.between]: [(minLng), (maxLng)]};
+
+    if(minPrice) query.where.price = {[Op.gte]: (minPrice)} ;
+    if(maxPrice) query.where.price = {[Op.lte]: (maxPrice)} ;
+    if(minPrice && maxPrice) query.where.price = {[Op.between]: [(minPrice), (maxPrice)]};
 
 
 
