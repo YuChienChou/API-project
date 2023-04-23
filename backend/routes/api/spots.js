@@ -27,11 +27,13 @@ const validateSpot = [
       .exists({ checkFalsy: true })
     //   .isDecimal({force_decimal: true})
     //   .isFloat({min: 90, max: 90})
+      .isNumeric()
       .withMessage('Latitude is not valid'),
     check('lng')
       .exists({ checkFalsy: true })
     //   .isDecimal({force_decimal: true})
     //   .isFloat({min: 90, max: 90})
+      .isNumeric()
       .withMessage('Longitude is not valid'),
     check('name')
     //   .exists({ checkFalsy: true })
