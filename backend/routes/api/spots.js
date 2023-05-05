@@ -37,6 +37,7 @@ const validateSpot = [
       .withMessage('Longitude is not valid'),
     check('name')
     //   .exists({ checkFalsy: true })
+    //   .withMessage('Name must be less than 50 characters') //a new spot can be edit without name
       .isLength({max: 50})
       .withMessage('Name must be less than 50 characters'),
     check('description')
@@ -44,6 +45,7 @@ const validateSpot = [
       .withMessage('Description is required'),
     check('price')
       .exists({ checkFalsy: true })
+    //   .isNumeric() //in live server, a new spot can be created with no issue if the price is not a number
       .withMessage('Price per day is required'),
     handleValidationErrors
   ];
