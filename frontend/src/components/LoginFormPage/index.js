@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import * as sessionActions from "../../store/session";
 import { useDispatch, useSelector } from "react-redux";
 import { Redirect } from "react-router-dom";
@@ -10,8 +10,17 @@ function LoginFormPage() {
   const [credential, setCredential] = useState("");
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState({});
+  const [validationErrors, setValidationErrors] = useState({});
+ useEffect(()=> {
+    const errors = {};
+    if(credential.length < 4) errors.credential = 'please enter Username or Email';
+    if(password.length < 6) errors.password = 'please enter password';
 
+    setValidationErrors(errors);
+  }, [credential, password]);
   if (sessionUser) return <Redirect to="/" />;
+
+ 
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -26,29 +35,40 @@ function LoginFormPage() {
 
   return (
     <>
+    <div className='form-container'>
       <h1>Log In</h1>
-      <form onSubmit={handleSubmit}>
+      <form className='login-form'
+      onSubmit={handleSubmit}>
+        {errors.credential && <p className='error'>{errors.credential}</p>}
         <label>
-          Username or Email
+          
           <input
             type="text"
             value={credential}
             onChange={(e) => setCredential(e.target.value)}
             required
+            placeholder="Username or Email"
+            className='login-input'
           />
         </label>
         <label>
-          Password
+          
           <input
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
+            placeholder="Password"
+            className='login-input'
           />
         </label>
-        {errors.credential && <p>{errors.credential}</p>}
-        <button type="submit">Log In</button>
+        
+        <button type="submit"
+        disabled={Object.values(validationErrors).length > 0}
+        className='login-button'
+        >Log In</button>
       </form>
+    </div>
     </>
   );
 }
