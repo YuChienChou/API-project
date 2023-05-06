@@ -33,7 +33,7 @@ function Navigation({ isLoaded }) {
   }
 
   return (
-    <ul>
+    <ul className='nav-ul'>
       <li>
         <NavLink exact to="/">
           Home

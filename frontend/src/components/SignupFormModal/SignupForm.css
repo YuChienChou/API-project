@@ -1,5 +1,11 @@
+#modal-content {
+    width: 60%;
+    padding-bottom: 30px;
+    border-radius: 10px;
+}
+
 .signup-form-container {
-    width: fit-content;
+    width: 60%;
     display: flex;
     flex-direction: column;
     align-items: center;
