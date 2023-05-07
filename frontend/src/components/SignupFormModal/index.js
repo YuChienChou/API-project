@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useModal } from "../../context/Modal";
 import * as sessionActions from "../../store/session";
@@ -14,6 +14,20 @@ function SignupFormModal() {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [errors, setErrors] = useState({});
   const { closeModal } = useModal();
+  const [validationErrors, setValidationErrors] = useState({});
+
+  useEffect(() => {
+    const errorLi = {};
+    if(!email) errorLi.email = 'please provide email';
+    // if(!username) errorLi.username = 'please provide username';
+    // if(!firstName) errorLi.firstName = 'please provide first Name';
+    // if(!lastName) errorLi.lastName = 'please provide last name';
+    // if(!password) errorLi.password = 'please provide password';
+    // if(!confirmPassword) errors.confirmPassword = 'please confirm password';
+
+    setValidationErrors(errorLi);
+  }, [email, username, firstName, lastName, password])
+
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -50,6 +64,7 @@ function SignupFormModal() {
         {errors.username && <p className='error'>{errors.username}</p>}
         {errors.firstName && <p className='error'>{errors.firstName}</p>}
         {errors.lastName && <p className='error'>{errors.lastName}</p>}
+        {errors.password && <p className='error'>{errors.password}</p>}
         {errors.confirmPassword && (
           <p className='error'>{errors.confirmPassword}</p>
         )}
@@ -112,7 +127,7 @@ function SignupFormModal() {
             placeholder="Password"
           />
         </label>
-        {errors.password && <p>{errors.password}</p>}
+        
         <label>
           
           <input
@@ -124,7 +139,10 @@ function SignupFormModal() {
           />
         </label>
         
-        <button type="submit">Sign Up</button>
+        <button 
+        type="submit"
+        disabled={Object.values(validationErrors).length > 0}
+        >Sign Up</button>
       </form>
       </div>
     </>

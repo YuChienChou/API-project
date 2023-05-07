@@ -15,6 +15,11 @@
 
 .signup-form-container h1 {
     font-size: 25px;
+    margin-bottom: 10px;
+}
+
+.signup-form-error-container {
+    margin: 10px;
 }
 
 .signup-form {
