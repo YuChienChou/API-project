@@ -1,12 +1,11 @@
 import React, { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { Redirect } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { useModal } from "../../context/Modal";
 import * as sessionActions from "../../store/session";
-import './SignupForm.css';
+import "./SignupForm.css";
 
-function SignupFormPage() {
+function SignupFormModal() {
   const dispatch = useDispatch();
-  const sessionUser = useSelector((state) => state.session.user);
   const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
   const [firstName, setFirstName] = useState("");
@@ -14,8 +13,7 @@ function SignupFormPage() {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [errors, setErrors] = useState({});
-
-  if (sessionUser) return <Redirect to="/" />;
+  const { closeModal } = useModal();
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -29,12 +27,14 @@ function SignupFormPage() {
           lastName,
           password,
         })
-      ).catch(async (res) => {
-        const data = await res.json();
-        if (data && data.errors) {
-          setErrors(data.errors);
-        }
-      });
+      )
+        .then(closeModal)
+        .catch(async (res) => {
+          const data = await res.json();
+          if (data && data.errors) {
+            setErrors(data.errors);
+          }
+        });
     }
     return setErrors({
       confirmPassword: "Confirm Password field must be the same as the Password field"
@@ -45,11 +45,21 @@ function SignupFormPage() {
     <>
     <div className='signup-form-container'>
       <h1>Sign Up</h1>
+      <div className='signup-error-container'>
+        {errors.email && <p className='error'>{errors.email}</p>}
+        {errors.username && <p className='error'>{errors.username}</p>}
+        {errors.firstName && <p className='error'>{errors.firstName}</p>}
+        {errors.lastName && <p className='error'>{errors.lastName}</p>}
+        {errors.confirmPassword && (
+          <p className='error'>{errors.confirmPassword}</p>
+        )}
+      </div>
       <form 
       onSubmit={handleSubmit}
       className='signup-form'
       >
         <label>
+          
           <input
             type="text"
             value={email}
@@ -58,7 +68,7 @@ function SignupFormPage() {
             placeholder="Email"
           />
         </label>
-        {errors.email && <p>{errors.email}</p>}
+        
         <label>
           
           <input
@@ -69,9 +79,9 @@ function SignupFormPage() {
             placeholder="Username"
           />
         </label>
-        {errors.username && <p>{errors.username}</p>}
+       
         <label>
-         
+          
           <input
             type="text"
             value={firstName}
@@ -80,7 +90,7 @@ function SignupFormPage() {
             placeholder="First Name"
           />
         </label>
-        {errors.firstName && <p>{errors.firstName}</p>}
+        
         <label>
           
           <input
@@ -91,7 +101,7 @@ function SignupFormPage() {
             placeholder="Last Name"
           />
         </label>
-        {errors.lastName && <p>{errors.lastName}</p>}
+        
         <label>
           
           <input
@@ -113,7 +123,7 @@ function SignupFormPage() {
             placeholder="Confirm Password"
           />
         </label>
-        {errors.confirmPassword && <p>{errors.confirmPassword}</p>}
+        
         <button type="submit">Sign Up</button>
       </form>
       </div>
@@ -121,4 +131,4 @@ function SignupFormPage() {
   );
 }
 
-export default SignupFormPage;
+export default SignupFormModal;
