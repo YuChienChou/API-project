@@ -12,13 +12,13 @@ function LoginFormModal() {
   const { closeModal } = useModal();
   const {validationErrors, setValidationErrors} = useState({});
 
-  // useEffect(() => {
-  //   const errors = {};
-  //   if(credential.length < 4) errors.credential = 'please provide username or email';
-  //   if(password.length < 6) errors.password = 'please prvide password';
+  useEffect(() => {
+    const errors = {};
+    if(credential.length < 4) errors.credential = '';
+    if(password.length < 6) errors.password = '';
 
-  //   setValidationErrors(errors);
-  // }, [credential, password]);
+    setErrors(errors);
+  }, [credential, password]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -36,10 +36,12 @@ function LoginFormModal() {
   return (
     <>
       <h1>Log In</h1>
+      <div className='error-container'>
+        {errors.credential && (
+            <p className='error'>{errors.credential}</p>
+          )}
+      </div>
       <div className='form-container'>
-      {errors.credential && (
-          <p>{errors.credential}</p>
-        )}
       <form 
       onSubmit={handleSubmit}
       className='login-form'
@@ -52,6 +54,7 @@ function LoginFormModal() {
             onChange={(e) => setCredential(e.target.value)}
             required
             placeholder="Username or Email"
+            className='login-input'
           />
         </label>
         <label>
@@ -61,13 +64,14 @@ function LoginFormModal() {
             onChange={(e) => setPassword(e.target.value)}
             required
             placeholder="Password"
+            className='login-input'
           />
         </label>
         
         <button 
         type="submit"
         className='login-button'
-        // disabled={Object.values(validationErrors).length > 0}
+        disabled={Object.values(errors).length > 0}
         >Log In</button>
       </form>
       </div>

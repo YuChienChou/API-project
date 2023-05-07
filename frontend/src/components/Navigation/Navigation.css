@@ -34,12 +34,41 @@
     display: none;
 }
 
-#nav-link-button {
+.nav-ul button {
     font-weight: bold;
     border: none;
     background-color: rgb(232, 118, 118);
     color: white;
-    padding: 5px;
+    padding: 5px 8px;
     border-radius: 5px;
     cursor: pointer;
 }
+
+.profile-button {
+    width: 60px;
+
+}
+
+.profile-dropdown {
+    position: absolute;
+    top: 60px;
+    right: 100px;
+    width: 100px;
+    border-radius: 5px;
+    padding: 5px;
+}
+
+.profile-li {
+    font-size: 13px;
+}
+
+#logout-button {
+    font-size: 12px;
+}
+
+
+
+
+
+
+
