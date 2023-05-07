@@ -53,10 +53,12 @@
 .profile-dropdown {
     position: absolute;
     top: 60px;
-    right: 100px;
-    width: 100px;
+    right: 80px;
+    width: 200px;
     border-radius: 5px;
-    padding: 5px;
+    padding: 10px;
+    background-color: white;
+    box-shadow: 0 0 10px rgb(224, 218, 218)
 }
 
 .profile-li {
