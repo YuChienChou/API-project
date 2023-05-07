@@ -21,7 +21,7 @@ router.get('/current', requireAuth, async(req, res, next) => {
             {model: Spot, attributes: ['id', 'ownerId', 'address', 'city', 'state', 'country', 'lat', 'lng', 'name', 'price']}]
     });
 
-    console.log(bookings);
+    // console.log(bookings);
     
 
     for (let i = 0; i < bookings.length; i++) {
