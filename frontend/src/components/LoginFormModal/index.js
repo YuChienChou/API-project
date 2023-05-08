@@ -10,7 +10,7 @@ function LoginFormModal() {
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState({});
   const { closeModal } = useModal();
-  const {validationErrors, setValidationErrors} = useState({});
+  // const {validationErrors, setValidationErrors} = useState({});
 
   useEffect(() => {
     const errors = {};

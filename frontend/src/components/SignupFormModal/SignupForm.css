@@ -15,11 +15,11 @@
 
 .signup-form-container h1 {
     font-size: 25px;
-    margin-bottom: 10px;
 }
 
-.signup-form-error-container {
+.signup-error-container {
     margin: 10px;
+    height: 20px;
 }
 
 .signup-form {
@@ -31,6 +31,10 @@
 
 .signup-form input {
     width: 100%;
+    border-radius: 5px;
+    border: 1px solid rgb(224, 218, 218);
+    padding-left: 8px;
+    font-size: 13px;
 }
 
 .signup-form button {
@@ -38,6 +42,11 @@
     height: 30px;
     color: white;
     border: none;
-    box-shadow: 5px 5px 5px;
-    background-color: rgb(232, 118, 118);
+    /* box-shadow: 5px 5px 5px; */
+    /* background-color: rgb(232, 118, 118); */
+    color: rgb(126, 128, 130);
+    border: 1px solid rgb(224, 218, 218);
+    border-radius: 5px;
+    box-shadow: 3px 3px 5px rgb(126, 128, 130);
+    cursor: pointer;
 }
