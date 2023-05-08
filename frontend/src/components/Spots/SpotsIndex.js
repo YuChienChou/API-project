@@ -26,7 +26,7 @@ const SpotsIndex = () => {
                         <img className="spot-image" src={spot.previewImage} alt=""/>
                         <div className="spot-details">
                             <p id="city-state">{spot.city}, {spot.state}</p>
-                            <p id="rating"><i class="fa-solid fa-star"></i> {spot.avgRating}</p>
+                            <p id="rating"><i className="fa-solid fa-star"></i> {spot.avgRating}</p>
                             <p id='price'>${spot.price} night</p>
                         </div>
                     </li>
