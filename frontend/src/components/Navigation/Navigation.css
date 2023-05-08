@@ -63,11 +63,15 @@
 .openModalMenuItem li{
     background-color: rgb(232, 118, 118);
     margin: 5px;
+    padding: 5px;
     font-size: 13px;
     padding-left: 5px;
     color: white;
     border-radius: 5px;
     cursor: pointer;
+    width: 95%;
+    display: flex;
+    justify-content: center;
 }
 
 .profile-li {

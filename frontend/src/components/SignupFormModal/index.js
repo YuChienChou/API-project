@@ -19,14 +19,14 @@ function SignupFormModal() {
   useEffect(() => {
     const errorLi = {};
     if(!email) errorLi.email = 'please provide email';
-    // if(!username) errorLi.username = 'please provide username';
-    // if(!firstName) errorLi.firstName = 'please provide first Name';
-    // if(!lastName) errorLi.lastName = 'please provide last name';
-    // if(!password) errorLi.password = 'please provide password';
-    // if(!confirmPassword) errors.confirmPassword = 'please confirm password';
+    if(!username || username.length < 4) errorLi.username = 'please provide username';
+    if(!firstName) errorLi.firstName = 'please provide first Name';
+    if(!lastName) errorLi.lastName = 'please provide last name';
+    if(!password || password.length < 6) errorLi.password = 'please provide password';
+    if(!confirmPassword) errorLi.confirmPassword = 'please confirm password';
 
     setValidationErrors(errorLi);
-  }, [email, username, firstName, lastName, password])
+  }, [email, username, firstName, lastName, password, confirmPassword])
 
 
   const handleSubmit = (e) => {
@@ -91,7 +91,7 @@ function SignupFormModal() {
             value={username}
             onChange={(e) => setUsername(e.target.value)}
             required
-            placeholder="Username"
+            placeholder="Username: at least 4 character"
           />
         </label>
        
@@ -124,7 +124,7 @@ function SignupFormModal() {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
-            placeholder="Password"
+            placeholder="Password: at least 6 character"
           />
         </label>
         
