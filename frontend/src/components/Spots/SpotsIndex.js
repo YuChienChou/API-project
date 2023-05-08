@@ -20,10 +20,10 @@ const SpotsIndex = () => {
             {spots.map((spot) => (
                 // {console.log("spot in spots.map funtion: ", spot)}
                 <li key={spot.id}>
-                    <img src={spot.previewImg} alt=""/> 
+                    <img src={spot.previewImage} alt=""/> 
                     <p>{spot.city}, {spot.state}</p>
                     <p>{spot.avgRating}</p>
-                    <p>{spot.price}</p>
+                    <p>${spot.price} night</p>
                 </li>
                 )
             )}
