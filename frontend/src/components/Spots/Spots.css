@@ -1,0 +1,52 @@
+.spots-container {
+    /* background-color: pink; */
+    padding: 20px 40px;
+}
+
+
+.spot-image {
+    width: 100%;
+    height: 150px;
+}
+.spots-ul {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+}
+
+#spot-li {
+    list-style-type: none;
+}
+
+.spot-details {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-areas: 
+        "city city rating"
+        "price price price";
+    padding: 5px 8px;
+    gap: 5px;
+}
+
+.spot-details p {
+    font-size: 12px;
+
+}
+
+#city-state {
+    grid-area: city;
+}
+
+#rating {
+    grid-area: rating;
+    text-align: right;
+}
+
+#rating i {
+    font-size: 9px;
+    color: rgb(56, 147, 166)
+}
+
+#price {
+    grid-area: price
+}
