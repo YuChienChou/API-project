@@ -178,7 +178,7 @@ module.exports = {
     options.tableName = 'Spots';
     const Op = Sequelize.Op;
     return queryInterface.bulkDelete(options, {
-      name: { [Op.in]: ['App Academy', 'Magic Candy House', 'Flight Train'] }
+      name: { [Op.in]: ['App Academy', 'Magic Candy House', 'Flight Train', 'spot 4', 'spot 5', 'spot 6', 'spot 7', 'spot 8', 'spot 9', 'spot 10', 'spot 11', 'sopt 12'] }
     }, {});
   }
 };
