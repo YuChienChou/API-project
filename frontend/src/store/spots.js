@@ -61,7 +61,8 @@ const spotsReducer = (state = initialState, action) => {
             return spotsState;
         };
         case RECEIVE_SPOT: {
-            return {...state, [action.spot.id]: action.spot}
+            const spotState = {...state, [action.spot.id]: action.spot}
+            return spotState; 
         };
 
         default: {
