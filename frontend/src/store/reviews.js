@@ -14,13 +14,13 @@ export const loadReviewsAction = (reviews) => {
 
 //thunk action creator
 
-export const loadReviewsThunk = () => async (dispatch) => {
-    const res = await csrfFetch('/api/:spotId/reviews');
+export const loadReviewsThunk = (spotId) => async (dispatch) => {
+    const res = await csrfFetch(`/api/spots/${spotId}/reviews`);
    
 
     if(res.ok) {
         const reviews = await res.json(); 
-        console.log("revies in thunk: ", res);
+        // console.log("revies in thunk: ", res);
         dispatch(loadReviewsAction(reviews));
         return reviews;
     };

@@ -9,7 +9,7 @@ const SpotShow = () => {
     const { spotId } = useParams();
  
     const spot = useSelector((state) => state.spots[spotId]);
-    console.log("Spot in SpotShow: ", spot);
+    // console.log("Spot in SpotShow: ", spot);
     
     const dispatch = useDispatch();
 
