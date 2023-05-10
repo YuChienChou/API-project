@@ -7,7 +7,7 @@ import Airbnb from './Airbnb-logo.jpg'
 
 function Navigation({ isLoaded }){
   const sessionUser = useSelector(state => state.session.user);
-  console.log("session user: ", sessionUser);
+  // console.log("session user: ", sessionUser);
 
   if(sessionUser) {
     return (

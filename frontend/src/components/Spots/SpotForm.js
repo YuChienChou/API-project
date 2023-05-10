@@ -40,10 +40,10 @@ const SpotForm = ({spot, formType}) => {
 
         spot = { ...spot, address, city, state, country, lat, lng, name, description, price}
         
-        if(formType === "Update Your Spot") {
+        if(formType === "Update Spot") {
             const editedSpot = await dispatch(updateSpotThunk(spot));
             spot = editedSpot;
-        } else if (formType === "Create a New Spot") {
+        } else if (formType === "Create Spot") {
             const newSpot = await dispatch(createSpotThunk(spot));
             spot = newSpot;
         }
