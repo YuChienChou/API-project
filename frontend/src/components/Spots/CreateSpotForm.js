@@ -6,11 +6,11 @@ const CreateSpotForm = () => {
         city: "",
         state: "",
         country: "",
-        lat: 0, 
-        lng: 0, 
+        lat: "", 
+        lng: "", 
         name: "",
         description: "",
-        price: 0,
+        price: "",
     };
 
     return (

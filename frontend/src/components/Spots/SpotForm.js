@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { createSpotThunk, updateSpotThunk } from '../../store/spots';
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 import './SpotForm.css';
+import { createSpotImagesThunk } from '../../store/spotImages';
 
 const SpotForm = ({spot, formType}) => {
     const [address, setAddress] = useState("");
@@ -13,13 +14,19 @@ const SpotForm = ({spot, formType}) => {
     const [lng, setLng] = useState("");
     const [name, setName] = useState("");
     const [description, setDescription] = useState("");
-    const [price, setPrice] = useState();
+    const [price, setPrice] = useState("");
     const [previewImage, setPreviewImage] = useState("");
+    const [image1, setImage1] = useState("");
+    const [image2, setImage2] = useState("");
+    const [image3, setImage3] = useState("");
+    const [image4, setImage4] = useState("");
     const [errors, setErrors] = useState({});
     const [validationErrors, setValidationErrors] = useState({});
-    const [image, setImageFormat] = useState("")
+    const [imageFormat, setImageFormat] = useState("")
     const dispatch = useDispatch();
     const history = useHistory();
+
+    const owner = useSelector(state => state.session.user); //to get the current user
 
     useEffect(() => {
         const errors = {};
@@ -35,29 +42,59 @@ const SpotForm = ({spot, formType}) => {
         setValidationErrors(errors)
 
     }, [country, address, city, state, description, name, price, previewImage]);
-
+    //create spot thunk needs spot info, img info and owner info
+    //in the thunk, create a spot
+    //after create a spot, create img with the spot id
+    //loop through img array and create img for each
+    //create final image array that have images from data base with image ids
+    //add final img array and owner data to the spot
     const onSubmit = async (e) => {
         e.preventDefault();
-
-
+        // spot = { ...spot, address, city, state, country, lat, lng, name, description, price, previewImage, image1, image2, image3, image4}
         spot = { ...spot, address, city, state, country, lat, lng, name, description, price, previewImage}
 
-        // const urlParse = spot.previewImage.split('.');
-        // const errors = {};
-        // if(urlParse[urlParse.length -1] !== 'jpe'
-        //    || urlParse[urlParse.length -1 !== 'png']
-        //    || urlParse[urlParse.length - 1] !== 'jpeg') {
-            
-        //   errors.setImageFormat = "Image URL must end in .png, .jpg, or .jpeg";
-        // }
-        
-        // setPreviewImageFormat(errors);
-
+        const imgArr = [];
+        if(previewImage) {
+            const previewImageObj = {
+                url: previewImage,
+                preview: true
+            }
+            imgArr.push(previewImageObj);
+        }
+        if(image1) {
+            const image1Obj = {
+                url: image1,
+                preview: true
+            }
+            imgArr.push(image1Obj);
+        }
+        if(image2) {
+            const image2Obj = {
+                url: image2,
+                preview: true
+            }
+            imgArr.push(image2Obj);
+        }
+        if(image3) {
+            const image3Obj = {
+                url: image3,
+                preview: true
+            }
+            imgArr.push(image3Obj);
+        }
+        if(image4) {
+            const image4Obj = {
+                url: image4,
+                preview: true
+            }
+            imgArr.push(image4Obj);
+        }
+    
         if(formType === "Update Spot") {
             const editedSpot = await dispatch(updateSpotThunk(spot));
             spot = editedSpot;
         } else if (formType === "Create Spot") {
-            const newSpot = await dispatch(createSpotThunk(spot));
+            const newSpot = await dispatch(createSpotThunk(spot, imgArr, owner));
             spot = newSpot;
         }
 
@@ -66,8 +103,6 @@ const SpotForm = ({spot, formType}) => {
         } else {
             history.push(`/spots/${spot.id}`);
         };
-
-        
     };
 
     return (
@@ -207,10 +242,33 @@ const SpotForm = ({spot, formType}) => {
                     onChange={(e) => setPreviewImage(e.target.value)}
                     />
                     <p className='error'>{validationErrors.previewImage}</p>
+                    <input 
+                    type='url' 
+                    placeholder='Image URL' 
+                    value={image1}
+                    onChange={(e) => setImage1(e.target.value)}
+                    />
+                    <input 
+                    type='url' 
+                    placeholder='Image URL' 
+                    value={image2}
+                    onChange={(e) => setImage2(e.target.value)}
+                    />
+                    <input 
+                    type='url' 
+                    placeholder='Image URL' 
+                    value={image3}
+                    onChange={(e) => setImage3(e.target.value)}
+                    />
+                    <input 
+                    type='url' 
+                    placeholder='Image URL' 
+                    value={image4}
+                    onChange={(e) => setImage4(e.target.value)}
+                    />
+                    {/* <input type='url' placeholder='Image URL' />
                     <input type='url' placeholder='Image URL' />
-                    <input type='url' placeholder='Image URL' />
-                    <input type='url' placeholder='Image URL' />
-                    <input type='url' placeholder='Image URL' />
+                    <input type='url' placeholder='Image URL' /> */}
                 </label>
             </div>
 
