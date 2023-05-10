@@ -21,7 +21,27 @@ module.exports = {
     return queryInterface.bulkInsert(options, [
       {
         spotId: 1, 
-        url: 'https://as1.ftcdn.net/v2/jpg/03/96/00/60/1000_F_396006014_aiWnqPW3WnVnjURGDIrL7FazJ916mNAD.jpg',
+        url: 'https://a0.muscache.com/im/pictures/miso/Hosting-13016398/original/6c59e24d-89f3-4475-aaca-80363792fb51.jpeg?im_w=1200',
+        preview: true 
+      },
+      {
+        spotId: 1, 
+        url: 'https://a0.muscache.com/im/pictures/miso/Hosting-13016398/original/7629c923-3741-4ee8-9520-4685578aad4a.jpeg?im_w=720',
+        preview: true 
+      },
+      {
+        spotId: 1, 
+        url: 'https://a0.muscache.com/im/pictures/miso/Hosting-13016398/original/1e16174c-e9a6-4f2a-b20d-43e049cdd85d.jpeg?im_w=720',
+        preview: true 
+      },
+      {
+        spotId: 1, 
+        url: 'https://a0.muscache.com/im/pictures/miso/Hosting-13016398/original/98ce235a-ed5f-4f27-af87-9b6cd00b994e.jpeg?im_w=720',
+        preview: true 
+      },
+      {
+        spotId: 1, 
+        url: 'https://a0.muscache.com/im/pictures/778bb991-75cb-47cd-84e6-80677c83e444.jpg?im_w=1440',
         preview: true 
       },
       {
