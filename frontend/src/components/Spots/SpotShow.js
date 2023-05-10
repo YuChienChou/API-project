@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { fetchDetailedSpotThunk } from '../../store/spots';
-import SpotReviews from '../Reviews/reviewsIndex';
+import SpotReviews from '../Reviews/Reviews';
 import './Spots.css';
 
 const SpotShow = () => {
@@ -15,7 +15,7 @@ const SpotShow = () => {
 
     useEffect(() => {
         dispatch(fetchDetailedSpotThunk(spotId));
-    }, [dispatch]);
+    }, [dispatch, spotId]);
 
     if(!spot || !spot.SpotImages) return null;
 

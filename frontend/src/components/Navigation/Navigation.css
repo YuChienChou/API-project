@@ -84,6 +84,17 @@
     margin-top: 2px;
 }
 
+#login-user {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    align-items: center;
+}
+
+#login-user a {
+    font-size: 12px;
+    color: rgb(106, 106, 111);
+}
 
 
 
