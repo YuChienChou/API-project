@@ -44,93 +44,107 @@ const SpotForm = ({spot, formType}) => {
         onSubmit={onSubmit}
         id='spot-form'
         >
-            <h1>{formType}</h1>
-            <h2>Where's your place located?</h2>
-            <p>Guests will only get your exact address once they booked a reservation.</p>
-            <label>
-                Country
-                <input 
-                    type='text'
-                    value={country}
-                    onChange={(e) => setCountry(e.target.value)} />
-            </label>
-            <label>
-                Street address
-                <input 
-                    type="text"
-                    value={address}
-                    onChange={(e) => setAddress(e.target.value)}
-                />
-            </label>
-            <label>
-                city
-                <input 
-                    type="text"
-                    value={city}
-                    onChange={(e) => setCity(e.target.value)}
-                />
-            </label>
-            <label>
-                State
-                <input 
-                    type="text"
-                    value={state}
-                    onChange={(e) => setState(e.target.value)}
-                />
-            </label>
-            <label>
-                Latitude
-                <input 
-                    type='number'
-                    value={lat}
-                    onChange={(e) => setLat(e.target.value)}
-                />
-            </label>
-            <label>
-                Longitude
-                <input 
-                    type='number'
-                    value={lng}
-                    onChange={(e) => setLat(e.target.value)}
-                />
-            </label>
-            <h3>Describe your place to guests</h3>
-            <label>
-            Mention the best features of your space, any special amentities like fast wif or parking, and what you love about the neighborhood.
-                <textarea
-                    value={description}
-                    onChange={(e) => setDescription(e.target.value)}
-                />
-            </label>
-            <h3>Create a title for your spot</h3>
-            <label>
-            Catch guests' attention with a spot title that highlights what makes your place special.
-                <input 
-                    type="text"
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
-                />
-            </label>
-            <h3>Set a base price for your spot</h3>
-            <label>
-            Competitive pricing can help your listing stand out and rank higher in search results.
-                <input 
-                    type="number"
-                    value={price}
-                    onChange={(e) => setPrice(e.target.value)}
-                />
-            </label>
-            <h3>Liven up your spot with photos</h3>
-            <label>
-            Submit a link to at least one photo to publish your spot.
-                <input type="url" placeholder='Preview Image URL'/>
-                <input type='url' placeholder='Image URL' />
-                <input type='url' placeholder='Image URL' />
-                <input type='url' placeholder='Image URL' />
-                <input type='url' placeholder='Image URL' />
-            </label>
+            <h3>Create a New Spot</h3>
+            <div id='spot-location'>
+                <h4>Where's your place located?</h4>
+                <p>Guests will only get your exact address once they booked a reservation.</p>
+                <label>
+                    Country
+                    <input 
+                        type='text'
+                        value={country}
+                        onChange={(e) => setCountry(e.target.value)} />
+                </label>
+                <label>
+                    Street address
+                    <input 
+                        type="text"
+                        value={address}
+                        onChange={(e) => setAddress(e.target.value)}
+                    />
+                </label>
+                <label>
+                    city
+                    <input 
+                        type="text"
+                        value={city}
+                        onChange={(e) => setCity(e.target.value)}
+                    />
+                </label>
+                <label>
+                    State
+                    <input 
+                        type="text"
+                        value={state}
+                        onChange={(e) => setState(e.target.value)}
+                    />
+                </label>
+                <label>
+                    Latitude
+                    <input 
+                        type='number'
+                        value={lat}
+                        onChange={(e) => setLat(e.target.value)}
+                    />
+                </label>
+                <label>
+                    Longitude
+                    <input 
+                        type='number'
+                        value={lng}
+                        onChange={(e) => setLng(e.target.value)}
+                    />
+                </label>
+            </div>
+            <div id='spot-description'>
+                <h4>Describe your place to guests</h4>
+                <label>
+                Mention the best features of your space, any special amentities like fast wif or parking, and what you love about the neighborhood.
+                    <textarea
+                        value={description}
+                        onChange={(e) => setDescription(e.target.value)}
+                    />
+                </label>
+            </div>
+            <div id='spot-name'>
+                <h4>Create a title for your spot</h4>
+                <label>
+                Catch guests' attention with a spot title that highlights what makes your place special.
+                    <input 
+                        type="text"
+                        value={name}
+                        onChange={(e) => setName(e.target.value)}
+                    />
+                </label>
+            </div>
+            <div id='spot-price'>
+            <h4>Set a base price for your spot</h4>
+                <label>
+                Competitive pricing can help your listing stand out and rank higher in search results.
+                    <input 
+                        type="number"
+                        value={price}
+                        onChange={(e) => setPrice(e.target.value)}
+                    />
+                </label>
+            </div>
+            <div id='spot-phto-url'>
+                <h4>Liven up your spot with photos</h4>
+                <label>
+                Submit a link to at least one photo to publish your spot.
+                    <input type="url" placeholder='Preview Image URL'/>
+                    <input type='url' placeholder='Image URL' />
+                    <input type='url' placeholder='Image URL' />
+                    <input type='url' placeholder='Image URL' />
+                    <input type='url' placeholder='Image URL' />
+                </label>
+            </div>
 
-            <button type='submit'>Create Spot</button>
+            <button 
+            type='submit'
+            disabled={Object.values(errors).length > 0}
+            id='create-spot-button'
+            >Create Spot</button>
             
         </form>
         </>
