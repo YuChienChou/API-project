@@ -4,6 +4,7 @@ import { csrfFetch } from "./csrf";
 //type string
 const LOAD_SPOTS = "spots/LOAD_SPOTS";
 const RECEIVE_SPOT = "spots/RECEIVE_SPOT";
+const UPDATE_SPOT = 'spots/UPDATE_SPOT';
 
 
 //action creator
@@ -12,10 +13,17 @@ export const loadSpotsAction = (spots) => ({
     spots
 });
 
-export const detailedSpotAction = (spot) => ({
+export const receiveSpotAction = (spot) => ({
     type: RECEIVE_SPOT,
     spot,
-})
+});
+
+export const editSpotAction = (spot) => {
+    return {
+        type: UPDATE_SPOT,
+        spot,
+    };
+};
 
 //thunk action creator
 
@@ -36,11 +44,45 @@ export const fetchDetailedSpotThunk = (spotId) => async (dispatch) => {
     if(res.ok) {
         const spotDetails =await res.json();
         // console.log("spotDetails in thunk: ", spotDetails);
-        dispatch(detailedSpotAction(spotDetails));
+        dispatch(receiveSpotAction(spotDetails));
     } else {
         const errors = await res.json();
         return errors;
     }
+};
+
+export const createSpotThunk = (spot) => async (dispatch) => {
+    const res = await csrfFetch('/api/spots', {
+        method: "POST",
+        header: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(spot),
+    });
+
+    if(res.ok) {
+        const newSpot = await res.json();
+        dispatch(receiveSpotAction(newSpot));
+        return newSpot;
+    } else {
+        const errors = await res.json();
+        return errors;
+    }
+};
+
+export const updateSpotThunk = (spot) => async (dispatch) => {
+    const res = await csrfFetch(`/api/spots/${spot.id}`, {
+        method: "PUT",
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(spot),
+    });
+
+    if(res.ok) {
+        const updatedSpot = await res.json();
+        dispatch(editSpotAction(updatedSpot));
+        return updatedSpot;
+    } else {
+        const errors = await res.json();
+        return errors;
+    };
 };
 
 //reducer: case in the reducer for all user reviews
@@ -64,10 +106,13 @@ const spotsReducer = (state = initialState, action) => {
             const spotState = {...state, [action.spot.id]: action.spot}
             return spotState; 
         };
-
-        default: {
-            return state;
+        case UPDATE_SPOT: {
+            const spotState = {...state, [action.spot.id]: action.spot}
+            return spotState;
         };
+        default:
+            return state;
+        
     }
 };
 

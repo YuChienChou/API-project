@@ -7,22 +7,22 @@ import { loadReviewsThunk } from "../../store/reviews";
 const SpotReviews = () => {
     const { spotId } = useParams();
     const reviewsStore = useSelector((state) => state.reviews);
-    console.log("reviewsStore in spotreviews: ", reviewsStore);
-    const review = Object.values(reviewsStore);
-    console.log("reviews in reviewindex: ", review)
+    // console.log("reviewsStore in spotreviews: ", reviewsStore);
+    const reviews = Object.values(reviewsStore);
+    // console.log("reviews in reviewindex: ", reviews);
     const dispatch = useDispatch();
 
     useEffect(() => {
         dispatch(loadReviewsThunk(spotId));
     }, [dispatch]);
 
-    if(!review) return null;
+    if(!reviews) return null;
 
     return (
         <>
         <div>
             <ul>
-               {review.map((review) => (
+               {reviews.map((review) => (
                 <li key={review.id}>
                     <h4>{review.User.firstName}</h4>
                     <p>{review.review}</p>
