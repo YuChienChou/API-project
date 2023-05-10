@@ -1,9 +1,109 @@
-#form-type {
-    font-size: 30px;
-}
 #spot-form {
     width: 40%;
-    margin: 0 auto;
+    margin: 20px auto;
     display: flex;
     flex-direction: column;
+    font-size: 14px;
+    gap: 20px;
+    padding: 30px;
+    border: 1px solid rgb(224, 218, 218);
+    border-radius: 5px;
+    /* background-color: pink; */
+}
+
+
+#spot-form input {
+    font-size: 12px;
+    width: 100%;
+    border: 1px solid rgb(224, 218, 218);
+    margin: 5px 0;
+    border-radius: 5px;
+    padding-left: 5px;
+    padding: 2px 0 2px 5px;
+}
+
+
+#spot-form h4 {
+    margin-bottom: 10px 0;
+}
+
+#spot-form p {
+    font-size: 12px;
+    margin: 3px 0;
+}
+
+#spot-form label {
+    font-size: 12px;
+    margin: 3px 0;
+}
+
+#city-state {
+    display: grid;
+    grid-template-columns: 3fr 2fr;
+    gap: 10px;
+    border-bottom: none;
+}
+
+#lat-lng {
+    display: flex; 
+    gap: 10px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid rgb(224, 218, 218);
+}
+
+#spot-description {
+    border-bottom: 1px solid rgb(224, 218, 218);
+    
+}
+
+#spot-description {
+    border-bottom: 1px solid rgb(224, 218, 218);
+    padding: 0 0 10px 0;
+}
+
+#spot-description textarea {
+    width: 100%;
+    height: 60px;
+    margin: 10px 0 5px 0;
+    border: 1px solid rgb(224, 218, 218);
+    border-radius: 5px;
+}
+
+#spot-name {
+    border-bottom: 1px solid rgb(224, 218, 218);
+    padding: 0 0 10px 0;
+}
+
+#spot-price {
+    border-bottom: 1px solid rgb(224, 218, 218);
+    padding: 0 0 10px 0;
+}
+
+#spot-price-input {
+    display: flex;
+    gap: 5px;
+    align-items: center;
+}
+
+#spot-photo-url {
+    border-bottom: 1px solid rgb(224, 218, 218);
+    padding: 0 0 10px 0;
+}
+
+#create-spot-button {
+    width: 100%;
+    height: 30px;
+    color: white;
+    border: none;
+    box-shadow: 3px 3px 5px rgb(126, 128, 130);
+    color: rgb(126, 128, 130);
+    border: 1px solid rgb(224, 218, 218);
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.label-error {
+    display: flex;
+    align-items: center;
+    gap: 10px;
 }

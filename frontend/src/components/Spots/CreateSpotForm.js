@@ -6,17 +6,17 @@ const CreateSpotForm = () => {
         city: "",
         state: "",
         country: "",
-        lat: "", 
-        lng: "", 
+        lat: 0, 
+        lng: 0, 
         name: "",
         description: "",
-        price: "",
+        price: 0,
     };
 
     return (
         <SpotForm 
             spot={spot}
-            formType="Create a New Spot" 
+            formType="Create Spot" 
         />
     );
 };

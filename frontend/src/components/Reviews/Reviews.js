@@ -14,7 +14,7 @@ const SpotReviews = () => {
 
     useEffect(() => {
         dispatch(loadReviewsThunk(spotId));
-    }, [dispatch]);
+    }, [dispatch, spotId]);
 
     if(!reviews) return null;
 
