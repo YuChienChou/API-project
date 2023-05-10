@@ -17,6 +17,7 @@ const SpotForm = ({spot, formType}) => {
     const [previewImage, setPreviewImage] = useState("");
     const [errors, setErrors] = useState({});
     const [validationErrors, setValidationErrors] = useState({});
+    const [image, setImageFormat] = useState("")
     const dispatch = useDispatch();
     const history = useHistory();
 
@@ -38,8 +39,20 @@ const SpotForm = ({spot, formType}) => {
     const onSubmit = async (e) => {
         e.preventDefault();
 
-        spot = { ...spot, address, city, state, country, lat, lng, name, description, price}
+
+        spot = { ...spot, address, city, state, country, lat, lng, name, description, price, previewImage}
+
+        // const urlParse = spot.previewImage.split('.');
+        // const errors = {};
+        // if(urlParse[urlParse.length -1] !== 'jpe'
+        //    || urlParse[urlParse.length -1 !== 'png']
+        //    || urlParse[urlParse.length - 1] !== 'jpeg') {
+            
+        //   errors.setImageFormat = "Image URL must end in .png, .jpg, or .jpeg";
+        // }
         
+        // setPreviewImageFormat(errors);
+
         if(formType === "Update Spot") {
             const editedSpot = await dispatch(updateSpotThunk(spot));
             spot = editedSpot;
@@ -53,6 +66,8 @@ const SpotForm = ({spot, formType}) => {
         } else {
             history.push(`/spots/${spot.id}`);
         };
+
+        
     };
 
     return (
