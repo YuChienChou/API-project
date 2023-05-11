@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { useParams } from 'react-router-dom'
 import { useDispatch, useSelector } from "react-redux"
 import { loadReviewsThunk } from "../../store/reviews";
+import './Reviews.css';
 
 
 const SpotReviews = () => {
@@ -21,9 +22,12 @@ const SpotReviews = () => {
     return (
         <>
         <div>
+            
             <ul>
                {reviews.map((review) => (
-                <li key={review.id}>
+                <li key={review.id}
+                    id='single-spot-review'
+                >
                     <h4>{review.User.firstName}</h4>
                     <p>{review.review}</p>
                 </li>

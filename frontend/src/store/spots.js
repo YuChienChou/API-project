@@ -63,7 +63,9 @@ export const createSpotThunk = (spot, imagesArray, owner) => async (dispatch) =>
 
         const finalImageArray = [];
 
+        //the imagesArray is passed in from SpotForm
         for (let image of imagesArray) {
+            //to assign the spotId to the new image
             image.spotId = newSpot.id;
             const imageRes = await csrfFetch(`/api/spots/${newSpot.id}/images`, {
                 method: "POST",
@@ -91,7 +93,7 @@ export const createSpotThunk = (spot, imagesArray, owner) => async (dispatch) =>
     }
 };
 
-export const updateSpotThunk = (spot) => async (dispatch) => {
+export const updateSpotThunk = (spot, imagesArray, owner) => async (dispatch) => {
     const res = await csrfFetch(`/api/spots/${spot.id}`, {
         method: "PUT",
         headers: { 'Content-Type': 'application/json' },
@@ -99,13 +101,38 @@ export const updateSpotThunk = (spot) => async (dispatch) => {
     });
 
     if(res.ok) {
-        const updatedSpot = await res.json();
-        dispatch(editSpotAction(updatedSpot));
-        return updatedSpot;
+        const newSpot = await res.json();
+
+        const finalImageArray = [];
+
+        //the imagesArray is passed in from SpotForm
+        for (let image of imagesArray) {
+            //to assign the spotId to the new image
+            image.spotId = newSpot.id;
+            const imageRes = await csrfFetch(`/api/spots/${newSpot.id}/images`, {
+                method: "POST",
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(image)
+            });
+
+            if(imageRes.ok) {
+                const newImage = await imageRes.json();
+                finalImageArray.push(newImage);
+            } else {
+                const errors = await imageRes.json();
+                return errors;
+            };
+            
+        }
+        newSpot.SpotImages = finalImageArray;
+        newSpot.owner = owner;
+
+        dispatch(receiveSpotAction(newSpot));
+        return newSpot;
     } else {
         const errors = await res.json();
         return errors;
-    };
+    }
 };
 
 //reducer: case in the reducer for all user reviews

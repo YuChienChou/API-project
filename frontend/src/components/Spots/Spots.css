@@ -118,10 +118,14 @@ h3  {
 .host-details {
     display: grid;
     grid-template-columns: 3fr 2fr;
+    padding-bottom: 20px;
     margin: 20px 0;
+    border-bottom: 1px solid rgb(224, 218, 218);
+    height: 200px;
 }
 
 #price-review {
+    height: 100px;
     display: grid;
     grid-template-areas: 
     "price review"
@@ -156,4 +160,8 @@ h3  {
     background-color: rgb(232, 118, 118);
     border-radius: 5px;
     cursor: pointer;
+}
+
+#spot-reivew {
+    background-color: pink;
 }
