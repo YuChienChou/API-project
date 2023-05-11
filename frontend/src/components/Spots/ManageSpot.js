@@ -15,7 +15,9 @@ const ManageSpot = () => {
     // console.log("spots in managespot: ", spots);
 
     const userSpots = spots.filter((spot) => spot.ownerId === user.id);
-    console.log("userSpots in manageSpot: ", userSpots);
+    // console.log("userSpots in manageSpot: ", userSpots);
+
+    // const toDeleteSpot = userSpots.find
 
     if(spots.length < 1) return null;
 
@@ -30,7 +32,7 @@ const ManageSpot = () => {
                 <img src={spot.previewImage} alt="" />
                 <p>{spot.city}, {spot.state}</p>
                 <p>${spot.price} night</p>
-                <Link to='/spots/edit'>
+                <Link to={`/spots/${spot.id}/edit`}>
                     <button>Update</button>
                 </Link>
                 <button>Delete</button>

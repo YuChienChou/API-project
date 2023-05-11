@@ -5,6 +5,7 @@ import { csrfFetch } from "./csrf";
 const LOAD_SPOTS = "spots/LOAD_SPOTS";
 const RECEIVE_SPOT = "spots/RECEIVE_SPOT";
 const UPDATE_SPOT = 'spots/UPDATE_SPOT';
+const DELETE_SPOT = 'spots/DELETE_SPOT';
 
 
 //action creator
@@ -22,6 +23,13 @@ export const editSpotAction = (spot) => {
     return {
         type: UPDATE_SPOT,
         spot,
+    };
+};
+
+export const deleteSpotAction = (spotId) => {
+    return {
+        type: DELETE_SPOT,
+        spotId
     };
 };
 
@@ -93,7 +101,7 @@ export const createSpotThunk = (spot, imagesArray, owner) => async (dispatch) =>
     }
 };
 
-export const updateSpotThunk = (spot, imagesArray, owner) => async (dispatch) => {
+export const updateSpotThunk = (spot) => async (dispatch) => {
     const res = await csrfFetch(`/api/spots/${spot.id}`, {
         method: "PUT",
         headers: { 'Content-Type': 'application/json' },
@@ -101,38 +109,55 @@ export const updateSpotThunk = (spot, imagesArray, owner) => async (dispatch) =>
     });
 
     if(res.ok) {
-        const newSpot = await res.json();
+        const editedSpot = await res.json();
 
-        const finalImageArray = [];
-
-        //the imagesArray is passed in from SpotForm
-        for (let image of imagesArray) {
-            //to assign the spotId to the new image
-            image.spotId = newSpot.id;
-            const imageRes = await csrfFetch(`/api/spots/${newSpot.id}/images`, {
-                method: "POST",
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(image)
-            });
-
-            if(imageRes.ok) {
-                const newImage = await imageRes.json();
-                finalImageArray.push(newImage);
-            } else {
-                const errors = await imageRes.json();
-                return errors;
-            };
+       
+        // const finalImageArray = [];
+        // //the imagesArray is passed in from SpotForm
+        // console.log("imagesArray in udateSpotThunk: ", imagesArray);
             
-        }
-        newSpot.SpotImages = finalImageArray;
-        newSpot.owner = owner;
+        //     for (let image of imagesArray) {
+        //     //to assign the spotId to the new image
+        //     image.spotId = editedSpot.id;
+        //     const imageRes = await csrfFetch(`/api/spots/${editedSpot.id}/images`, {
+        //         method: "PUT",
+        //         headers: { 'Content-Type': 'application/json' },
+        //         body: JSON.stringify(image)
+        //     });
 
-        dispatch(receiveSpotAction(newSpot));
-        return newSpot;
+        //     if(imageRes.ok) {
+        //         const newImage = await imageRes.json();
+        //         finalImageArray.push(newImage);
+        //     } else {
+        //         const errors = await imageRes.json();
+        //         return errors;
+        //     };
+        //  };
+
+        //  editedSpot.SpotImages = finalImageArray;
+        //  editedSpot.owner = owner;
+
+        dispatch(receiveSpotAction(editedSpot));
+        return editedSpot;
     } else {
         const errors = await res.json();
         return errors;
     }
+};
+
+export const deletSpotThunk = (spotId) => async (dispatch) => {
+    const res = await csrfFetch(`/api/spots/${spotId}`, {
+        method: "DELETE",
+    });
+
+    if(res.ok) {
+        const spotToBeDeleted = await res.json();
+        dispatch(deleteSpotAction(spotToBeDeleted));
+        return spotToBeDeleted;
+    } else {
+        const errors = await res.json();
+        return errors;
+    };
 };
 
 //reducer: case in the reducer for all user reviews
@@ -160,6 +185,11 @@ const spotsReducer = (state = initialState, action) => {
             const spotState = {...state, [action.spot.id]: action.spot}
             return spotState;
         };
+        case DELETE_SPOT: {
+            const spotsState = {...state};
+            delete spotsState[action.spotId];
+            return spotsState;
+        }
         default:
             return state;
         

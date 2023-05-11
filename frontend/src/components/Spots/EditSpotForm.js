@@ -1,16 +1,18 @@
 import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
-import { createSpotThunk } from '../../store/spots';
-import SpotForm from './SpotForm';
+import { updateSpotThunk } from '../../store/spots';
+import SpotFormEdit from './SpotFormEdit';
 
 const EditSpotForm = () => {
-    const { spotId } = useParams();
+    let { spotId } = useParams();
+    spotId = parseInt(spotId);
     const spot = useSelector((state) => state.spots[spotId]);
+
     const dispatch = useDispatch();
 
     useEffect(() => {
-        dispatch(createSpotThunk(spotId));
+        dispatch(updateSpotThunk(spotId));
     }, [dispatch, spotId]);
 
     if(!spot) return (<></>);
@@ -18,7 +20,7 @@ const EditSpotForm = () => {
     return (
         Object.keys(spot).length > 1 && (
             <>
-                <SpotForm 
+                <SpotFormEdit
                     spot={spot}
                     formType="Update Spot"
                 />

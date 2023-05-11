@@ -1,4 +1,4 @@
-import SpotForm from './SpotForm';
+import SpotFormCreate from './SpotFormCreate';
 
 const CreateSpotForm = () => {
     const spot = {
@@ -14,7 +14,7 @@ const CreateSpotForm = () => {
     };
 
     return (
-        <SpotForm 
+        <SpotFormCreate 
             spot={spot}
             formType="Create Spot" 
         />
