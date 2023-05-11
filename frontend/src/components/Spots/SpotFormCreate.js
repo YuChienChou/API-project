@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { createSpotThunk, updateSpotThunk } from '../../store/spots';
+import { createSpotThunk } from '../../store/spots';
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 import './SpotForm.css';
 // import { createSpotImagesThunk } from '../../store/spotImages';

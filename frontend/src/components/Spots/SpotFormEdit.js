@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { createSpotThunk, updateSpotThunk } from '../../store/spots';
+import { useDispatch } from 'react-redux';
+import { updateSpotThunk } from '../../store/spots';
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 import './SpotForm.css';
 // import { createSpotImagesThunk } from '../../store/spotImages';
 
-const SpotFormEdit = ({spot, formType}) => { 
+const SpotFormEdit = ({spot}) => { 
     //when set up controlled inputs, definitely need to assign the initail value
 
     // console.log("spot id in spot edit form: ", spot.id)
@@ -32,7 +32,7 @@ const SpotFormEdit = ({spot, formType}) => {
     const history = useHistory();
 
     //to get the current user so can pass in to the thunkaction creators.
-    const owner = useSelector(state => state.session.user); 
+    // const owner = useSelector(state => state.session.user); 
 
     //this is the data validation to check the input values
     useEffect(() => {
@@ -66,7 +66,7 @@ const SpotFormEdit = ({spot, formType}) => {
         //here are the images from the input that will be passed
         //into the thunk. So create an empty array to take in the inputs
         //this imgArr will be passed into createSpotThunk as an arg.
-        const imgArr = [];
+        // const imgArr = [];
 
         //since in the useState(), the initial values of images are empty string, need to convert it to an obj since it takes 
         //spotId, url, and preveiw value to create a new image.

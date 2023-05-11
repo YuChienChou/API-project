@@ -109,33 +109,7 @@ export const updateSpotThunk = (spot) => async (dispatch) => {
     });
 
     if(res.ok) {
-        const editedSpot = await res.json();
-
-       
-        // const finalImageArray = [];
-        // //the imagesArray is passed in from SpotForm
-        // console.log("imagesArray in udateSpotThunk: ", imagesArray);
-            
-        //     for (let image of imagesArray) {
-        //     //to assign the spotId to the new image
-        //     image.spotId = editedSpot.id;
-        //     const imageRes = await csrfFetch(`/api/spots/${editedSpot.id}/images`, {
-        //         method: "PUT",
-        //         headers: { 'Content-Type': 'application/json' },
-        //         body: JSON.stringify(image)
-        //     });
-
-        //     if(imageRes.ok) {
-        //         const newImage = await imageRes.json();
-        //         finalImageArray.push(newImage);
-        //     } else {
-        //         const errors = await imageRes.json();
-        //         return errors;
-        //     };
-        //  };
-
-        //  editedSpot.SpotImages = finalImageArray;
-        //  editedSpot.owner = owner;
+        const editedSpot = await res.json()
 
         dispatch(receiveSpotAction(editedSpot));
         return editedSpot;
@@ -151,9 +125,8 @@ export const deletSpotThunk = (spotId) => async (dispatch) => {
     });
 
     if(res.ok) {
-        const spotToBeDeleted = await res.json();
-        dispatch(deleteSpotAction(spotToBeDeleted));
-        return spotToBeDeleted;
+        dispatch(deleteSpotAction(spotId));
+        return;
     } else {
         const errors = await res.json();
         return errors;

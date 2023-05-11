@@ -5,15 +5,17 @@ import { updateSpotThunk } from '../../store/spots';
 import SpotFormEdit from './SpotFormEdit';
 
 const EditSpotForm = () => {
-    let { spotId } = useParams();
-    spotId = parseInt(spotId);
+    const { spotId } = useParams();
+    // console.log('SpotId in editSpotForm: ', spotId);
+    // console.log('SpotId type in editSpotForm: ', typeof spotId);
     const spot = useSelector((state) => state.spots[spotId]);
+    // console.log("spot id in editSpotForm: ", spot.id);
+    // console.log('spot id type in editSpotForm: ', typeof spot.id)
+    // const dispatch = useDispatch();
 
-    const dispatch = useDispatch();
-
-    useEffect(() => {
-        dispatch(updateSpotThunk(spotId));
-    }, [dispatch, spotId]);
+    // useEffect(() => {
+    //     dispatch(updateSpotThunk(spotId));
+    // }, [dispatch, spotId]);
 
     if(!spot) return (<></>);
 
