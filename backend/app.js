@@ -20,6 +20,9 @@ app.use(morgan('dev'));
 //test comment
 app.use(cookieParser());
 app.use(express.json());
+// app.use((req, res, next) => {
+//   console.log("this is req.body", req.body)
+//   next()})
 
 // Security Middleware
 if (!isProduction) {
