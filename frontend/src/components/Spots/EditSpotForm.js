@@ -17,7 +17,7 @@ const EditSpotForm = () => {
     //     dispatch(updateSpotThunk(spotId));
     // }, [dispatch, spotId]);
 
-    if(!spot) return (<></>);
+    if(!spot.id) return (<></>);
 
     return (
         Object.keys(spot).length > 1 && (
