@@ -43,6 +43,16 @@ const ManageSpot = () => {
                     <li key={spot.id}>
                         <img src={spot.previewImage} alt="" />
                         <p>{spot.city}, {spot.state}</p>
+                        <div className="spot-details">
+                            <p id="city-state">{spot.city}, {spot.state}</p>
+                            {(() => { //use IIFE to have if statement used in JSX!!
+                                if(spot.avgRating === null) {
+                                    return <p className="rating"><i className="fa-solid fa-star"></i> new</p> 
+                                } else {
+                                    return <p className="rating"><i className="fa-solid fa-star"></i> {spot.avgRating}</p> 
+                                }
+                            })()}
+                        </div>
                         <p>${spot.price} night</p>
                         <Link to={`/spots/${spot.id}/edit`}>
                             <button>Update</button>
