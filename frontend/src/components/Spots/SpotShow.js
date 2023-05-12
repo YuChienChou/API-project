@@ -25,89 +25,11 @@ const SpotShow = () => {
     for (let i = 0; i < spot.SpotImages.length; i++) {
         imgList.push(spot.SpotImages[i].url);
     }
-
-
-    // console.log("numReviews in spotshow: ", spot.numReviews);
-
-    // if(spot.numReviews === 0)  {
-    //     return (
-    //         <>
-    //         <div className="spotshow-container">
-    //             <h2>{spot.name}</h2>
-    //             <p>{spot.city}, {spot.state}, {spot.country}</p>
-    //             <div className="spot-image-container">
-    //                 {/* {spot.SpotImages.map((img) => (
-    //                     <li key={img.id}>
-    //                         <img src={img.url} alt='' />
-    //                     </li>
-    //                 ))} */}
-    //                 <li id='img1'><img src={imgList[0]} alt="" /></li>
-    //                 <li id='img2'><img src={imgList[1]} alt="" /></li>
-    //                 <li id='img3'><img src={imgList[2]} alt="" /></li>
-    //                 <li id='img4'><img src={imgList[3]} alt="" /></li>
-    //                 <li id='img5'><img src={imgList[4]} alt="" /></li>
-    //             </div>
-                    
-    //             <div className="host-details"> 
-    //                 <div>
-    //                     <h3>{`Hosted by ${spot.owner.firstName} ${spot.owner.lastName}`}</h3>
-    //                     <p>{spot.description}</p>
-    //                 </div>
-    //                 <div id='price-review'>
-    //                     <p id='price'>${spot.price} night</p>
-    //                     <p className='rating' id='review'><i className="fa-solid fa-star"></i>{spot.aveStarRating} - New</p>
-    //                     <button id='reserve-button'>reserve</button>
-    //                 </div>
-    //             </div>
-    //             <div> 
-    //                 <h3 className='spot-review'><i className="fa-solid fa-star"></i>New</h3>
     
-    //                 <SpotReviews />
-    //             </div>
-                
-    //         </div>
-    //         </>
-    //     )
-    // } else {
-    //     return (
-    //     <>
-    //     <div className="spotshow-container">
-    //         <h2>{spot.name}</h2>
-    //         <p>{spot.city}, {spot.state}, {spot.country}</p>
-    //         <div className="spot-image-container">
-    //             {/* {spot.SpotImages.map((img) => (
-    //                 <li key={img.id}>
-    //                     <img src={img.url} alt='' />
-    //                 </li>
-    //             ))} */}
-    //             <li id='img1'><img src={imgList[0]} alt="" /></li>
-    //             <li id='img2'><img src={imgList[1]} alt="" /></li>
-    //             <li id='img3'><img src={imgList[2]} alt="" /></li>
-    //             <li id='img4'><img src={imgList[3]} alt="" /></li>
-    //             <li id='img5'><img src={imgList[4]} alt="" /></li>
-    //         </div>
-                
-    //         <div className="host-details"> 
-    //             <div>
-    //                 <h3>{`Hosted by ${spot.owner.firstName} ${spot.owner.lastName}`}</h3>
-    //                 <p>{spot.description}</p>
-    //             </div>
-    //             <div id='price-review'>
-    //                 <p id='price'>${spot.price} night</p>
-    //                 <p className='rating' id='review'><i className="fa-solid fa-star"></i>{spot.aveStarRating} - {spot.numReviews} reviews</p>
-    //                 <button id='reserve-button'>reserve</button>
-    //             </div>
-    //         </div>
-    //         <div> 
-    //             <h3 className='spot-review'><i className="fa-solid fa-star"></i>{spot.aveStarRating} - {spot.numReviews} reviews</h3>
+    // const reserverButtonAlert = () => {
 
-    //             <SpotReviews />
-    //         </div>
-            
-    //     </div>
-    //     </>
-    // )
     // }
+
     return (
         <>
         <div className="spotshow-container">
@@ -134,7 +56,10 @@ const SpotShow = () => {
                 <div id='price-review'>
                     <p id='price'>${spot.price} night</p>
                     <p className='rating' id='review'><i className="fa-solid fa-star"></i>{spot.aveStarRating} - New</p>
-                    <button id='reserve-button'>reserve</button>
+                    <button 
+                    id='reserve-button'
+                    onClick={() => {alert("feature coming soon")}}
+                    >reserve</button>
                 </div>
             </div>
             <div> 

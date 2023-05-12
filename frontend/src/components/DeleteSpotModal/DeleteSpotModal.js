@@ -1,19 +1,21 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useState } from 'react';
 import { deletSpotThunk } from "../../store/spots";
-import { useParams } from "react-router-dom/cjs/react-router-dom.min";
-import { useModal } from '../../context/Modal';
+import { useModal } from '../../context/Modal'; //for using closeModal function
 
 
-const DeleteSpotModal = () => {
+const DeleteSpotModal = ({spot}) => {
     const [errors, setErrors] = useState();
-    const {spotId} = useParams();
-    const spot = useSelector((state) => state.spots[spotId])
+    // const {spotId} = useParams();
+    // console.log("spotId in delete spot modal: ", spotId);
+    // const spot = useSelector((state) => state.spots[spotId]);
+    // console.log("spot in delete spot modal: ", spot);
     const dispatch = useDispatch();
     const { closeModal } = useModal();
 
     const handleSubmit = (e) => {
         e.preventDefault();
+        setErrors({})
         return dispatch(deletSpotThunk(spot.id))
         .then(closeModal)
         .catch(async (res) => {
@@ -25,7 +27,16 @@ const DeleteSpotModal = () => {
     }
 
     return (
-        <> <h1>Delete su</h1>
+        <> 
+        <h1>Confirm Delete</h1>
+        <p>Are you sure you want to remove this spot form the listings?</p>
+        <button
+        onClick={handleSubmit}
+        
+        >Yes</button>
+        <button
+        onClick={closeModal}
+        >No</button>
         </>
     )
     
