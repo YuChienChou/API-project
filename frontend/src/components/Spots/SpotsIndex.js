@@ -25,8 +25,13 @@ const SpotsIndex = () => {
                 {spots.map((spot) => (
                     // {console.log("spot in spots.map funtion: ", spot)}
                     <li key={spot.id} id="spot-li">
-                        <Link key={spot.id} to={`/spots/${spot.id}`}>
-                            <img className="spot-image" src={spot.previewImage} alt=""/>
+                        <Link key={spot.id} to={`/spots/${spot.id}`}>                               
+                            <img 
+                                className="spot-image" 
+                                src={spot.previewImage} 
+                                alt=""
+                                title={spot.name}
+                                />
                         </Link>
                         
                         <div className="spot-details">

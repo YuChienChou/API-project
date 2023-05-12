@@ -1,9 +1,9 @@
+/*spotIndex*/
+
 .spots-container {
     /* background-color: pink; */
     padding: 20px 40px;
 }
-
-
 
 .spot-image {
     width: 100%;
@@ -53,10 +53,17 @@
     grid-area: price
 }
 
+/* image tooltips*/
+
+.tooltip {
+    background-color: pink;
+}
+
 /*Spot Show*/
 
 .spotshow-container {
     padding: 20px 40px;
+    width: 1000px;
 }
 
 .spotshow-container h2,

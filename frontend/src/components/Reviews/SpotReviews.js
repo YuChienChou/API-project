@@ -29,6 +29,7 @@ const SpotReviews = () => {
                     id='single-spot-review'
                 >
                     <h4>{review.User.firstName}</h4>
+                    <p>{review.createdAt}</p>
                     <p>{review.review}</p>
                 </li>
                ))}
