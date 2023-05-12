@@ -42,7 +42,8 @@ const validateSpot = [
       .withMessage('Name must be less than 50 characters'),
     check('description')
       .exists({ checkFalsy: true })
-      .withMessage('Description is required'),
+      .isLength({ min: 30 })
+      .withMessage('Description needs 30 or more characters'),
     check('price')
       .exists({ checkFalsy: true })
     //   .isNumeric() //in live server, a new spot can be created with no issue if the price is not a number
