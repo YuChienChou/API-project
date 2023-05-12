@@ -3,6 +3,7 @@ import { useDispatch } from "react-redux";
 import { useModal } from "../../context/Modal";
 import * as sessionActions from "../../store/session";
 import "./SignupForm.css";
+import { useHistory } from "react-router-dom";
 
 function SignupFormModal() {
   const dispatch = useDispatch();
@@ -15,6 +16,7 @@ function SignupFormModal() {
   const [errors, setErrors] = useState({});
   const { closeModal } = useModal();
   const [validationErrors, setValidationErrors] = useState({});
+  const history = useHistory();
 
   useEffect(() => {
     const errorLi = {};
@@ -43,6 +45,7 @@ function SignupFormModal() {
         })
       )
         .then(closeModal)
+        .then(history.push('/'))
         .catch(async (res) => {
           const data = await res.json();
           if (data && data.errors) {

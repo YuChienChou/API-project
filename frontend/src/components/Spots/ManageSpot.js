@@ -23,16 +23,18 @@ const ManageSpot = () => {
     //     if(!user) history.push('/');
     // }, [user]);
 
-    if(spots.length < 1 ) {
-            return (
-                <>
-            <h2>Manage Spots</h2>
-            <Link to='/spots/new'>
-            <button>Create a New Spot</button>
-            </Link>
-            </>
-            )
-        } else {
+    if(spots.length < 1) return null;
+
+    // if(spots.length < 1 ) {
+    //         return (
+    //             <>
+    //         <h2>Manage Spots</h2>
+    //         <Link to='/spots/new'>
+    //         <button>Create a New Spot</button>
+    //         </Link>
+    //         </>
+    //         )
+    //     } else {
              return (
                 <>
                 <h2>Manage Spots</h2>
@@ -41,7 +43,9 @@ const ManageSpot = () => {
                 </Link>
                 {userSpots.map((spot) => (
                     <li key={spot.id}>
-                        <img src={spot.previewImage} alt="" />
+                        <Link key={spot.id} to={`/spots/${spot.id}`}> 
+                        <img src={spot.previewImage} alt="" title={spot.name} />
+                        </Link>
                         <p>{spot.city}, {spot.state}</p>
                         <div className="spot-details">
                             <p id="city-state">{spot.city}, {spot.state}</p>
@@ -69,7 +73,7 @@ const ManageSpot = () => {
                 ))}
                 </>
             );
-        }
+        // }
 
 };
 

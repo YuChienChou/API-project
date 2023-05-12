@@ -5,14 +5,14 @@ import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 import './SpotForm.css';
 // import { createSpotImagesThunk } from '../../store/spotImages';
 
-const SpotFormCreate = ({spot, formType}) => { 
+const SpotFormCreate = ({spot}) => { 
     //when set up controlled inputs, definitely need to assign the initail value
     const [address, setAddress] = useState("");
     const [city, setCity] = useState("");
     const [state, setState] = useState("");
     const [country, setCountry] = useState("");
-    const [lat, setLat] = useState("");
-    const [lng, setLng] = useState("");
+    const [lat, setLat] = useState(10);
+    const [lng, setLng] = useState(10);
     const [name, setName] = useState("");
     const [description, setDescription] = useState("");
     const [price, setPrice] = useState("");
@@ -23,8 +23,9 @@ const SpotFormCreate = ({spot, formType}) => {
     const [image2, setImage2] = useState("");
     const [image3, setImage3] = useState("");
     const [image4, setImage4] = useState("");
-    const [errors, setErrors] = useState({});
+    // const [errors, setErrors] = useState({});
     const [validationErrors, setValidationErrors] = useState({});
+    const [isSubmit, setIsSubmit] = useState(false);
     // const [imageFormat, setImageFormat] = useState("");
     const dispatch = useDispatch();
     const history = useHistory();
@@ -35,18 +36,27 @@ const SpotFormCreate = ({spot, formType}) => {
     //this is the data validation to check the input values
     useEffect(() => {
         const errors = {};
-        if(!country) errors.country = 'Country is required';
-        if(!address) errors.address = 'Address is required';
-        if(!city) errors.city = 'City is required';
-        if(!state) errors.state = 'State is required';
-        if(description.length < 30) errors.description = 'Description needs a minimum of 30 characters'
-        if(!name) errors.name = 'Name is required';
-        if(!price) errors.price = 'Price is required';
+        // country, address, city, state, description, name, and price will be validate from the backend.
+        // if(!country) errors.country = 'Country is required';
+        // if(!address) errors.address = 'Address is required';
+        // if(!city) errors.city = 'City is required';
+        // if(!state) errors.state = 'State is required';
+        // if(description.length < 30) errors.description = 'Description needs a minimum of 30 characters'
+        // if(!name) errors.name = 'Name is required';
+        // if(!price) errors.price = 'Price is required';
         if(!previewImage) errors.previewImage = 'PreviewImage is required';
-        
+        if(previewImage && !previewImage.endsWith('.jpg') && !previewImage.endsWith('.png') && !previewImage.endsWith('.jpeg')) errors.previewImageFormat = "Image URL needs to end in png or jpg (or jpeg)";
+        if((!image1.endsWith('.jpg') && !image1.endsWith('.png') && !image1.endsWith('.jpeg'))) errors.image1Format = "Image URL needs to end in png or jpg (or jpeg)";
+        if((!image2.endsWith('.jpg') && !image2.endsWith('.png') && !image2.endsWith('.jpeg'))) errors.image2Format = "Image URL needs to end in png or jpg (or jpeg)";
+        if((!image3.endsWith('.jpg') && !image3.endsWith('.png') && !image3.endsWith('.jpeg'))) errors.image3Format = "Image URL needs to end in png or jpg (or jpeg)";
+        if((!image4.endsWith('.jpg') && !image4.endsWith('.png') && !image4.endsWith('.jpeg'))) errors.image4Format = "Image URL needs to end in png or jpg (or jpeg)";
+        console.log("error useEffect running ", errors)
         setValidationErrors(errors)
 
-    }, [country, address, city, state, description, name, price, previewImage]);
+    }, [previewImage, image1, image2, image3, image4]);
+
+    // console.log("validationErrors: ", validationErrors);
+
 
     //create spot thunk needs spot info, img info and owner info
     //in the createSpotThunk, create a spot first
@@ -56,7 +66,11 @@ const SpotFormCreate = ({spot, formType}) => {
     //add final img array and owner data to the spot
     const onSubmit = async (e) => {
         e.preventDefault();
-    
+        setIsSubmit(true);
+        if(Object.values(validationErrors).length > 0) {
+
+            return (alert('please provide valid images'));
+        } 
         //check the keys that need to be inside a single spot 
         //this is the spot value that will be passed into thunks
         spot = { ...spot, address, city, state, country, lat, lng, name, description, price, previewImage}
@@ -81,50 +95,49 @@ const SpotFormCreate = ({spot, formType}) => {
         if(image1) {
             const image1Obj = {
                 url: image1,
-                preview: true
+                preview: false
             }
             imgArr.push(image1Obj);
         }
         if(image2) {
             const image2Obj = {
                 url: image2,
-                preview: true
+                preview: false
             }
             imgArr.push(image2Obj);
         }
         if(image3) {
             const image3Obj = {
                 url: image3,
-                preview: true
+                preview: false
             }
             imgArr.push(image3Obj);
         }
         if(image4) {
             const image4Obj = {
                 url: image4,
-                preview: true
+                preview: false
             }
             imgArr.push(image4Obj);
         }
-    
-        // if(formType === "Update Spot") {
-        //     const editedSpot = await dispatch(updateSpotThunk(spot));
-        //     spot = editedSpot;
-        // } else if (formType === "Create Spot") {
-        //     const newSpot = await dispatch(createSpotThunk(spot, imgArr, owner));
-        //     spot = newSpot;
-        // }
+        
+      
 
         const newSpot = await dispatch(createSpotThunk(spot, imgArr, owner));
         spot = newSpot;
 
-        if(spot.errors) {
-            setErrors(spot.errors);
+        
+
+        // console.log("newspot: ", newSpot)
+        if(spot.errors) { //this are the errors send from the backend route spot.js
+            // console.log("spot errors from backend: ", spot.errors)
+            setValidationErrors(spot.errors);
         } else {
             history.push(`/spots/${spot.id}`);
-        };
+        }; 
+       
     };
-
+   
     return (
         <>
      
@@ -132,24 +145,14 @@ const SpotFormCreate = ({spot, formType}) => {
         onSubmit={onSubmit}
         id='spot-form'
         >
-            <div>
-            {(() => {
-                if(formType === 'Create Spot') {
-                    return <h3>Create a New Spot</h3>
-                } else if(formType === 'Update Spot') {
-                    return <h3>Update Your Spot</h3>
-                }
-            })()}
-            </div>
-            
             <div id='spot-location'>
                 <h4>Where's your place located?</h4>
                 <p >Guests will only get your exact address once they booked a reservation.</p>
                 <label>
                     <span className='label-error'>
                         Country
-                        <p className='error'>{validationErrors.country}</p>
-                    </span>
+                     {isSubmit && <p className='error'>{validationErrors.country}</p>}
+                     </span>
                     <input 
                         type='text'
                         placeholder='Country'
@@ -159,7 +162,7 @@ const SpotFormCreate = ({spot, formType}) => {
                 <label>
                     <span className='label-error'>
                         Street address
-                        <p className='error'>{validationErrors.address}</p>
+                        {isSubmit && <p className='error'>{validationErrors.address}</p>}
                     </span>
                     
                     <input 
@@ -173,7 +176,7 @@ const SpotFormCreate = ({spot, formType}) => {
                     <label>
                         <span className='label-error'>
                            City
-                            <p className='error'>{validationErrors.city}</p> 
+                            {isSubmit && <p className='error'>{validationErrors.city}</p>}
                         </span>
                         
                         <input 
@@ -186,7 +189,7 @@ const SpotFormCreate = ({spot, formType}) => {
                     <label>
                         <span className='label-error'>
                             State
-                            <p className='error'>{validationErrors.state}</p>
+                            {isSubmit && <p className='error'>{validationErrors.state}</p>}
                         </span>
                         
                         <input 
@@ -230,7 +233,7 @@ const SpotFormCreate = ({spot, formType}) => {
                     />
                      
                 </label>
-                <p className='error'>{validationErrors.description}</p>
+                {isSubmit && <p className='error'>{validationErrors.description}</p>}
             </div>
             <div id='spot-name'>
                 <h4>Create a title for your spot</h4>
@@ -242,7 +245,7 @@ const SpotFormCreate = ({spot, formType}) => {
                         value={name}
                         onChange={(e) => setName(e.target.value)}
                     />
-                    <p className='error'>{validationErrors.name}</p>
+                    {isSubmit && <p className='error'>{validationErrors.name}</p>}
                 </label>
             </div>
             <div id='spot-price'>
@@ -258,7 +261,7 @@ const SpotFormCreate = ({spot, formType}) => {
                         onChange={(e) => setPrice(e.target.value)}
                     />
                     </div>
-                    <p className='error'>{validationErrors.price}</p>
+                    {isSubmit && <p className='error'>{validationErrors.price}</p>}
                 </label>
             </div>
             <div id='spot-photo-url'>
@@ -271,41 +274,46 @@ const SpotFormCreate = ({spot, formType}) => {
                     value={previewImage}
                     onChange={(e) => setPreviewImage(e.target.value)}
                     />
-                    <p className='error'>{validationErrors.previewImage}</p>
+                    {isSubmit && validationErrors.previewImage && <p className='error'>{validationErrors.previewImage}</p>}
+                    {isSubmit && validationErrors.previewImageFormat && <p className='error'>{validationErrors.previewImageFormat}</p>}
                     <input 
                     type='url' 
                     placeholder='Image URL' 
                     value={image1}
                     onChange={(e) => setImage1(e.target.value)}
-                    />
+                    />                    
+                    {isSubmit && validationErrors.image1Format && <p className='error'>{validationErrors.image1Format}</p>}
                     <input 
                     type='url' 
                     placeholder='Image URL' 
                     value={image2}
                     onChange={(e) => setImage2(e.target.value)}
                     />
+                    {isSubmit && validationErrors.image2Format && <p className='error'>{validationErrors.image2Format}</p>}
+
                     <input 
                     type='url' 
                     placeholder='Image URL' 
                     value={image3}
                     onChange={(e) => setImage3(e.target.value)}
                     />
+                    {isSubmit && validationErrors.image3Format && <p className='error'>{validationErrors.image3Format}</p>}
+
                     <input 
                     type='url' 
                     placeholder='Image URL' 
                     value={image4}
                     onChange={(e) => setImage4(e.target.value)}
                     />
-                    {/* <input type='url' placeholder='Image URL' />
-                    <input type='url' placeholder='Image URL' />
-                    <input type='url' placeholder='Image URL' /> */}
+                    {isSubmit && validationErrors.image4Format && <p className='error'>{validationErrors.image4Format}</p>}
+
                 </label>
             </div>
 
             <button 
             type='submit'
-            disabled={Object.values(validationErrors).length > 0}
             id='create-spot-button'
+            // disabled={Object.values()}
             >Create Spot</button>
             
         </form>
