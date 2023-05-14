@@ -6,6 +6,7 @@ const LOAD_SPOTS = "spots/LOAD_SPOTS";
 const RECEIVE_SPOT = "spots/RECEIVE_SPOT";
 const UPDATE_SPOT = 'spots/UPDATE_SPOT';
 const DELETE_SPOT = 'spots/DELETE_SPOT';
+const GET_CURRENT_USER_SPOTs = 'spots/GET_CURRENT_USER_SPOTS';
 
 
 //action creator
@@ -30,6 +31,13 @@ export const deleteSpotAction = (spotId) => {
     return {
         type: DELETE_SPOT,
         spotId
+    };
+};
+
+export const getCurrentUserSpotsAction = (user) => {
+    return {
+        type: GET_CURRENT_USER_SPOTs,
+        type: user
     };
 };
 
@@ -141,6 +149,20 @@ export const deletSpotThunk = (spotId) => async (dispatch) => {
     };
 };
 
+export const getCurrentUserSpotsThunk = (user) => async (dispatch) => {
+    const res = await csrfFetch(`/api/spots/${user}`);
+
+    if(res.ok) {
+        const userSpots = await res.json();
+        dispatch(getCurrentUserSpotsAction(userSpots));
+        return userSpots;
+    } else {
+        const errors = await res.json();
+        return errors;
+    };
+
+};
+
 //reducer: case in the reducer for all user reviews
 //normalize review data
 
@@ -169,6 +191,14 @@ const spotsReducer = (state = initialState, action) => {
         case DELETE_SPOT: {
             const spotsState = {...state};
             delete spotsState[action.spotId];
+            return spotsState;
+        };
+        case GET_CURRENT_USER_SPOTs: {
+            const spotsState = {...state};
+            console.log("spotsState in spot reducer: ", spotsState);
+            action.user.Spots.forEach((spot) => {
+                spotsState[spot.id] = spot;
+            })
             return spotsState;
         }
         default:
