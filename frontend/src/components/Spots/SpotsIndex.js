@@ -22,9 +22,9 @@ const SpotsIndex = () => {
         <>
         <div className='spots-container'>
             <ul className='spots-ul'>
-                {spots.map((spot) => (
+                {spots.reverse().map((spot) => (
                     // {console.log("spot in spots.map funtion: ", spot)}
-                    <li key={spot.id} id="spot-li">
+                    <li key={spot.id} className="spot-li">
                         <Link key={spot.id} to={`/spots/${spot.id}`}>                               
                             <img 
                                 className="spot-image" 
@@ -34,16 +34,18 @@ const SpotsIndex = () => {
                                 />
                         </Link>
                         
-                        <div className="spot-details">
-                            <p id="city-state">{spot.city}, {spot.state}</p>
-                            {(() => { //use IIFE to have if statement used in JSX!!
-                                if(spot.avgRating === null) {
-                                    return <p className="rating"><i className="fa-solid fa-star"></i> new</p> 
-                                } else {
-                                    return <p className="rating"><i className="fa-solid fa-star"></i> {spot.avgRating}</p> 
-                                }
-                            })()}
-                           
+                        <div id='spot-index-spot-container'>
+                            <h6>{spot.name}</h6>
+                            <div className="spot-details"> 
+                                <p id="spot-index-city-state">{spot.city}, {spot.state}</p>
+                                {(() => { //use IIFE to have if statement used in JSX!!
+                                    if(spot.avgRating === null) {
+                                        return <p className="rating"><i className="fa-solid fa-star"></i> new</p> 
+                                    } else {
+                                        return <p className="rating"><i className="fa-solid fa-star"></i> {spot.avgRating}</p> 
+                                    }
+                                })()}
+                           </div>
                             <p id='price'>${spot.price} night</p>
                         </div>
                     </li>

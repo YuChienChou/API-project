@@ -1,0 +1,88 @@
+#manage-spot-container {
+    padding: 20px 40px;
+}
+
+#manage-spot-container h2 {
+    margin-bottom: 10PX;
+}
+
+#manage-spot-spot-container {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 15px
+}
+
+.manage-spot-spot-li {
+    list-style-type: none;
+    width: 100%;
+
+}
+
+.manage-spot-spot-li img{
+    width: 100%;
+    height: 180px;
+}
+
+.manage-spot-spot-details {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    margin: 10px 0;
+}
+
+#manage-spot-create-spot-button {
+    width: 150px;
+    height: 30px;
+    color: white;
+    border: none;
+    box-shadow: 3px 3px 5px rgb(126, 128, 130);
+    color: rgb(126, 128, 130);
+    border: 1px solid rgb(224, 218, 218);
+    border-radius: 5px;
+    cursor: pointer;
+    margin-bottom: 10px;
+}
+
+#manage-spot-city-state {
+    font-size: 13px;
+}
+
+#manage-spot-rating {
+    font-size: 13px;
+    text-align: right;
+}
+
+#manage-spot-spot-price {
+    font-size: 13px;
+    margin-bottom: 10px;
+}
+
+#manage-spot-update-delete {
+    display: flex;
+    gap: 15px;
+}
+
+#update-spot-button {
+    width: 60px;
+    height: 30px;
+    color: white;
+    border: none;
+    box-shadow: 3px 3px 5px rgb(126, 128, 130);
+    color: rgb(126, 128, 130);
+    border: 1px solid rgb(224, 218, 218);
+    border-radius: 5px;
+    cursor: pointer;
+    margin-bottom: 10px;
+}
+
+#delete-spot-button {
+    width: 60px;
+    height: 30px;
+    color: white;
+    border: none;
+    box-shadow: 3px 3px 5px rgb(126, 128, 130);
+    color: rgb(126, 128, 130);
+    border: 1px solid rgb(224, 218, 218);
+    border-radius: 5px;
+    cursor: pointer;
+    margin-bottom: 10px;
+}
