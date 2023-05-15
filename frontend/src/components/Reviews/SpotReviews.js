@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useParams } from 'react-router-dom'
 import { useDispatch, useSelector } from "react-redux"
 import { loadReviewsThunk } from "../../store/reviews";
-import './Reviews.css';
+import './SpotReviews.css';
 
 
 const SpotReviews = () => {
@@ -10,6 +10,7 @@ const SpotReviews = () => {
     const reviewsStore = useSelector((state) => state.reviews);
     // console.log("reviewsStore in spotreviews: ", reviewsStore);
     const reviews = Object.values(reviewsStore);
+    const user = useSelector((state) => state.session.user)
     // console.log("reviews in reviewindex: ", reviews);
     const dispatch = useDispatch();
 
@@ -19,7 +20,27 @@ const SpotReviews = () => {
 
     if(!reviews) return null;
 
-    return (
+    if(!user) {
+        return (
+            <>
+            <div>
+                
+                <ul>
+                   {reviews.map((review) => (
+                    <li key={review.id}
+                        id='single-spot-review'
+                    >
+                        <h4>{review.User.firstName}</h4>
+                        <p>{review.createdAt}</p>
+                        <p>{review.review}</p>
+                    </li>
+                   ))}
+                </ul>
+            </div>
+            </>
+        )
+    } else {
+        return (
         <>
         <div>
             
@@ -30,13 +51,21 @@ const SpotReviews = () => {
                 >
                     <h4>{review.User.firstName}</h4>
                     <p>{review.createdAt}</p>
-                    <p>{review.review}</p>
+                    <p id='single-spot-review'>{review.review}</p>
+                    {(() => {
+                        if(review.ownerId === user.id) {
+                            return <button>Delete Review</button>
+                        }
+                    })()}
                 </li>
                ))}
             </ul>
         </div>
         </>
     )
+    }
+
+    
 };
 
 export default SpotReviews;

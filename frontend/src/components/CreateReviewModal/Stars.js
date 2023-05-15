@@ -7,10 +7,8 @@ const StarRating = () => {
 
     return (
         <>
-        <h1>How was your stay?</h1>
-        <textarea placeholder="Leave your review here..."></textarea>
         <div className='star-rating'>
-            {[...Array(5)].map((star) => {
+            {[...Array(5)].map((star, index) => {
                 index += 1;
                 return (
                     <button

@@ -76,7 +76,9 @@
 
 .profile-li {
     font-size: 14px;
-    padding: 2px;
+    padding: 5px;
+    border-bottom: 1px solid;
+    margin: 5px 0;
 }
 
 #logout-button {
@@ -97,7 +99,17 @@
 }
 
 
+#manage-spot-link {
+    padding: 5px;
+    margin: 5px 0;
+    width: 120px;
+    border-bottom: 1px solid;
+}
 
+#manage-spot-link a {
+    font-size: 14px;
+
+}
 
 
 
