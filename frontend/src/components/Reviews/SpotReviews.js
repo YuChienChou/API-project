@@ -10,6 +10,7 @@ const SpotReviews = () => {
     const reviewsStore = useSelector((state) => state.reviews);
     // console.log("reviewsStore in spotreviews: ", reviewsStore);
     const reviews = Object.values(reviewsStore);
+    const user = useSelector((state) => state.session.user)
     // console.log("reviews in reviewindex: ", reviews);
     const dispatch = useDispatch();
 
@@ -31,6 +32,11 @@ const SpotReviews = () => {
                     <h4>{review.User.firstName}</h4>
                     <p>{review.createdAt}</p>
                     <p>{review.review}</p>
+                    {(() => {
+                        if(review.ownerId === user.id) {
+                            return <button>Delete Review</button>
+                        }
+                    })()}
                 </li>
                ))}
             </ul>

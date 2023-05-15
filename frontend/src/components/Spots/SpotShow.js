@@ -3,13 +3,19 @@ import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { fetchDetailedSpotThunk } from '../../store/spots';
 import SpotReviews from '../Reviews/SpotReviews';
+import CreateReviewModal from "../CreateReviewModal/CreateReviewModal";
+import OpenModalMenuItem from "../Navigation/OpenModalMenuItem";
 import './Spots.css';
 
 const SpotShow = () => {
     const { spotId } = useParams();
+    const user = useSelector((state) => state.session.user);
+    console.log("user in spotshow: ", user);
+    console.log("user id in spotshow: ", user.id);
  
     const spot = useSelector((state) => state.spots[spotId]);
-    // console.log("Spot in SpotShow: ", spot);
+    console.log("Spot in SpotShow: ", spot);
+    console.log("spot owner id in spotshow: ", spot.ownerId);
     
     const dispatch = useDispatch();
 
@@ -68,6 +74,17 @@ const SpotShow = () => {
                         return <h3 className='spot-review'><i className="fa-solid fa-star"></i>New</h3>
                     } else {
                         return <h3 className='spot-review'><i className="fa-solid fa-star"></i>{spot.aveStarRating} - {spot.numReviews} reviews</h3>
+                    }
+                })()}
+
+                {(() => {
+                    if(user && user.id !== spot.ownerId) {
+                        return <button>
+                        <OpenModalMenuItem
+                            modalComponent={<CreateReviewModal />}
+                            itemText='Post Your Review' 
+                            />
+                        </button>
                     }
                 })()}
                 

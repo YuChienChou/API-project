@@ -4,6 +4,7 @@ import { deletSpotThunk } from "../../store/spots";
 import { useModal } from '../../context/Modal'; //for using closeModal function
 
 
+
 const DeleteSpotModal = ({spot}) => {
     const [errors, setErrors] = useState();
     // const {spotId} = useParams();
