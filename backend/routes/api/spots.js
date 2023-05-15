@@ -167,7 +167,7 @@ router.get('/', async (req, res, next) => {
             }
         });
         
-        const avgRating = totalRating / totalSpots;
+        const avgRating = Math.round((totalRating / totalSpots), -2);
         
 
         const spotData = {
