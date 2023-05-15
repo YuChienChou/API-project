@@ -2,6 +2,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useState } from 'react';
 import { deletSpotThunk } from "../../store/spots";
 import { useModal } from '../../context/Modal'; //for using closeModal function
+import './DeleteSpotModal.css'
 
 
 
@@ -31,13 +32,14 @@ const DeleteSpotModal = ({spot}) => {
         <> 
         <h1>Confirm Delete</h1>
         <p>Are you sure you want to remove this spot form the listings?</p>
-        <button
-        onClick={handleSubmit}
-        
-        >Yes</button>
-        <button
-        onClick={closeModal}
-        >No</button>
+        <div className='confirm-delete-spot-button'>
+            <button
+            onClick={handleSubmit}
+            >Yes</button>
+            <button
+            onClick={closeModal}
+            >No</button>
+        </div>
         </>
     )
     
