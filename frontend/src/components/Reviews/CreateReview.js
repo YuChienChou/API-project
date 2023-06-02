@@ -1,16 +1,16 @@
-// import CreateReviewModal from "../CreateReviewModal/CreateReviewModal";
+import CreateReviewModal from "../CreateReviewModal/CreateReviewModal";
 
-// const CreateReview = () => {
-//     const review = {
-//         review: "",
-//         stars: "", 
-//     };
+const CreateReview = () => {
+    const review = {
+        review: "",
+        stars: "", 
+    };
 
-//     return (
-//         <CreateReviewModal 
-//         review={review}
-//         />
-//     )
-// };
+    return (
+        <CreateReviewModal 
+        review={review}
+        />
+    )
+};
 
-// export default CreateReview;
+export default CreateReview;

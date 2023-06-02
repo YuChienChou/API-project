@@ -6,9 +6,8 @@ import './Spots.css';
 
 const SpotsIndex = () => {
     const spotsStore =useSelector((state) => state.spots);
-    // console.log("spotsStore in spotsIndex: ", spotsStore)
+    // console.log("spotsStore in spotsIndex: ", spotsStore);
     const spots = Object.values(spotsStore);
-
     // console.log('SPOTS IN SPOTSINDEX: ', spots);
     const dispatch = useDispatch();
 
@@ -40,6 +39,7 @@ const SpotsIndex = () => {
                                 <p id="spot-index-city-state">{spot.city}, {spot.state}</p>
                                 {(() => { //use IIFE to have if statement used in JSX!!
                                     if(spot.avgRating === null) {
+                                        
                                         return <p className="rating"><i className="fa-solid fa-star"></i> new</p> 
                                     } else {
                                         return <p className="rating"><i className="fa-solid fa-star"></i> {spot.avgRating}</p> 
