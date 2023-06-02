@@ -167,7 +167,10 @@ router.get('/', async (req, res, next) => {
             }
         });
         
-        const avgRating = (totalRating / totalSpots).toFixed(1);
+        // const avgRating = (totalRating / totalSpots).toFixed(1);
+        const avgRatingVal = totalRating / totalSpots;
+        const avgRating = parseFloat(avgRatingVal); // 
+  
         
 
         const spotData = {
@@ -292,7 +295,8 @@ router.get('/:id', async (req, res, next) => {
         }
     });
     
-    avgRating = totalRating / totalSpots;
+    // avgRating = (totalRating / totalSpots).toFixed(1);
+    const avgRating = (totalRating / totalSpots);
 
     const spotImages = await SpotImage.findAll({
         where: {spotId: spotId},
