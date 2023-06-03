@@ -41,7 +41,7 @@ const SpotReviews = ({ spot }) => {
             
             <div>
                 {(() => {
-                    if(user && user.id !== spot.ownerId) {
+                    if(user && user.id !== spot.ownerId  && (!reviews.find((review) => review.userId === user.id))) {
                         return <button id='post-review-button'>
                         <OpenModalMenuItem
                             modalComponent={<CreateReviewModal spot={spot} user={user}/>}
@@ -76,7 +76,9 @@ const SpotReviews = ({ spot }) => {
                         return <p>Please log in to leave a review</p>
                     } else if (spot.numReviews === 0 && user && user.id !== spot.ownerId) {
                         return <p>Be the first to post a review!</p>
-                    } 
+                    } else {
+                        return null;
+                    }
                 })()}
             </div>
 

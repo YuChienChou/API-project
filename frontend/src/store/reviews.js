@@ -50,6 +50,7 @@ export const createReviewThunk = (spotId, review) => async (dispatch) => {
         return newReview;
     } else {
         const errors = await res.json();
+        console.log("errors in review reducer: ", errors);
         return errors;
     };
 };
