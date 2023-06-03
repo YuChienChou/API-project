@@ -8,14 +8,17 @@ import './CreateReview.css';
 
 
 
-const CreateReviewModal = () => {
+const CreateReviewModal = ({ spot, user }) => {
+    console.log("spot in creatReview: ", spot);
+
     const dispatch = useDispatch();
     const [review, setReview] = useState("");
-    const [stars, setStars] = useState("");
+    const [stars, setStars] = useState();
     const [errors, setErrors] = useState({});
     const { closeModal } = useModal();
 
-    const owner = useSelector(state => state.session.user); 
+    // const user = useSelector(state => state.session.user); 
+    console.log("user in createReviewModel: ", user);
 
     useEffect(() => {
         const errors = {};
@@ -25,18 +28,32 @@ const CreateReviewModal = () => {
         setErrors(errors);
     }, [review, stars]);
 
-    const onSubmit = (e) => {
+    const onSubmit = async (e) => {
+
         e.preventDefault();
+
+        const payload = {
+            review,
+            stars,
+        }
+
         setErrors({});
-        return dispatch(reviewActions.receiveReviewThunk(review, stars))
+        return await dispatch(reviewActions.receiveReviewThunk(spot.id, user.id, payload))
         .then(closeModal)
         .catch(async (res) => {
             const data = await res.json();
             if(data && data.errors) {
                 setErrors(data.errors)
             }
-        });
+        }); 
     };
+
+    const onChange = (stars) => {
+        setStars(stars);
+    };
+    
+    if(!user) return <></>;
+
 
     return (
         <>
@@ -48,7 +65,11 @@ const CreateReviewModal = () => {
             onChange={(e) => setReview(e.target.value)}
         />
         <span>
-            <StarRating />
+            <StarRating 
+            stars={stars}
+            disabled={false}
+            onChange={onChange}
+            />
         </span>
         <button
         onClick={onSubmit} 

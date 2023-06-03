@@ -35,12 +35,11 @@ export const loadReviewsThunk = (spotId) => async (dispatch) => {
     };
 };
 
-export const receiveReviewThunk = (spotId, review) => async (dispatch) => {
+export const receiveReviewThunk = (spotId, userId, review) => async (dispatch) => {
     const res = await csrfFetch(`/api/spots/${spotId}/reviews`, {
         method: "POST", 
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(review)
-        
     });
 
     if(res.ok) {
@@ -52,7 +51,6 @@ export const receiveReviewThunk = (spotId, review) => async (dispatch) => {
         return errors;
     };
 };
-
 
 //reducer
 
