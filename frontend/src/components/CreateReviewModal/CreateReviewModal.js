@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
 import { useModal } from "../../context/Modal";
 import CreateReview from "../Reviews/CreateReview";
-import * as reviewActions from '../../store/reviews';
+import { createReviewThunk } from '../../store/reviews';
+import { loadReviewsThunk } from '../../store/reviews';
 import StarRating from './Stars';
 import './CreateReview.css';
 
@@ -13,12 +15,14 @@ const CreateReviewModal = ({ spot, user }) => {
 
     const dispatch = useDispatch();
     const [review, setReview] = useState("");
-    const [stars, setStars] = useState();
+    const [stars, setStars] = useState(0);
     const [errors, setErrors] = useState({});
     const { closeModal } = useModal();
+    const history = useHistory();
 
     // const user = useSelector(state => state.session.user); 
     console.log("user in createReviewModel: ", user);
+    console.log("stars in createReviewModal: ", stars);
 
     useEffect(() => {
         const errors = {};
@@ -33,19 +37,22 @@ const CreateReviewModal = ({ spot, user }) => {
         e.preventDefault();
 
         const payload = {
+            userId: user.id,
             review,
             stars,
         }
 
-        setErrors({});
-        return await dispatch(reviewActions.receiveReviewThunk(spot.id, user.id, payload))
-        .then(closeModal)
-        .catch(async (res) => {
-            const data = await res.json();
-            if(data && data.errors) {
-                setErrors(data.errors)
-            }
-        }); 
+        const newReview = await dispatch(createReviewThunk(spot.id, payload));
+
+        if(!newReview) {
+            setErrors(newReview.errors)
+        } else { 
+            dispatch(loadReviewsThunk(spot.id));
+            history.push(`/spots/${spot.id}`);
+        }
+
+        closeModal();
+        
     };
 
     const onChange = (stars) => {
@@ -73,6 +80,7 @@ const CreateReviewModal = ({ spot, user }) => {
         </span>
         <button
         onClick={onSubmit} 
+        disabled={Object.values(errors).length > 0}
         > 
             Submit Your Review
         </button>

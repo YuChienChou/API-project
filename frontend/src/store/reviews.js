@@ -26,16 +26,18 @@ export const receiveReviewAction = (review) => {
 export const loadReviewsThunk = (spotId) => async (dispatch) => {
     const res = await csrfFetch(`/api/spots/${spotId}/reviews`);
    
-
     if(res.ok) {
         const reviews = await res.json(); 
         // console.log("revies in thunk: ", res);
         dispatch(loadReviewsAction(reviews));
         return reviews;
+    } else {
+        const errors = await res.json();
+        return errors;
     };
 };
 
-export const receiveReviewThunk = (spotId, userId, review) => async (dispatch) => {
+export const createReviewThunk = (spotId, review) => async (dispatch) => {
     const res = await csrfFetch(`/api/spots/${spotId}/reviews`, {
         method: "POST", 
         headers: { 'Content-Type': 'application/json' },
@@ -45,7 +47,7 @@ export const receiveReviewThunk = (spotId, userId, review) => async (dispatch) =
     if(res.ok) {
         const newReview = await res.json();
         dispatch(receiveReviewAction(newReview));
-        return newReview
+        return newReview;
     } else {
         const errors = await res.json();
         return errors;

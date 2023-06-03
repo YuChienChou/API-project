@@ -166,6 +166,7 @@ export const getCurrentUserSpotsThunk = (user) => async (dispatch) => {
 //reducer: case in the reducer for all user reviews
 //normalize review data
 
+
 const initialState = {};
 
 const spotsReducer = (state = initialState, action) => {
@@ -195,7 +196,7 @@ const spotsReducer = (state = initialState, action) => {
         };
         case GET_CURRENT_USER_SPOTs: {
             const spotsState = {...state};
-            console.log("spotsState in spot reducer: ", spotsState);
+            // console.log("spotsState in spot reducer: ", spotsState);
             action.user.Spots.forEach((spot) => {
                 spotsState[spot.id] = spot;
             })

@@ -9,8 +9,9 @@ import './SpotReviews.css';
 
 const SpotReviews = ({ spot }) => {
     const { spotId } = useParams();
+    console.log("spot in SpotReviews: ", spot)
     const reviewsStore = useSelector((state) => state.reviews);
-    // console.log("reviewsStore in spotreviews: ", reviewsStore);
+    console.log("reviewsStore in spotreviews: ", reviewsStore);
     const reviews = Object.values(reviewsStore);
     console.log("reviews in SpotReviews: ", reviews);
     const user = useSelector((state) => state.session.user);
@@ -18,10 +19,10 @@ const SpotReviews = ({ spot }) => {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        dispatch(loadReviewsThunk(spotId));
-    }, [dispatch, spotId]);
+        dispatch(loadReviewsThunk(spot.id));
+    }, [dispatch, spot.id]);
 
-    if(!reviews.length) return <></>;
+    // if(!reviews || !reviews[reviews.length-1].User) return null;
 
     // if(!user) {
         return (
@@ -37,15 +38,7 @@ const SpotReviews = ({ spot }) => {
                     }
                 })()}
             </div>
-            <div>
-                {(() => {
-                    if(!user) {
-                        return <p>Please log in to leave a review</p>
-                    } else if (spot.numReviews === 0 && user && user.id !== spot.ownerId) {
-                        return <p>Be the first to post a review!</p>
-                    } 
-                })()}
-            </div>
+            
             <div>
                 {(() => {
                     if(user && user.id !== spot.ownerId) {
@@ -61,15 +54,15 @@ const SpotReviews = ({ spot }) => {
             <div>
                 
                 <ul>
-                   {reviews.map((review) => (
+                   {reviews && reviews.map((review) => (
                     <li key={review.id}
                         id='single-spot-review'
                     >
-                        <h4>{review.User.firstName}</h4>
+                        <h4>{review.User ? review.User.firstName : null}</h4>
                         <p>{review.createdAt.split("-")[1]} {review.createdAt.split("-")[0]}</p>
                         <p>{review.review}</p>
                         {(() => {
-                        if(review.userId === user.id) {
+                        if(user && review.userId === user.id) {
                             return <button>Delete Review</button>
                         }
                         })()}
@@ -77,6 +70,17 @@ const SpotReviews = ({ spot }) => {
                 ))}
                 </ul>
             </div>
+            <div>
+                {(() => {
+                    if(!user) {
+                        return <p>Please log in to leave a review</p>
+                    } else if (spot.numReviews === 0 && user && user.id !== spot.ownerId) {
+                        return <p>Be the first to post a review!</p>
+                    } 
+                })()}
+            </div>
+
+
             </>
         )
     
