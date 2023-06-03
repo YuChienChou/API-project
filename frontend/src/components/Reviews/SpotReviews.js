@@ -38,15 +38,7 @@ const SpotReviews = ({ spot }) => {
                     }
                 })()}
             </div>
-            <div>
-                {(() => {
-                    if(!user) {
-                        return <p>Please log in to leave a review</p>
-                    } else if (spot.numReviews === 0 && user && user.id !== spot.ownerId) {
-                        return <p>Be the first to post a review!</p>
-                    } 
-                })()}
-            </div>
+            
             <div>
                 {(() => {
                     if(user && user.id !== spot.ownerId) {
@@ -78,6 +70,17 @@ const SpotReviews = ({ spot }) => {
                 ))}
                 </ul>
             </div>
+            <div>
+                {(() => {
+                    if(!user) {
+                        return <p>Please log in to leave a review</p>
+                    } else if (spot.numReviews === 0 && user && user.id !== spot.ownerId) {
+                        return <p>Be the first to post a review!</p>
+                    } 
+                })()}
+            </div>
+
+
             </>
         )
     

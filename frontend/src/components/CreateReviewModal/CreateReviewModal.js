@@ -15,13 +15,14 @@ const CreateReviewModal = ({ spot, user }) => {
 
     const dispatch = useDispatch();
     const [review, setReview] = useState("");
-    const [stars, setStars] = useState();
+    const [stars, setStars] = useState(0);
     const [errors, setErrors] = useState({});
     const { closeModal } = useModal();
     const history = useHistory();
 
     // const user = useSelector(state => state.session.user); 
     console.log("user in createReviewModel: ", user);
+    console.log("stars in createReviewModal: ", stars);
 
     useEffect(() => {
         const errors = {};
@@ -79,6 +80,7 @@ const CreateReviewModal = ({ spot, user }) => {
         </span>
         <button
         onClick={onSubmit} 
+        disabled={Object.values(errors).length > 0}
         > 
             Submit Your Review
         </button>
