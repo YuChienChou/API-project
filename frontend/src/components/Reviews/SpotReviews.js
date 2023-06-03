@@ -69,7 +69,7 @@ const SpotReviews = ({ spot }) => {
                         <p>{review.createdAt.split("-")[1]} {review.createdAt.split("-")[0]}</p>
                         <p>{review.review}</p>
                         {(() => {
-                        if(review.userId === user.id) {
+                        if(user && review.userId === user.id) {
                             return <button>Delete Review</button>
                         }
                         })()}
