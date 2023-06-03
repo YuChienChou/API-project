@@ -9,8 +9,9 @@ import './SpotReviews.css';
 
 const SpotReviews = ({ spot }) => {
     const { spotId } = useParams();
+    console.log("spot in SpotReviews: ", spot)
     const reviewsStore = useSelector((state) => state.reviews);
-    // console.log("reviewsStore in spotreviews: ", reviewsStore);
+    console.log("reviewsStore in spotreviews: ", reviewsStore);
     const reviews = Object.values(reviewsStore);
     console.log("reviews in SpotReviews: ", reviews);
     const user = useSelector((state) => state.session.user);
@@ -21,7 +22,7 @@ const SpotReviews = ({ spot }) => {
         dispatch(loadReviewsThunk(spotId));
     }, [dispatch, spotId]);
 
-    if(!reviews.length) return <></>;
+    if(!reviews[reviews.length - 1].User) return null;
 
     // if(!user) {
         return (

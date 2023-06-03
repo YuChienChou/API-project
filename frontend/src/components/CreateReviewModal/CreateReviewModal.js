@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
 import { useModal } from "../../context/Modal";
 import CreateReview from "../Reviews/CreateReview";
-import * as reviewActions from '../../store/reviews';
+import { createReviewThunk } from '../../store/reviews';
+import { loadReviewsThunk } from '../../store/reviews';
 import StarRating from './Stars';
 import './CreateReview.css';
 
@@ -16,6 +18,7 @@ const CreateReviewModal = ({ spot, user }) => {
     const [stars, setStars] = useState();
     const [errors, setErrors] = useState({});
     const { closeModal } = useModal();
+    const history = useHistory();
 
     // const user = useSelector(state => state.session.user); 
     console.log("user in createReviewModel: ", user);
@@ -33,19 +36,23 @@ const CreateReviewModal = ({ spot, user }) => {
         e.preventDefault();
 
         const payload = {
+            userId: user.id,
             review,
             stars,
         }
 
-        setErrors({});
-        return await dispatch(reviewActions.receiveReviewThunk(spot.id, user.id, payload))
-        .then(closeModal)
-        .catch(async (res) => {
-            const data = await res.json();
-            if(data && data.errors) {
-                setErrors(data.errors)
-            }
-        }); 
+        const newReview = await dispatch(createReviewThunk(spot.id, payload));
+
+        if(!newReview) {
+            setErrors(newReview.errors)
+        } else {
+            history.push(`/spots/${spot.id}`);
+        }
+
+        dispatch(loadReviewsThunk(spot.id));
+
+        closeModal();
+        
     };
 
     const onChange = (stars) => {
