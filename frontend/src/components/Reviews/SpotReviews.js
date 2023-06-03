@@ -66,7 +66,7 @@ const SpotReviews = ({ spot }) => {
                     <li key={review.id}
                         id='single-spot-review'
                     >
-                        <h4>{review.User.firstName}</h4>
+                        <h4>{review.User ? review.User.firstName : null}</h4>
                         <p>{review.createdAt.split("-")[1]} {review.createdAt.split("-")[0]}</p>
                         <p>{review.review}</p>
                         {(() => {
