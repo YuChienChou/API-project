@@ -5,6 +5,7 @@ import { useModal } from "../../context/Modal";
 import CreateReview from "../Reviews/CreateReview";
 import { createReviewThunk } from '../../store/reviews';
 import { loadReviewsThunk } from '../../store/reviews';
+import { fetchDetailedSpotThunk } from '../../store/spots'
 import StarRating from './Stars';
 import './CreateReview.css';
 
@@ -18,6 +19,7 @@ const CreateReviewModal = ({ spot, user }) => {
     const [stars, setStars] = useState(0);
     const [errors, setErrors] = useState({});
     const { closeModal } = useModal();
+    const [hasSubmitted, setHasSebmitted] = useState(false)
     const history = useHistory();
 
     // const user = useSelector(state => state.session.user); 
@@ -27,7 +29,7 @@ const CreateReviewModal = ({ spot, user }) => {
     useEffect(() => {
         const errors = {};
         if(review.length < 10) errors.review  = 'Review needs a minimum of 10 characters';
-        if(stars < 1) errors.review = 'Stars range from 1 to 5';
+        if(stars < 1) errors.stars = 'Stars range from 1 to 5';
 
         setErrors(errors);
     }, [review, stars]);
@@ -36,24 +38,31 @@ const CreateReviewModal = ({ spot, user }) => {
 
         e.preventDefault();
 
+        setHasSebmitted(true)
+
         const payload = {
             userId: user.id,
             review,
             stars,
         }
+        console.log("payload in createReviewModal onsubmit function: ", payload);
 
         const newReview = await dispatch(createReviewThunk(spot.id, payload));
-
-        if(!newReview) {
+        console.log("newReview in create review Modal: ", newReview)
+        if(newReview.errors) {
+            
             setErrors(newReview.errors)
         } else { 
             dispatch(loadReviewsThunk(spot.id));
+            dispatch(fetchDetailedSpotThunk(spot.id));
             history.push(`/spots/${spot.id}`);
         }
 
         closeModal();
         
     };
+
+    console.log("errors in create review modal: ", errors.errors);
 
     const onChange = (stars) => {
         setStars(stars);
@@ -64,29 +73,35 @@ const CreateReviewModal = ({ spot, user }) => {
 
     return (
         <>
-        <h3>How was your stay?</h3>
-        <input 
-            type='text'
-            placeholder="Leave your review here..."
-            value={review}
-            onChange={(e) => setReview(e.target.value)}
-        />
-        <span>
-            <StarRating 
-            stars={stars}
-            disabled={false}
-            onChange={onChange}
+        <div id='create-review-modal'>
+            
+            <h3>How was your stay?</h3>
+            {hasSubmitted && <p>{errors.review}</p>}
+            <input 
+                type='text'
+                placeholder="Leave your review here..."
+                value={review}
+                onChange={(e) => setReview(e.target.value)}
+                id='create-review-input'
             />
-        </span>
-        <button
-        onClick={onSubmit} 
-        disabled={Object.values(errors).length > 0}
-        > 
-            Submit Your Review
-        </button>
-
-        <p></p>
-
+            <div id='star-rating'>
+            {hasSubmitted && <p>{errors.stars}</p>}
+                <StarRating 
+                stars={stars}
+                disabled={false}
+                onChange={onChange}
+                />
+                <p>Stars</p>
+            </div>
+            {/* <div>{errors.errors.message}</div> */}
+            <button
+            onClick={onSubmit} 
+            disabled={Object.values(errors).length > 0}
+            id='create-review-button'
+            > 
+                Submit Your Review
+            </button>
+        </div>
         </>
     )
 
