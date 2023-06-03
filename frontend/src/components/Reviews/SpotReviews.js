@@ -22,7 +22,7 @@ const SpotReviews = ({ spot }) => {
         dispatch(loadReviewsThunk(spotId));
     }, [dispatch, spotId]);
 
-    if(!reviews[reviews.length - 1].User) return null;
+    if(!reviews) return null;
 
     // if(!user) {
         return (
