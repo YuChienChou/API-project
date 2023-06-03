@@ -45,11 +45,10 @@ const CreateReviewModal = ({ spot, user }) => {
 
         if(!newReview) {
             setErrors(newReview.errors)
-        } else {
+        } else { 
+            dispatch(loadReviewsThunk(spot.id));
             history.push(`/spots/${spot.id}`);
         }
-
-        dispatch(loadReviewsThunk(spot.id));
 
         closeModal();
         

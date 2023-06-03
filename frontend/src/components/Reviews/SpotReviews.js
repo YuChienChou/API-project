@@ -19,10 +19,10 @@ const SpotReviews = ({ spot }) => {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        dispatch(loadReviewsThunk(spotId));
-    }, [dispatch, spotId]);
+        dispatch(loadReviewsThunk(spot.id));
+    }, [dispatch, spot.id]);
 
-    if(!reviews) return null;
+    // if(!reviews || !reviews[reviews.length-1].User) return null;
 
     // if(!user) {
         return (
@@ -62,7 +62,7 @@ const SpotReviews = ({ spot }) => {
             <div>
                 
                 <ul>
-                   {reviews.map((review) => (
+                   {reviews && reviews.map((review) => (
                     <li key={review.id}
                         id='single-spot-review'
                     >
