@@ -3,50 +3,23 @@ import { Link } from 'react-router-dom';
 import { useEffect } from "react";
 import DeleteSpotModal from '../DeleteSpotModal/DeleteSpotModal';
 import OpenModalMenuItem from '../Navigation/OpenModalMenuItem';
-import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import { getCurrentUserSpotsThunk } from "../../store/spots";
 import './ManageSpot.css';
 
 
 const ManageSpot = () => {
-    // const history = useHistory(); 
-    // const dispatch = useDispatch();
+ 
     const user = useSelector((state) => state.session.user);
     const dispatch = useDispatch();
-
-    // const spotStore = useSelector((state) => state.spots);
-    // console.log('spotStore in manageSpot: ', spotStore);
-    // const userSpots = Object.values(spotStore);
-    // console.log('user spots in manage spots: ', userSpots);
-   
-    // const spots = dispatch(getCurrentUserSpotsThunk(user));
-    
-    
-    // console.log("user in managespot: ", user);
     const spotsStore = useSelector((state) => state.spots);
-    console.log("spotsStore in managespot: ", spotsStore);
     const spots = Object.values(spotsStore);
-    console.log("spots in managespot: ", spots);
-    // const userSpots = spots.filter((spot) => spot.ownerId === user.id);
-    // console.log("userSpots in manageSpot: ", userSpots);
-
 
     useEffect(() => {
         dispatch(getCurrentUserSpotsThunk());
     }, [dispatch]);
 
-    if(spots.length < 1) return null;
+    if(spots.length < 1) return <></>;
 
-    // if(spots.length < 1 ) {
-    //         return (
-    //             <>
-    //         <h2>Manage Spots</h2>
-    //         <Link to='/spots/new'>
-    //         <button>Create a New Spot</button>
-    //         </Link>
-    //         </>
-    //         )
-    //     } else {
              return (
                 <>
                 <div id='manage-spot-container'>

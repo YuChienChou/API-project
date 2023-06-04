@@ -155,7 +155,7 @@ export const getCurrentUserSpotsThunk = () => async (dispatch) => {
 
     if(res.ok) {
         const userSpots = await res.json();
-        dispatch(getCurrentUserSpotsAction(userSpots));
+        dispatch(loadSpotsAction(userSpots));
         return userSpots;
     } else {
         const errors = await res.json();
