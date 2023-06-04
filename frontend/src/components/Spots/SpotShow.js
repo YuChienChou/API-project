@@ -47,7 +47,7 @@ const SpotShow = () => {
                     <p>{spot.description}</p>
                 </div>
                 <div id='price-review'>
-                    <p id='price'>${spot.price} night</p>
+                    <p id='price'>${spot.price} /night</p>
                     <div className='rating' id='review'><i className="fa-solid fa-star"></i>{spot.aveStarRating && spot.aveStarRating.toFixed(1)} - {(() => {
                         if(spot.numReviews === 0) return <p>new</p>
                         else if(spot.numReviews === 1) return <p>1 review</p>

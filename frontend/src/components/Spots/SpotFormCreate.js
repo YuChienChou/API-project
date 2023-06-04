@@ -32,11 +32,12 @@ const SpotFormCreate = ({spot}) => {
 
     //to get the current user so can pass in to the thunkaction creators.
     const owner = useSelector(state => state.session.user); 
+    // console.log("owner in SpotFromCreate: ", owner);
 
     //this is the data validation to check the input values
     useEffect(() => {
         const errors = {};
-        // country, address, city, state, description, name, and price will be validate from the backend.
+        // country, address, city, state, description, name, and price will be also validate from the backend.
         if(!country) errors.country = 'Country is required';
         if(!address) errors.address = 'Address is required';
         if(!city) errors.city = 'City is required';
@@ -46,10 +47,10 @@ const SpotFormCreate = ({spot}) => {
         if(!price) errors.price = 'Price is required';
         if(!previewImage) errors.previewImage = 'PreviewImage is required';
         if(previewImage && !previewImage.endsWith('.jpg') && !previewImage.endsWith('.png') && !previewImage.endsWith('.jpeg')) errors.previewImageFormat = "Image URL needs to end in png or jpg (or jpeg)";
-        if((!image1.endsWith('.jpg') && !image1.endsWith('.png') && !image1.endsWith('.jpeg'))) errors.image1Format = "Image URL needs to end in png or jpg (or jpeg)";
-        if((!image2.endsWith('.jpg') && !image2.endsWith('.png') && !image2.endsWith('.jpeg'))) errors.image2Format = "Image URL needs to end in png or jpg (or jpeg)";
-        if((!image3.endsWith('.jpg') && !image3.endsWith('.png') && !image3.endsWith('.jpeg'))) errors.image3Format = "Image URL needs to end in png or jpg (or jpeg)";
-        if((!image4.endsWith('.jpg') && !image4.endsWith('.png') && !image4.endsWith('.jpeg'))) errors.image4Format = "Image URL needs to end in png or jpg (or jpeg)";
+        if(image1 && (!image1.endsWith('.jpg') && !image1.endsWith('.png') && !image1.endsWith('.jpeg'))) errors.image1Format = "Image URL needs to end in png or jpg (or jpeg)";
+        if((image2 && !image2.endsWith('.jpg') && !image2.endsWith('.png') && !image2.endsWith('.jpeg'))) errors.image2Format = "Image URL needs to end in png or jpg (or jpeg)";
+        if((image3 && !image3.endsWith('.jpg') && !image3.endsWith('.png') && !image3.endsWith('.jpeg'))) errors.image3Format = "Image URL needs to end in png or jpg (or jpeg)";
+        if((image4 && !image4.endsWith('.jpg') && !image4.endsWith('.png') && !image4.endsWith('.jpeg'))) errors.image4Format = "Image URL needs to end in png or jpg (or jpeg)";
         console.log("error useEffect running ", errors)
         setValidationErrors(errors)
 
@@ -98,7 +99,7 @@ const SpotFormCreate = ({spot}) => {
                 preview: false
             }
             imgArr.push(image1Obj);
-        }
+        } 
         if(image2) {
             const image2Obj = {
                 url: image2,
@@ -151,7 +152,7 @@ const SpotFormCreate = ({spot}) => {
         setImage4("");
         setValidationErrors({})
         setIsSubmit(false);
-       history.push(`/spots/${spot.id}`);
+        history.push(`/spots/${spot.id}`);
     };
    
     return (

@@ -149,26 +149,29 @@ h3  {
 .host-details {
     display: grid;
     grid-template-columns: 3fr 2fr;
-    padding-bottom: 20px;
+    padding: 20px 10px;
     margin: 20px 0;
     border-bottom: 1px solid rgb(224, 218, 218);
-    height: 200px;
+    height: 160px;
 }
 
 #price-review {
+    width: 300px;
     height: 100px;
     display: grid;
-    grid-template-areas: 
-    "price review"
-    "reserve reserve";
+    grid-template-areas:
+        "price review"
+        "reserve reserve";
     padding: 20px;
     border: 1px solid rgb(224, 218, 218);
     border-radius: 5px;
-    box-shadow: 0 0 10px rgb(224, 218, 218)
+    box-shadow: 0 0 10px rgb(224, 218, 218);
+    justify-self: flex-end;
 }
 
 #price {
     grid-area: price;
+    font-size: 14px;
 }
 
 #review {
@@ -178,6 +181,7 @@ h3  {
     align-items: center;
     justify-content: right;
     gap: 5px;
+    font-size: 14px;
 }
 
 

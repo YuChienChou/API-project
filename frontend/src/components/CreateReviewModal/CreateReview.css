@@ -18,10 +18,12 @@ button {
   }
 
   #create-review-input {
-    width: 50%;
+    width: 250px;
     height: 100px;
     padding: 5px;
     margin: 10px 0;
+    border: 1px solid rgb(224, 218, 218);
+    border-radius: 5px;
   }
 
   #star-rating {
@@ -43,13 +45,12 @@ button {
   }
 
   #create-review-button {
-    width: 100%;
+    width: 150px;
     height: 30px;
-    color: white;
-    border: none;
     box-shadow: 3px 3px 5px rgb(126, 128, 130);
     color: rgb(126, 128, 130);
     border: 1px solid rgb(224, 218, 218);
     border-radius: 5px;
     cursor: pointer;
+    margin: 10px 0;
   }

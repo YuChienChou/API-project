@@ -7,44 +7,7 @@ import './Navigation.css';
 
 function Navigation({ isLoaded }){
   const sessionUser = useSelector(state => state.session.user);
-  // console.log("session user: ", sessionUser);
-
-  // if(sessionUser) {
-  //   return (
-  //     <ul className='nav-ul'>
-  //       <li>
-  //         <NavLink exact to="/">
-  //           <img src={Airbnb} alt='airbnb logo' className='logo-img' />
-  //         </NavLink>
-  //       </li>
-  //       <div id='login-user'>
-  //         <NavLink to='/spots/new' id='creat-new-spot-link'>
-  //           Create a New Spot
-  //         </NavLink>
-  //         {isLoaded && (
-  //           <li>
-  //             <ProfileButton user={sessionUser} />
-  //           </li>
-  //         )}
-  //       </div>
-  //     </ul>
-  //     );
-  //   } else {
-  //     return (
-  //       <ul className='nav-ul'>
-  //         <li>
-  //           <NavLink exact to="/">
-  //             <img src={Airbnb} alt='airbnb logo' className='logo-img' />
-  //           </NavLink>
-  //         </li>
-  //         {isLoaded && (
-  //           <li>
-  //             <ProfileButton user={sessionUser} />
-  //           </li>
-  //         )}
-  //       </ul>
-  //       );
-  //   }
+  
     return (
       <ul className='nav-ul'>
         <li>
