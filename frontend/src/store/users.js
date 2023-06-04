@@ -14,7 +14,7 @@ export const getUserAction = (user) => {
 };
 
 
-//thunk action creatro
+//thunk action creator
 
 export const getUserThunk = (userId) => async (dispatch) => {
     const res = await csrfFetch(`/api/users/${userId}`);

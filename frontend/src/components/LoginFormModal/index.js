@@ -4,6 +4,7 @@ import { useDispatch } from "react-redux";
 import { useModal } from "../../context/Modal";
 import "./LoginForm.css";
 import { useHistory } from "react-router-dom";
+import GetDemoUser from "../Users/demoUser";
 
 function LoginFormModal() {
   const dispatch = useDispatch();
@@ -77,7 +78,9 @@ function LoginFormModal() {
         className='login-button'
         disabled={Object.values(errors).length > 0}
         >Log In</button>
+        <GetDemoUser credential={"Demo-lition"} password={"password"} />
       </form>
+      
       </div>
     </>
   );

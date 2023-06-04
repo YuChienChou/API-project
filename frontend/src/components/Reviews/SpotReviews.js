@@ -10,11 +10,11 @@ import './SpotReviews.css';
 
 const SpotReviews = ({ spot }) => {
     const { spotId } = useParams();
-    console.log("spot in SpotReviews: ", spot)
+    // console.log("spot in SpotReviews: ", spot);
     const reviewsStore = useSelector((state) => state.reviews);
-    console.log("reviewsStore in spotreviews: ", reviewsStore);
+    // console.log("reviewsStore in spotreviews: ", reviewsStore);
     const reviews = Object.values(reviewsStore);
-    console.log("reviews in SpotReviews: ", reviews);
+    // console.log("reviews in SpotReviews: ", reviews);
     const user = useSelector((state) => state.session.user);
     // console.log("reviews in reviewindex: ", reviews);
     const dispatch = useDispatch();
@@ -55,7 +55,7 @@ const SpotReviews = ({ spot }) => {
             <div>
                 
                 <ul>
-                   {reviews && reviews.map((review) => (
+                   {reviews && reviews.reverse().map((review) => (
                     <li key={review.id}
                         id='single-spot-review'
                     >
