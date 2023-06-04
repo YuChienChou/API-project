@@ -61,6 +61,7 @@ export const fetchDetailedSpotThunk = (spotId) => async (dispatch) => {
         const spotDetails =await res.json();
         // console.log("spotDetails in thunk: ", spotDetails);
         dispatch(receiveSpotAction(spotDetails));
+        return spotDetails;
     } else {
         const errors = await res.json();
         return errors;
