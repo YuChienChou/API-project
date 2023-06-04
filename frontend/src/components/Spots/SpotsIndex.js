@@ -42,7 +42,7 @@ const SpotsIndex = () => {
                                         
                                         return <p className="rating"><i className="fa-solid fa-star"></i> new</p> 
                                     } else {
-                                        return <p className="rating"><i className="fa-solid fa-star"></i> {spot.avgRating}</p> 
+                                        return <p className="rating"><i className="fa-solid fa-star"></i> {spot.avgRating && spot.avgRating.toFixed(1)}</p> 
                                     }
                                 })()}
                            </div>

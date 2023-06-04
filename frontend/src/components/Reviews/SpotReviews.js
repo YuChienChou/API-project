@@ -34,7 +34,7 @@ const SpotReviews = ({ spot }) => {
                     } else if (spot.numReviews === 1) {
                         return <h3 className='spot-review'><i className="fa-solid fa-star"></i>{spot.aveStarRating} - {spot.numReviews} review</h3>
                     }else {
-                        return <h3 className='spot-review'><i className="fa-solid fa-star"></i>{spot.aveStarRating} - {spot.numReviews} reviews</h3>
+                        return <h3 className='spot-review'><i className="fa-solid fa-star"></i>{spot.aveStarRating.toFixed(1)} - {spot.numReviews} reviews</h3>
                     }
                 })()}
             </div>

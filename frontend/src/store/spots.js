@@ -37,7 +37,7 @@ export const deleteSpotAction = (spotId) => {
 export const getCurrentUserSpotsAction = (user) => {
     return {
         type: GET_CURRENT_USER_SPOTs,
-        type: user
+        user
     };
 };
 
