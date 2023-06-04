@@ -37,13 +37,13 @@ const SpotFormCreate = ({spot}) => {
     useEffect(() => {
         const errors = {};
         // country, address, city, state, description, name, and price will be validate from the backend.
-        // if(!country) errors.country = 'Country is required';
-        // if(!address) errors.address = 'Address is required';
-        // if(!city) errors.city = 'City is required';
-        // if(!state) errors.state = 'State is required';
-        // if(description.length < 30) errors.description = 'Description needs a minimum of 30 characters'
-        // if(!name) errors.name = 'Name is required';
-        // if(!price) errors.price = 'Price is required';
+        if(!country) errors.country = 'Country is required';
+        if(!address) errors.address = 'Address is required';
+        if(!city) errors.city = 'City is required';
+        if(!state) errors.state = 'State is required';
+        if(description.length < 30) errors.description = 'Description needs a minimum of 30 characters'
+        if(!name) errors.name = 'Name is required';
+        if(!price) errors.price = 'Price is required';
         if(!previewImage) errors.previewImage = 'PreviewImage is required';
         if(previewImage && !previewImage.endsWith('.jpg') && !previewImage.endsWith('.png') && !previewImage.endsWith('.jpeg')) errors.previewImageFormat = "Image URL needs to end in png or jpg (or jpeg)";
         if((!image1.endsWith('.jpg') && !image1.endsWith('.png') && !image1.endsWith('.jpeg'))) errors.image1Format = "Image URL needs to end in png or jpg (or jpeg)";
@@ -129,13 +129,29 @@ const SpotFormCreate = ({spot}) => {
         
 
         // console.log("newspot: ", newSpot)
-        if(spot.errors) { //this are the errors send from the backend route spot.js
-            // console.log("spot errors from backend: ", spot.errors)
-            setValidationErrors(spot.errors);
-        } else {
-            history.push(`/spots/${spot.id}`);
-        }; 
-       
+        // if(spot.errors) { //this are the errors send from the backend route spot.js
+        //     // console.log("spot errors from backend: ", spot.errors)
+        //     setValidationErrors(spot.errors);
+        //     return;
+        // } else {
+            
+        // }; 
+
+        setAddress("");
+        setCity("");
+        setState("");
+        setCountry("");
+        setName("");
+        setDescription("");
+        setPrice("");
+        setPreviewImage("");
+        setImage1("");
+        setImage2("");
+        setImage3("");
+        setImage4("");
+        setValidationErrors({})
+        setIsSubmit(false);
+       history.push(`/spots/${spot.id}`);
     };
    
     return (
