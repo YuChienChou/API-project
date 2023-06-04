@@ -3,6 +3,7 @@ import { csrfFetch } from "./csrf";
 //type string
 export const LOAD_REVIEWS = "review/LOAD_REVIEWS";
 export const RECEIVE_REVIEW = "review/RECEIVE_REVIEW";
+export const REMOVE_REVIEW = "review/REMOVE_REVIEW";
 
 
 
@@ -20,6 +21,13 @@ export const receiveReviewAction = (review) => {
         review
     };
 };
+
+export const actionRemoveReview = (reviewId) => {
+    return {
+        type: REMOVE_REVIEW,
+        reviewId
+    }
+}
 
 //thunk action creator
 
@@ -55,6 +63,20 @@ export const createReviewThunk = (spotId, review) => async (dispatch) => {
     };
 };
 
+export const thunkRemoveReview = (reviewId) => async (dispatch) => {
+    const res = await csrfFetch(`/api/reviews/${reviewId}`, {
+        method: "DELETE",
+    });
+
+    if(res.ok) {
+        dispatch(actionRemoveReview(reviewId));
+        return;
+    } else {
+        const errors = await res.json();
+        return errors;
+    };
+};
+
 //reducer
 
 const initialState = {};
@@ -71,6 +93,11 @@ const reviewReducer = (state = initialState, action) => {
         };
         case RECEIVE_REVIEW: {
             const reviewsState = {...state, [action.review.id]: action.review}
+            return reviewsState;
+        };
+        case REMOVE_REVIEW: {
+            const reviewsState = {...state};
+            delete reviewsState[action.reviewId];
             return reviewsState;
         }
         default: {

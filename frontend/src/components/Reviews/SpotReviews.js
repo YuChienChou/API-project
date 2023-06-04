@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux"
 import { loadReviewsThunk } from "../../store/reviews";
 import CreateReviewModal from "../CreateReviewModal/CreateReviewModal";
 import OpenModalMenuItem from "../Navigation/OpenModalMenuItem";
+import DeleteReview from "./deleteReview";
 import './SpotReviews.css';
 
 
@@ -32,9 +33,9 @@ const SpotReviews = ({ spot }) => {
                     if(spot.numReviews === 0) { 
                         return <h3 className='spot-review'><i className="fa-solid fa-star"></i>New</h3>
                     } else if (spot.numReviews === 1) {
-                        return <h3 className='spot-review'><i className="fa-solid fa-star"></i>{spot.aveStarRating} - {spot.numReviews} review</h3>
+                        return <h3 className='spot-review'><i className="fa-solid fa-star"></i>{spot.aveStarRating && spot.aveStarRating} - {spot.numReviews && spot.numReviews} review</h3>
                     }else {
-                        return <h3 className='spot-review'><i className="fa-solid fa-star"></i>{spot.aveStarRating.toFixed(1)} - {spot.numReviews} reviews</h3>
+                        return <h3 className='spot-review'><i className="fa-solid fa-star"></i>{spot.aveStarRating && spot.aveStarRating.toFixed(1)} - {spot.numReviews && spot.numReviews} reviews</h3>
                     }
                 })()}
             </div>
@@ -63,7 +64,7 @@ const SpotReviews = ({ spot }) => {
                         <p>{review.review}</p>
                         {(() => {
                         if(user && review.userId === user.id) {
-                            return <button>Delete Review</button>
+                            return <DeleteReview spot={spot} review={review} />
                         }
                         })()}
                     </li>

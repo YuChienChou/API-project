@@ -12,6 +12,7 @@ const ManageSpot = () => {
     // const history = useHistory(); 
     // const dispatch = useDispatch();
     const user = useSelector((state) => state.session.user);
+    const dispatch = useDispatch();
 
     // const spotStore = useSelector((state) => state.spots);
     // console.log('spotStore in manageSpot: ', spotStore);
@@ -21,18 +22,18 @@ const ManageSpot = () => {
     // const spots = dispatch(getCurrentUserSpotsThunk(user));
     
     
-    console.log("user in managespot: ", user);
+    // console.log("user in managespot: ", user);
     const spotsStore = useSelector((state) => state.spots);
     console.log("spotsStore in managespot: ", spotsStore);
     const spots = Object.values(spotsStore);
     console.log("spots in managespot: ", spots);
-    const userSpots = spots.filter((spot) => spot.ownerId === user.id);
-    console.log("userSpots in manageSpot: ", userSpots);
+    // const userSpots = spots.filter((spot) => spot.ownerId === user.id);
+    // console.log("userSpots in manageSpot: ", userSpots);
 
 
-    // useEffect(() => {
-    //     dispatch(getCurrentUserSpotsThunk(user));
-    // }, [dispatch, user]);
+    useEffect(() => {
+        dispatch(getCurrentUserSpotsThunk());
+    }, [dispatch]);
 
     if(spots.length < 1) return null;
 
@@ -54,7 +55,7 @@ const ManageSpot = () => {
                         <button id='manage-spot-create-spot-button'>Create a New Spot</button>
                     </Link>
                     <div id='manage-spot-spot-container'>
-                        {userSpots.map((spot) => (
+                        {spots.map((spot) => (
                             <li key={spot.id} className='manage-spot-spot-li'>
                                 <Link key={spot.id} to={`/spots/${spot.id}`}> 
                                 <img src={spot.previewImage} alt="" title={spot.name} />
@@ -66,7 +67,7 @@ const ManageSpot = () => {
                                         if(spot.avgRating === null) {
                                             return <p id="manage-spot-rating"><i className="fa-solid fa-star"></i> new</p> 
                                         } else {
-                                            return <p id="manage-spot-rating"><i className="fa-solid fa-star"></i> {spot.avgRating}</p> 
+                                            return <p id="manage-spot-rating"><i className="fa-solid fa-star"></i> {spot.avgRating && spot.avgRating.toFixed(1)}</p> 
                                         }
                                     })()}
                                 </div>
