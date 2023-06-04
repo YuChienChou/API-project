@@ -18,8 +18,9 @@ export default function DeleteReview ({ spot, review }) {
         <button 
         type='submit'
         onClick={handleReviewSubmit}
+        id='delete-review-button'
         >
-            Delete Review
+            Delete
         </button>
         </>
     )

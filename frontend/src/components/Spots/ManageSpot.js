@@ -33,29 +33,31 @@ const ManageSpot = () => {
                                 <Link key={spot.id} to={`/spots/${spot.id}`}> 
                                 <img src={spot.previewImage} alt="" title={spot.name} />
                                 </Link>
-                                <p>{spot.name}</p>
-                                <div className="manage-spot-spot-details">
-                                    <p id="manage-spot-city-state">{spot.city}, {spot.state}</p>
-                                    {(() => { //use IIFE to have if statement used in JSX!!
-                                        if(spot.avgRating === null) {
-                                            return <p id="manage-spot-rating"><i className="fa-solid fa-star"></i> new</p> 
-                                        } else {
-                                            return <p id="manage-spot-rating"><i className="fa-solid fa-star"></i> {spot.avgRating && spot.avgRating.toFixed(1)}</p> 
-                                        }
-                                    })()}
-                                </div>
-                                <p id='manage-spot-spot-price'>${spot.price} night</p>
-                                <div id='manage-spot-update-delete'>
-                                <Link to={`/spots/${spot.id}/edit`}>
-                                    <button id='update-spot-button'>Update</button>
-                                </Link>
-                                <button id='delete-spot-button'>
-                                    <OpenModalMenuItem
-                                        modalComponent={<DeleteSpotModal spot={spot}/>} 
-                                        //pass the spot as the porp which is fetched from the ManageSpot funtion.
-                                        itemText='Delete'
-                                    />
-                                </button>
+                                <div id='single-spot-list'>
+                                    <p>{spot.name}</p>
+                                    <div className="manage-spot-spot-details">
+                                        <p id="manage-spot-city-state">{spot.city}, {spot.state}</p>
+                                        {(() => { //use IIFE to have if statement used in JSX!!
+                                            if(spot.avgRating === null) {
+                                                return <p id="manage-spot-rating"><i className="fa-solid fa-star"></i> new</p> 
+                                            } else {
+                                                return <p id="manage-spot-rating"><i className="fa-solid fa-star"></i> {spot.avgRating && spot.avgRating.toFixed(1)}</p> 
+                                            }
+                                        })()}
+                                    </div>
+                                    <p id='manage-spot-spot-price'>${spot.price} /night</p>
+                                    <div id='manage-spot-update-delete'>
+                                        <Link to={`/spots/${spot.id}/edit`}>
+                                            <button id='update-spot-button'>Update</button>
+                                        </Link>
+                                        <button id='delete-spot-button'>
+                                            <OpenModalMenuItem
+                                                modalComponent={<DeleteSpotModal spot={spot}/>} 
+                                                //pass the spot as the porp which is fetched from the ManageSpot funtion.
+                                                itemText='Delete'
+                                            />
+                                        </button>
+                                    </div>
                                 </div>
                             </li>
                             

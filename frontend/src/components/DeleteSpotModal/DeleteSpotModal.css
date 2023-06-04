@@ -1,17 +1,18 @@
 #modal-content p {
-    text-align: center;
     margin: 10px 0;
+    width: 100%;
+    text-align: center;
 }
 
 .confirm-delete-spot-button {
     margin: 10px 0;
     padding: 5px;
     display: flex;
-    justify-content: space-around;
+    flex-direction: column;
 }
 
 .confirm-delete-spot-button button {
-    width: 60px;
+    width: 80%x;
     height: 30px;
     color: white;
     border: none;

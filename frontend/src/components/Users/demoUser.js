@@ -2,6 +2,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from "react-router-dom"
 import { login } from '../../store/session';
 import { useModal } from '../../context/Modal';
+import './demoUser.css'
 
 export default function GetDemoUser({credential, password}) {
 
@@ -23,6 +24,7 @@ export default function GetDemoUser({credential, password}) {
         <>
         <div
         onClick={handleSubmit}
+        id='demo-user-div'
         >
             Demo User
         </div>
