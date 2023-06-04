@@ -33,9 +33,9 @@ const SpotReviews = ({ spot }) => {
                     if(spot.numReviews === 0) { 
                         return <h3 className='spot-review'><i className="fa-solid fa-star"></i>New</h3>
                     } else if (spot.numReviews === 1) {
-                        return <h3 className='spot-review'><i className="fa-solid fa-star"></i>{spot.aveStarRating && spot.aveStarRating} - {spot.numReviews && spot.numReviews} review</h3>
+                        return <h3 className='spot-review'><i className="fa-solid fa-star"></i>{spot.aveStarRating && spot.aveStarRating} <i className="fa-solid fa-circle" id='spot-review-dot'></i> 1 review</h3>
                     }else {
-                        return <h3 className='spot-review'><i className="fa-solid fa-star"></i>{spot.aveStarRating && spot.aveStarRating.toFixed(1)} - {spot.numReviews && spot.numReviews} reviews</h3>
+                        return <h3 className='spot-review'><i className="fa-solid fa-star" ></i>{spot.aveStarRating && spot.aveStarRating.toFixed(1)} <i className="fa-solid fa-circle" id='spot-review-dot'></i> {spot.numReviews && spot.numReviews} reviews</h3>
                     }
                 })()}
             </div>
@@ -60,8 +60,26 @@ const SpotReviews = ({ spot }) => {
                         id='single-spot-review'
                     >
                         <h4>{review.User ? review.User.firstName : null}</h4>
-                        <p>{review.createdAt.split("-")[1]} {review.createdAt.split("-")[0]}</p>
-                        <p>{review.review}</p>
+                        {(() => {
+                            // console.log("review createdAt date in SpotReview: ", review.createdAt);
+                            const month = {
+                                "01": "Jan",
+                                "02": "Feb",
+                                "03": "Mar",
+                                "04": "Apr",
+                                "05": "May",
+                                "06": "Jun",
+                                "07": "Jul",
+                                "08": "Aug",
+                                "09": "Sep",
+                                "10": "Oct",
+                                "11": "Nov",
+                                "12": "Dec"
+                            }
+
+                            return <p>{month[review.createdAt.split("-")[1]]} {review.createdAt.split("-")[0]}</p>
+                        })()}
+                        <p id='review-content'>{review.review}</p>
                         {(() => {
                         if(user && review.userId === user.id) {
                             return <DeleteReview spot={spot} review={review} />
