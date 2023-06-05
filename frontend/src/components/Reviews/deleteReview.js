@@ -7,9 +7,10 @@ export default function DeleteReview ({ spot, review }) {
 
     const dispatch = useDispatch();
 
-    const handleReviewSubmit = () => {
+    const handleReviewDelete = () => {
+        console.log("review id in handReviewDele");
         dispatch(thunkRemoveReview(review.id));
-        dispatch(loadReviewsThunk());
+        // dispatch(loadReviewsThunk());
         dispatch(fetchDetailedSpotThunk(spot.id));
     };
 
@@ -17,7 +18,7 @@ export default function DeleteReview ({ spot, review }) {
         <>
         <button 
         type='submit'
-        onClick={handleReviewSubmit}
+        onClick={handleReviewDelete}
         id='delete-review-button'
         >
             Delete

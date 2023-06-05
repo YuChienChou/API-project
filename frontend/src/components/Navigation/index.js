@@ -12,8 +12,8 @@ function Navigation({ isLoaded }){
       <ul className='nav-ul'>
         <li>
           <NavLink exact to="/" id='logo-link'>
-            {/* <img src={logo} alt='airbnb logo' className='logo-img' /> */}
-            <i className="fa-brands fa-airbnb"></i>
+            <i className="fa-brands fa-fly"></i>
+            {/* <i className="fa-solid fa-house-chimney-window"></i> */}
             <h6>HaveFunBnb</h6>
           </NavLink>
         </li>
