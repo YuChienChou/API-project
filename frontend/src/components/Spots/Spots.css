@@ -5,6 +5,10 @@
     padding: 20px 40px;
 }
 
+#spot-index-spot-container {
+ padding: 5px 10px;
+}
+
 .spot-image {
     width: 220px;
     height: 150px;
@@ -24,8 +28,7 @@
 
 .spot-li {
     list-style-type: none;
-    padding-bottom: 5px;
-    /* width: 24%; */
+    padding-bottom: 10px;
 }
 
 
@@ -35,13 +38,12 @@
     grid-template-areas: 
         "city city rating"
         "price price price";
-    /* padding: 5px 8px; */
     gap: 5px;
     margin: 10px 0;
 }
 
 .spot-details p {
-    font-size: 12px;
+    font-size: 13px;
 
 }
 
@@ -59,9 +61,9 @@
     color: rgb(56, 147, 166)
 }
 
-#price {
+#spot-index-price {
     grid-area: price;
-    font-size: 12px;
+    font-size: 13px;
 }
 
 /* image tooltips*/
