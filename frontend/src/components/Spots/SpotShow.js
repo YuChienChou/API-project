@@ -12,6 +12,8 @@ const SpotShow = () => {
     const user = useSelector((state) => state.session.user);
  
     const spot = useSelector((state) => state.spots[spotId]);
+    const reviews = useSelector((state) => state.reviews);
+    console.log("reveiws in SpotShow: ", reviews);
     
     const dispatch = useDispatch();
 

@@ -129,7 +129,7 @@ module.exports = {
     },
     {
       spotId: 1,
-      userId: 1,
+      userId: 9,
       review: "The house was really cozy and we loved the fireplace!",
       stars: 3.7
     },

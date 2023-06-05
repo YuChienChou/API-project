@@ -9,12 +9,12 @@ import './SpotReviews.css';
 
 
 const SpotReviews = ({ spot }) => {
-    const { spotId } = useParams();
+    // const { spotId } = useParams();
     // console.log("spot in SpotReviews: ", spot);
     const reviewsStore = useSelector((state) => state.reviews);
     // console.log("reviewsStore in spotreviews: ", reviewsStore);
     const reviews = Object.values(reviewsStore);
-    // console.log("reviews in SpotReviews: ", reviews);
+    console.log("reviews in SpotReviews: ", reviews);
     const user = useSelector((state) => state.session.user);
     // console.log("reviews in reviewindex: ", reviews);
     const dispatch = useDispatch();
@@ -33,7 +33,7 @@ const SpotReviews = ({ spot }) => {
                     if(spot.numReviews === 0) { 
                         return <h3 className='spot-review'><i className="fa-solid fa-star"></i>New</h3>
                     } else if (spot.numReviews === 1) {
-                        return <h3 className='spot-review'><i className="fa-solid fa-star"></i>{spot.aveStarRating && spot.aveStarRating} <i className="fa-solid fa-circle" id='spot-review-dot'></i> 1 review</h3>
+                        return <h3 className='spot-review'><i className="fa-solid fa-star"></i>{spot.aveStarRating && spot.aveStarRating.toFixed(1)} <i className="fa-solid fa-circle" id='spot-review-dot'></i> 1 review</h3>
                     }else {
                         return <h3 className='spot-review'><i className="fa-solid fa-star" ></i>{spot.aveStarRating && spot.aveStarRating.toFixed(1)} <i className="fa-solid fa-circle" id='spot-review-dot'></i> {spot.numReviews && spot.numReviews} reviews</h3>
                     }

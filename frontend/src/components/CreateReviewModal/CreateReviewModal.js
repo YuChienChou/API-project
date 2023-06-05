@@ -12,7 +12,7 @@ import './CreateReview.css';
 
 
 const CreateReviewModal = ({ spot, user }) => {
-    console.log("spot in creatReview: ", spot);
+    // console.log("spot in creatReview: ", spot);
 
     const dispatch = useDispatch();
     const [review, setReview] = useState("");
@@ -23,8 +23,8 @@ const CreateReviewModal = ({ spot, user }) => {
     const history = useHistory();
 
     // const user = useSelector(state => state.session.user); 
-    console.log("user in createReviewModel: ", user);
-    console.log("stars in createReviewModal: ", stars);
+    // console.log("user in createReviewModel: ", user);
+    // console.log("stars in createReviewModal: ", stars);
 
     useEffect(() => {
         const errors = {};
@@ -45,10 +45,10 @@ const CreateReviewModal = ({ spot, user }) => {
             review,
             stars,
         }
-        console.log("payload in createReviewModal onsubmit function: ", payload);
+        // console.log("payload in createReviewModal onsubmit function: ", payload);
 
         const newReview = await dispatch(createReviewThunk(spot.id, payload));
-        console.log("newReview in create review Modal: ", newReview)
+        // console.log("newReview in create review Modal: ", newReview);
         if(newReview.errors) {
             
             setErrors(newReview.errors)
@@ -62,7 +62,7 @@ const CreateReviewModal = ({ spot, user }) => {
         
     };
 
-    console.log("errors in create review modal: ", errors.errors);
+    // console.log("errors in create review modal: ", errors.errors);
 
     const onChange = (stars) => {
         setStars(stars);

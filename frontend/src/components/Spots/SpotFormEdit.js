@@ -144,7 +144,6 @@ const SpotFormEdit = ({spot}) => {
                     </span>
                     <input 
                         type='text'
-                        // placeholder={spot.country}
                         value={country}
                         onChange={(e) => setCountry(e.target.value)} />
                 </label>
