@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { useModal } from "../../context/Modal";
-import CreateReview from "../Reviews/CreateReview";
 import { createReviewThunk } from '../../store/reviews';
 import { loadReviewsThunk } from '../../store/reviews';
 import { fetchDetailedSpotThunk } from '../../store/spots'
@@ -55,7 +54,7 @@ const CreateReviewModal = ({ spot, user }) => {
         } else { 
             dispatch(loadReviewsThunk(spot.id));
             dispatch(fetchDetailedSpotThunk(spot.id));
-            history.push(`/spots/${spot.id}`);
+            // history.push(`/spots/${spot.id}`);
         }
 
         closeModal();

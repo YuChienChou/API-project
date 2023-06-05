@@ -13,7 +13,7 @@ function LoginFormModal() {
   const [errors, setErrors] = useState({});
   const { closeModal } = useModal(); 
   const history = useHistory();
-  // const {validationErrors, setValidationErrors} = useState({});
+
 
   useEffect(() => {
     const errors = {};

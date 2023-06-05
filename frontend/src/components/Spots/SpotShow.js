@@ -3,18 +3,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { fetchDetailedSpotThunk } from '../../store/spots';
 import SpotReviews from '../Reviews/SpotReviews';
-// import CreateReviewModal from "../CreateReviewModal/CreateReviewModal";
-// import OpenModalMenuItem from "../Navigation/OpenModalMenuItem";
 import './Spots.css';
+
 
 const SpotShow = () => {
     const { spotId } = useParams();
-    const user = useSelector((state) => state.session.user);
- 
-    const spot = useSelector((state) => state.spots[spotId]);
-    const reviews = useSelector((state) => state.reviews);
-    console.log("reveiws in SpotShow: ", reviews);
-    
+    const spot = useSelector((state) => state.spots[spotId]);    
     const dispatch = useDispatch();
 
     useEffect(() => {

@@ -9,7 +9,6 @@ import './ManageSpot.css';
 
 const ManageSpot = () => {
  
-    const user = useSelector((state) => state.session.user);
     const dispatch = useDispatch();
     const spotsStore = useSelector((state) => state.spots);
     const spots = Object.values(spotsStore);

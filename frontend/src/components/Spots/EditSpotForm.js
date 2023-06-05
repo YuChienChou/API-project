@@ -1,7 +1,5 @@
 import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { useEffect } from 'react';
-import { updateSpotThunk } from '../../store/spots';
 import SpotFormEdit from './SpotFormEdit';
 
 const EditSpotForm = () => {
