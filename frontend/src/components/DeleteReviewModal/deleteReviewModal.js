@@ -19,7 +19,7 @@ export default function DeleteReviewModal ({ spot, review }) {
         e.preventDefault();
 
         // console.log("review id in handReviewDele: ", review.id);
-        return dispatch(thunkRemoveReview(review.id))
+        return dispatch(thunkRemoveReview(review.id))  
             .then(dispatch(fetchDetailedSpotThunk(spot.id)))
             .then(closeModal)
             .catch(async (res) => {

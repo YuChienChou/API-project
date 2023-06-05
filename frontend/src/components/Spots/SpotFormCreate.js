@@ -70,14 +70,9 @@ const SpotFormCreate = ({spot}) => {
         setIsSubmit(true);
         if(Object.values(validationErrors).length > 0) {
 
-            if(validationErrors.previewImage) setPreviewImage("");
-            if(validationErrors.previewImageFormat) setPreviewImage("")
-            // if(validationErrors.image1Format) setImage1("");
-            // if(validationErrors.image2Format) setImage1("");
-            // if(validationErrors.image3Format) setImage1("");
-            // if(validationErrors.image4Format) setImage1("");
+            setPreviewImage("");
 
-            return (alert('please provide valid images'));
+            return (alert("Please provide valid information"));
         } 
         //check the keys that need to be inside a single spot 
         //this is the spot value that will be passed into thunks
@@ -169,6 +164,7 @@ const SpotFormCreate = ({spot}) => {
         onSubmit={onSubmit}
         id='spot-form'
         >
+            <h3>Create a New Spot</h3>
             <div id='spot-location'>
                 <h4>Where's your place located?</h4>
                 <p >Guests will only get your exact address once they booked a reservation.</p>
@@ -253,6 +249,7 @@ const SpotFormCreate = ({spot}) => {
                 Mention the best features of your space, any special amentities like fast wif or parking, and what you love about the neighborhood.
                     <textarea
                         value={description}
+                        placeholder='Please write at least 30 characters'
                         onChange={(e) => setDescription(e.target.value)}
                     />
                      

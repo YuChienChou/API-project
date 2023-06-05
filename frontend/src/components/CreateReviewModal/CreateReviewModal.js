@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { useHistory } from "react-router-dom";
+import { useDispatch } from "react-redux";
 import { useModal } from "../../context/Modal";
 import { createReviewThunk } from '../../store/reviews';
 import { loadReviewsThunk } from '../../store/reviews';
@@ -19,7 +18,6 @@ const CreateReviewModal = ({ spot, user }) => {
     const [errors, setErrors] = useState({});
     const { closeModal } = useModal();
     const [hasSubmitted, setHasSebmitted] = useState(false)
-    const history = useHistory();
 
     // const user = useSelector(state => state.session.user); 
     // console.log("user in createReviewModel: ", user);
@@ -54,7 +52,6 @@ const CreateReviewModal = ({ spot, user }) => {
         } else { 
             dispatch(loadReviewsThunk(spot.id));
             dispatch(fetchDetailedSpotThunk(spot.id));
-            // history.push(`/spots/${spot.id}`);
         }
 
         closeModal();
