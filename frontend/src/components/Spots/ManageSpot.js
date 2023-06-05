@@ -18,8 +18,19 @@ const ManageSpot = () => {
         dispatch(getCurrentUserSpotsThunk());
     }, [dispatch]);
 
-    if(spots.length < 1) return <></>;
-
+    if(spots.length < 1) {
+        return (
+            <>
+             <div id='manage-spot-container'>
+                    <h2>Manage Spots</h2>
+                    <Link to='/spots/new'>
+                        <button id='manage-spot-create-spot-button'>Create a New Spot</button>
+                    </Link>
+             </div>
+            </>
+        )
+    }
+    
              return (
                 <>
                 <div id='manage-spot-container'>
@@ -66,7 +77,6 @@ const ManageSpot = () => {
                 </div>
                 </>
             );
-        // }
 
 };
 

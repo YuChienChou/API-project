@@ -34,7 +34,7 @@ const SpotsIndex = () => {
                         </Link>
                         
                         <div id='spot-index-spot-container'>
-                            <h6>{spot.name}</h6>
+                            <h5>{spot.name}</h5>
                             <div className="spot-details"> 
                                 <p id="spot-index-city-state">{spot.city}, {spot.state}</p>
                                 {(() => { //use IIFE to have if statement used in JSX!!
@@ -46,7 +46,7 @@ const SpotsIndex = () => {
                                     }
                                 })()}
                            </div>
-                            <p id='price'>${spot.price} night</p>
+                            <p id='spot-index-price'>${spot.price} /night</p>
                         </div>
                     </li>
                     )

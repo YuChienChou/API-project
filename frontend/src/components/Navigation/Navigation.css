@@ -68,8 +68,8 @@
 
 .profile-dropdown {
     position: absolute;
-    top: 60px;
-    right: 80px;
+    top: 40px;
+    right: 50px;
     width: 200px;
     border-radius: 5px;
     padding: 10px;
@@ -93,7 +93,7 @@
 }
 
 .profile-li {
-    font-size: 14px;
+    font-size: 13px;
     padding: 5px;
     border-bottom: 1px solid;
     margin: 5px 0;
@@ -109,6 +109,7 @@
     gap: 20px;
     justify-content: center;
     align-items: center;
+    position: relative;
 }
 
 #login-user a {
@@ -125,8 +126,11 @@
 }
 
 #manage-spot-link a {
-    font-size: 14px;
+    font-size: 13px;
+}
 
+#creat-new-spot-link {
+    text-decoration: underline;
 }
 
 
