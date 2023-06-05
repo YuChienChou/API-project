@@ -8,10 +8,7 @@ import './DeleteSpotModal.css'
 
 const DeleteSpotModal = ({spot}) => {
     const [errors, setErrors] = useState();
-    // const {spotId} = useParams();
-    // console.log("spotId in delete spot modal: ", spotId);
-    // const spot = useSelector((state) => state.spots[spotId]);
-    // console.log("spot in delete spot modal: ", spot);
+
     const dispatch = useDispatch();
     const { closeModal } = useModal();
 
@@ -32,9 +29,10 @@ const DeleteSpotModal = ({spot}) => {
         <> 
         <h1>Confirm Delete</h1>
         <p>Are you sure you want to remove this spot form the listings?</p>
-        <div className='confirm-delete-spot-button'>
+        <div className='confirm-delete-spot-div'>
             <button
             onClick={handleSubmit}
+            id='confirm-delete-spot-button'
             >Yes (Delete Spot)</button>
             <button
             onClick={closeModal}

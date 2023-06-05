@@ -1,10 +1,9 @@
 import { useEffect } from "react";
-import { useParams } from 'react-router-dom'
 import { useDispatch, useSelector } from "react-redux"
 import { loadReviewsThunk } from "../../store/reviews";
 import CreateReviewModal from "../CreateReviewModal/CreateReviewModal";
 import OpenModalMenuItem from "../Navigation/OpenModalMenuItem";
-import DeleteReview from "./deleteReview";
+import DeleteReviewModal from "../DeleteReviewModal/deleteReviewModal";
 import './SpotReviews.css';
 
 
@@ -14,7 +13,6 @@ const SpotReviews = ({ spot }) => {
     const reviewsStore = useSelector((state) => state.reviews);
     // console.log("reviewsStore in spotreviews: ", reviewsStore);
     const reviews = Object.values(reviewsStore);
-    console.log("reviews in SpotReviews: ", reviews);
     const user = useSelector((state) => state.session.user);
     // console.log("reviews in reviewindex: ", reviews);
     const dispatch = useDispatch();
@@ -82,7 +80,13 @@ const SpotReviews = ({ spot }) => {
                         <p id='review-content'>{review.review}</p>
                         {(() => {
                         if(user && review.userId === user.id) {
-                            return <DeleteReview spot={spot} review={review} />
+                            // return <DeleteReview spot={spot} review={review} />
+                            return <button id='delete-review-button'>
+                            <OpenModalMenuItem
+                                modalComponent={<DeleteReviewModal spot={spot} review={review}/>}
+                                itemText='delete' 
+                                
+                                /></button>
                         }
                         })()}
                     </li>

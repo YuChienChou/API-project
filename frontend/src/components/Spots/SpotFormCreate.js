@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { createSpotThunk } from '../../store/spots';
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 import './SpotForm.css';
-// import { createSpotImagesThunk } from '../../store/spotImages';
+
 
 const SpotFormCreate = ({spot}) => { 
     //when set up controlled inputs, definitely need to assign the initail value
@@ -54,7 +54,7 @@ const SpotFormCreate = ({spot}) => {
         console.log("error useEffect running ", errors)
         setValidationErrors(errors)
 
-    }, [previewImage, image1, image2, image3, image4]);
+    }, [country, address, city, state, name, price, previewImage, image1, image2, image3, image4]);
 
     // console.log("validationErrors: ", validationErrors);
 
@@ -69,6 +69,13 @@ const SpotFormCreate = ({spot}) => {
         e.preventDefault();
         setIsSubmit(true);
         if(Object.values(validationErrors).length > 0) {
+
+            if(validationErrors.previewImage) setPreviewImage("");
+            if(validationErrors.previewImageFormat) setPreviewImage("")
+            // if(validationErrors.image1Format) setImage1("");
+            // if(validationErrors.image2Format) setImage1("");
+            // if(validationErrors.image3Format) setImage1("");
+            // if(validationErrors.image4Format) setImage1("");
 
             return (alert('please provide valid images'));
         } 
