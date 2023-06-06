@@ -150,8 +150,6 @@ function SignupFormModal() {
         >Sign Up</button>
       </form>
       </div>
-
-      {(() => console.log("this runs at the end of return"))()}
     </>
   );
 }
