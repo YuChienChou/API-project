@@ -46,21 +46,27 @@ export const loadReviewsThunk = (spotId) => async (dispatch) => {
 };
 
 export const createReviewThunk = (spotId, review) => async (dispatch) => {
-    const res = await csrfFetch(`/api/spots/${spotId}/reviews`, {
-        method: "POST", 
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(review)
-    });
 
-    if(res.ok) {
-        const newReview = await res.json();
-        dispatch(receiveReviewAction(newReview));
-        return newReview;
-    } else {
-        const errors = await res.json();
-        console.log("errors in review reducer: ", errors);
-        return errors;
-    };
+    try {
+        const res = await csrfFetch(`/api/spots/${spotId}/reviews`, {
+                method: "POST", 
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(review)
+            });
+        
+            // console.log("newReview res in createReviewThunk: ", res);
+        
+        
+            if(res.ok) {
+                const newReview = await res.json();
+                // console.log("newReview res in createReviewThunk: ", res);
+                dispatch(receiveReviewAction(newReview));
+                return newReview;
+    }} catch (err) {
+        const errors = await err.json();
+            // console.log("errors in review reducer: ", errors);
+            return errors;
+    }
 };
 
 export const thunkRemoveReview = (reviewId) => async (dispatch) => {
