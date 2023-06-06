@@ -97,9 +97,10 @@
     height: 30px;
     color: white;
     border: none;
+    background-color: #E87676;
     box-shadow: 3px 3px 5px rgb(126, 128, 130);
-    color: rgb(126, 128, 130);
-    border: 1px solid rgb(224, 218, 218);
+    /* color: rgb(126, 128, 130); */
+    color: #FFFFFF;
     border-radius: 5px;
     cursor: pointer;
 }
