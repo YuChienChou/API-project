@@ -60,7 +60,7 @@ function ProfileButton({ user }) {
             <li className='profile-li'>{user.email}</li>
             <div id='manage-spot-link'>
               <NavLink to='/spots/current'>
-                Manage Spot
+                Manage Spots
               </NavLink>
             </div>
             <li>
