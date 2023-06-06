@@ -10,7 +10,7 @@ export default function DeleteReviewModal ({ spot, review }) {
 
     const [errors, setErrors] = useState();
 
-    console.log("review in DeleteReview: ", review);
+    // console.log("review in DeleteReview: ", review);
 
     const dispatch = useDispatch();
     const { closeModal } = useModal();
@@ -33,7 +33,7 @@ export default function DeleteReviewModal ({ spot, review }) {
     return (
         <>
         <h1>Confirm Delete</h1>
-        <p>Are you sure you want to delet this review?</p>
+        <p>Are you sure you want to delete this review?</p>
         <div className='confirm-delete-review-div'>
             <button 
                 type='submit'

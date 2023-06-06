@@ -26,6 +26,11 @@ button {
     border-radius: 5px;
   }
 
+  .create-review-errors {
+    color: red;
+    font-size: 14px;
+  }
+
   #star-rating {
     display: flex;
     align-items: center;

@@ -72,9 +72,9 @@ router.get('/', async (req, res, next) => {
     let {page, size, minLat, maxLat, minLng, maxLng, minPrice, maxPrice} = req.query;
 
     if(!page) page = 1;
-    if(!size) size = 20; 
+    if(!size) size = 100; 
     if(page > 10) page = 10;
-    if(size > 20) size = 20;
+    if(size > 20) size = 100;
 
     page = parseInt(page);
     size = parseInt(size);

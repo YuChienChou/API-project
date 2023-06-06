@@ -49,6 +49,13 @@ const SpotReviews = ({ spot }) => {
                             /></button>
                     }
                 })()}
+
+                    {/* <button id='post-review-button'>
+                        <OpenModalMenuItem
+                            modalComponent={<CreateReviewModal spot={spot} user={user}/>}
+                            itemText='Post Your Review' 
+                            
+                    /></button> */}
             </div>
             <div>
                 
@@ -89,6 +96,7 @@ const SpotReviews = ({ spot }) => {
                                 /></button>
                         }
                         })()}
+                      
                     </li>
                 ))}
                 </ul>

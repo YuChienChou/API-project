@@ -51,7 +51,7 @@ const SpotFormCreate = ({spot}) => {
         if((image2 && !image2.endsWith('.jpg') && !image2.endsWith('.png') && !image2.endsWith('.jpeg'))) errors.image2Format = "Image URL needs to end in png or jpg (or jpeg)";
         if((image3 && !image3.endsWith('.jpg') && !image3.endsWith('.png') && !image3.endsWith('.jpeg'))) errors.image3Format = "Image URL needs to end in png or jpg (or jpeg)";
         if((image4 && !image4.endsWith('.jpg') && !image4.endsWith('.png') && !image4.endsWith('.jpeg'))) errors.image4Format = "Image URL needs to end in png or jpg (or jpeg)";
-        console.log("error useEffect running ", errors)
+        // console.log("error useEffect running ", errors);
         setValidationErrors(errors)
 
     }, [country, address, city, state, name, price, previewImage, image1, image2, image3, image4]);
