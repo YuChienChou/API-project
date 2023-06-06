@@ -29,9 +29,20 @@ export const login = (user) => async (dispatch) => {
       password,
     }),
   });
+  
   const data = await response.json();
   dispatch(setUser(data.user));
   return response;
+
+  // if(response.ok) {
+  //   const logIn = await response.json();
+  //   dispatch(setUser(logIn));
+  //   return logIn;
+  // } else {
+  //   const errors = await response.json();
+  //   console.log("errors in session login thunk: ", errors)
+  //   return errors
+  // }
 };
 
 export const restoreUser = () => async (dispatch) => {

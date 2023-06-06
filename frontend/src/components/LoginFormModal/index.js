@@ -7,6 +7,7 @@ import { useHistory } from "react-router-dom";
 import GetDemoUser from "../Users/demoUser";
 
 function LoginFormModal() {
+
   const dispatch = useDispatch();
   const [credential, setCredential] = useState("");
   const [password, setPassword] = useState("");
@@ -21,9 +22,11 @@ function LoginFormModal() {
     if(password.length < 6) errors.password = '';
 
     setErrors(errors);
-  }, [credential, password]);
 
-  const handleSubmit = (e) => {
+  }, [credential, password]);
+  
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setErrors({});
    
@@ -36,7 +39,16 @@ function LoginFormModal() {
           setErrors(data.errors);
         }
       });
+
+      // const res = await dispatch(sessionActions.login({ credential, password }));
+      // if(res.errors) {
+      //   setErrors(res.errors);
+      // } else {
+      //   closeModal();
+      //   history.push('/')
+      // }
   };
+
 
   return (
     <>
@@ -77,6 +89,7 @@ function LoginFormModal() {
         type="submit"
         className='login-button'
         disabled={Object.values(errors).length > 0}
+        id={Object.values(errors).length > 0 ? "log-in-button-disabled" : "log-in-button-active"}
         >Log In</button>
         <GetDemoUser credential={"Demo-lition"} password={"password"} />
       </form>

@@ -17,7 +17,8 @@ const CreateReviewModal = ({ spot, user }) => {
     const [stars, setStars] = useState(0);
     const [errors, setErrors] = useState({});
     const { closeModal } = useModal();
-    const [hasSubmitted, setHasSebmitted] = useState(false)
+    const [hasSubmitted, setHasSebmitted] = useState(false);
+    const [disabled, setDisabled] = useState(true);
 
     // const user = useSelector(state => state.session.user); 
     // console.log("user in createReviewModel: ", user);
@@ -29,13 +30,15 @@ const CreateReviewModal = ({ spot, user }) => {
         if(stars < 1) errors.stars = 'Stars range from 1 to 5';
 
         setErrors(errors);
+
+        if(Object.values(errors).length < 1) setDisabled(false);
     }, [review, stars]);
 
     const onSubmit = async (e) => {
 
         e.preventDefault();
 
-        setHasSebmitted(true)
+        setHasSebmitted(true);
 
         const payload = {
             userId: user.id,
@@ -47,7 +50,6 @@ const CreateReviewModal = ({ spot, user }) => {
         const newReview = await dispatch(createReviewThunk(spot.id, payload));
         // console.log("newReview in create review Modal: ", newReview);
         if(newReview.errors) {
-            
             setErrors(newReview.errors)
         } else { 
             dispatch(loadReviewsThunk(spot.id));
@@ -93,7 +95,8 @@ const CreateReviewModal = ({ spot, user }) => {
             <button
             onClick={onSubmit} 
             disabled={Object.values(errors).length > 0}
-            id='create-review-button'
+            // id='create-review-button'
+            id={disabled ? 'create-review-button-disabled' : "create-review-button-active"}
             > 
                 Submit Your Review
             </button>

@@ -28,6 +28,7 @@ function SignupFormModal() {
     if(!confirmPassword) errorLi.confirmPassword = 'please confirm password';
 
     setValidationErrors(errorLi);
+
   }, [email, username, firstName, lastName, password, confirmPassword])
 
 
@@ -69,7 +70,7 @@ function SignupFormModal() {
         {errors.lastName && <p className='error'>{errors.lastName}</p>}
         {errors.password && <p className='error'>{errors.password}</p>}
         {errors.confirmPassword && (
-          <p className='error'>{errors.confirmPassword}</p>
+          <p id='confirm-password-error'>{errors.confirmPassword}</p>
         )}
       </div>
       <form 
@@ -145,9 +146,12 @@ function SignupFormModal() {
         <button 
         type="submit"
         disabled={Object.values(validationErrors).length > 0}
+        id={Object.values(validationErrors).length > 0 ? "sign-up-button-disabled" : "sign-up-button-active"}
         >Sign Up</button>
       </form>
       </div>
+
+      {(() => console.log("this runs at the end of return"))()}
     </>
   );
 }

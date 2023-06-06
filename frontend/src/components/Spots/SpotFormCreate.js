@@ -334,7 +334,6 @@ const SpotFormCreate = ({spot}) => {
             <button 
             type='submit'
             id='create-spot-button'
-            // disabled={Object.values()}
             >Create Spot</button>
             
         </form>
