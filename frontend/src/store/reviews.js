@@ -83,6 +83,22 @@ export const thunkRemoveReview = (reviewId) => async (dispatch) => {
     };
 };
 
+export const thunkGetCurrentUserReview = () => async (dispatch) => {
+    try {
+        const res = await csrfFetch('/api/reviews/current');
+        
+        if(res.ok) {
+            const currentUserReviews = await res.json();
+            console.log("currentUserReviews in Thunk: ", currentUserReviews);
+            dispatch(loadReviewsAction(currentUserReviews));
+            return currentUserReviews;
+        }
+    } catch (err) {
+        const errors = await err.json();
+        return errors;
+    }
+};
+
 //reducer
 
 const initialState = {};

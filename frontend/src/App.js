@@ -8,6 +8,7 @@ import SpotShow from "./components/Spots/SpotShow";
 import CreateSpotForm from "./components/Spots/CreateSpotForm";
 import EditSpotForm from "./components/Spots/EditSpotForm";
 import ManageSpot from "./components/Spots/ManageSpot";
+import ManageReviews from './components/Reviews/ManageReview';
 
 function App() {
   const dispatch = useDispatch();
@@ -27,8 +28,7 @@ function App() {
            <Route path='/spots/new' component={CreateSpotForm} />
            <Route path='/spots/:spotId/edit' component={EditSpotForm} /> 
            <Route path='/spots/:spotId' component={SpotShow} />
-
-           
+           <Route path='/reviews/current' component={ManageReviews} />
       </Switch>}
       
     </>
