@@ -107,37 +107,46 @@ h3  {
     border-radius: 5px;
 }
 
-#img1 {
+#previewImage {
     grid-area: img1;
     width: 462px;
     height: 343px;
-    
+    position: relative;
     
 }
 
-#img2 {
+#img1 {
     grid-area: img2;
     width: 230px;
     height: 169px;
-
+    position: relative;
 }
 
-#img3 {
+#img2 {
     grid-area: img3;
     width: 230px;
     height: 169px;
+    position: relative;
 }
 
-#img4 {
+#img3 {
     grid-area: img4;
     width: 230px;
     height: 169px;
+    position: relative;
 }
 
-#img5 {
+#img4 {
     grid-area: img5;
     width: 230px;
     height: 169px;
+    position: relative;
+}
+
+.no-image-text {
+    position: absolute;
+    top: 45%;
+    left: 20%;
 }
 
 .host-details {
