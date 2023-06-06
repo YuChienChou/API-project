@@ -30,11 +30,11 @@ const SpotShow = () => {
             <h2>{spot.name}</h2>
             <p>{spot.city}, {spot.state}, {spot.country}</p>
             <div className="spot-image-container">
-                <li id='img1'><img src={imgList[0]} alt="" /></li>
-                <li id='img2'><img src={imgList[1]} alt="" /></li>
-                <li id='img3'><img src={imgList[2]} alt="" /></li>
-                <li id='img4'><img src={imgList[3]} alt="" /></li>
-                <li id='img5'><img src={imgList[4]} alt="" /></li>
+                <li id='previewImage'><img src={imgList[0]} alt="" /></li>
+                <li id='img1'><img src={imgList[1]} alt="" /><p className="no-image-text">{imgList[1] ? "" : "Image coming soon!"}</p></li>
+                <li id='img2'><img src={imgList[2]} alt="" /><p className="no-image-text">{imgList[2] ? "" : "Image coming soon!"}</p></li>
+                <li id='img3'><img src={imgList[3]} alt="" /><p className="no-image-text">{imgList[3] ? "" : "Image coming soon!"}</p></li>
+                <li id='img4'><img src={imgList[4]} alt="" /><p className="no-image-text">{imgList[4] ? "" : "Image coming soon!"}</p></li>
             </div>
                 
             <div className="host-details"> 
