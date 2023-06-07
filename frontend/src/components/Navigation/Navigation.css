@@ -120,10 +120,10 @@
 
 
 #manage-spot-link {
-    padding: 5px;
+    padding: 0 5px;
     margin: 5px 0;
     width: 120px;
-    border-bottom: 1px solid;
+    /* border-top: 1px solid; */
 }
 
 #manage-spot-link a {
@@ -137,7 +137,7 @@
 
 #update-review-link {
     padding: 5px;
-    margin: 5px 0;
+    margin-bottom: 5px;
     width: 120px;
     border-bottom: 1px solid;
 }
