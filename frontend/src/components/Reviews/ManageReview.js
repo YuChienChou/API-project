@@ -3,6 +3,8 @@ import { useEffect } from "react";
 import { thunkGetCurrentUserReview } from '../../store/reviews';
 import OpenModalMenuItem from "../Navigation/OpenModalMenuItem";
 import DeleteReviewModal from '../DeleteReviewModal/deleteReviewModal';
+import EditReviewModal from '../EditReviewModal/EditReviewModal';
+import './ManageReview.css';
 
 
 export default function ManageReviews() {
@@ -20,43 +22,60 @@ export default function ManageReviews() {
     //if the currentUserReviews array is empty and the obj inside of the array doesn't have 
     // a Spot key, return null to run the useEffect();
     if(!currentUserReviews.length || !currentUserReviews[0].Spot) return null;
+
+
+    // for (let i = 0; i < currentUserReviews.length;  i++) {
+    //     if(!currentUserReviews.length || !currentUserReviews[i].Spot) return null;
+    // }
+    
     
 
     return (
         <>
-        {currentUserReviews && currentUserReviews.map((review) => (
-            <li key={review.id}>
-                <h3>{review.Spot.name}</h3>
-                {(() => {
-                            const month = {
-                                "01": "Jan",
-                                "02": "Feb",
-                                "03": "Mar",
-                                "04": "Apr",
-                                "05": "May",
-                                "06": "Jun",
-                                "07": "Jul",
-                                "08": "Aug",
-                                "09": "Sep",
-                                "10": "Oct",
-                                "11": "Nov",
-                                "12": "Dec"
-                            }
-                            return <p>{month[review.createdAt.split("-")[1]]} {review.createdAt.split("-")[0]}</p>
-                        })()}
-                <div>
-                    {review.review}
-                </div>
-                <button>Update</button>
-                <button id='delete-review-button'>
-                    <OpenModalMenuItem
-                        modalComponent={<DeleteReviewModal spot={review.Spot} review={review}/>}
-                        itemText='Delete'
-                    />
-                </button>
-                {/* <DeleteReviewModal /> */}
-            </li>
-        ))}
+        <div id='current-user-review-div'>
+            <h2>Manage Reviews</h2>
+            {currentUserReviews && currentUserReviews.map((review) => (
+                <li key={review.id} id='current-user-reviews-list'>
+                    <h3>{review.Spot.name}</h3>
+                    {(() => {
+                                const month = {
+                                    "01": "Jan",
+                                    "02": "Feb",
+                                    "03": "Mar",
+                                    "04": "Apr",
+                                    "05": "May",
+                                    "06": "Jun",
+                                    "07": "Jul",
+                                    "08": "Aug",
+                                    "09": "Sep",
+                                    "10": "Oct",
+                                    "11": "Nov",
+                                    "12": "Dec"
+                                }
+                                return <p>{month[review.createdAt.split("-")[1]]} {review.createdAt.split("-")[0]}</p>
+                            })()}
+                    <p id='review-content'>
+                        {review.review}
+                    </p>
+                    <div id='manage-review-buttons'>
+                        <button id='update-review-button'>
+                            <OpenModalMenuItem
+                                    modalComponent={<EditReviewModal review={review}/>}
+                                    itemText='Update'
+                            />
+                        </button>
+                        <button id='delete-review-button'>
+                            <OpenModalMenuItem
+                                modalComponent={<DeleteReviewModal spot={review.Spot} review={review}/>}
+                                itemText='Delete'
+                            />
+                        </button>
+                    </div>
+                </li>
+
+            ))}
+
+       </div>
         </>
     )
 }

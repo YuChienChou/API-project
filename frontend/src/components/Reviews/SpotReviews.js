@@ -17,8 +17,13 @@ const SpotReviews = ({ spot }) => {
     // console.log("reviews in reviewindex: ", reviews);
     const dispatch = useDispatch();
 
+    // const userReview = reviews.find((review) => review.userId === user.id);
+    // console.log("userReview in SpotReview: ", userReview);
+
+
     useEffect(() => {
         dispatch(loadReviewsThunk(spot.id));
+        // dispatch(thunkGetCurrentUserReview());
     }, [dispatch, spot.id]);
 
     // if(!reviews || !reviews[reviews.length-1].User) return null;
@@ -50,12 +55,6 @@ const SpotReviews = ({ spot }) => {
                     }
                 })()}
 
-                    {/* <button id='post-review-button'>
-                        <OpenModalMenuItem
-                            modalComponent={<CreateReviewModal spot={spot} user={user}/>}
-                            itemText='Post Your Review' 
-                            
-                    /></button> */}
             </div>
             <div>
                 
@@ -85,17 +84,27 @@ const SpotReviews = ({ spot }) => {
                             return <p>{month[review.createdAt.split("-")[1]]} {review.createdAt.split("-")[0]}</p>
                         })()}
                         <p id='review-content'>{review.review}</p>
-                        {(() => {
-                        if(user && review.userId === user.id) {
-                            // return <DeleteReview spot={spot} review={review} />
-                            return <button id='delete-review-button'>
-                            <OpenModalMenuItem
-                                modalComponent={<DeleteReviewModal spot={spot} review={review}/>}
-                                itemText='delete' 
-                                
-                                /></button>
-                        }
-                        })()}
+                        <div>
+                            {/* {user && review.userId === user.id ? 
+                                <button id='update-review-button'>
+                                <OpenModalMenuItem
+                                        modalComponent={<EditReviewModal spot={spot} review={userReview} />}
+                                        itemText='Update'
+                                />
+                            </button> : <></>} */}
+                            {(() => {
+                                if(user && review.userId === user.id) {
+                                    // return <DeleteReview spot={spot} review={review} />
+                                    return <button id='delete-review-button'>
+                                    <OpenModalMenuItem
+                                        modalComponent={<DeleteReviewModal spot={spot} review={review}/>}
+                                        itemText='delete' 
+                                        
+                                        /></button>
+                                }
+                            })()}
+                        </div>
+                        
                       
                     </li>
                 ))}
