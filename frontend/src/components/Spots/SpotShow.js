@@ -1,9 +1,10 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import { fetchDetailedSpotThunk } from '../../store/spots';
+import { fetchDetailedSpotThunk, actionClearSpot } from '../../store/spots';
 import SpotReviews from '../Reviews/SpotReviews';
 import './Spots.css';
+import { actionClearReview } from "../../store/reviews";
 
 
 const SpotShow = () => {
@@ -13,6 +14,15 @@ const SpotShow = () => {
 
     useEffect(() => {
         dispatch(fetchDetailedSpotThunk(spotId));
+        // console.log("clear review action is running in SpotShow");
+        // dispatch(actionClearReview());
+
+        return () =>{
+            console.log("useEffect in SpotShow is running");
+            dispatch(actionClearReview());
+            dispatch(actionClearSpot());
+        }
+        
     }, [dispatch, spotId]);
 
     // console.log('spotImages in spotshow: ', spot.SpotImages);

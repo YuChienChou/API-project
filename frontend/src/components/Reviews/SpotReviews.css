@@ -59,3 +59,9 @@
     cursor: pointer;
     margin: 10px 0;
 }
+
+
+#review-update-delete-div {
+    display: flex;
+    gap: 8px;
+}

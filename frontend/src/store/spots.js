@@ -7,6 +7,7 @@ const RECEIVE_SPOT = "spots/RECEIVE_SPOT";
 const UPDATE_SPOT = 'spots/UPDATE_SPOT';
 const DELETE_SPOT = 'spots/DELETE_SPOT';
 const GET_CURRENT_USER_SPOTs = 'spots/GET_CURRENT_USER_SPOTS';
+const CLEAR_SPOT = "spots/CLEAR_SPOT"
 
 
 //action creator
@@ -39,6 +40,12 @@ export const getCurrentUserSpotsAction = (spots) => {
         type: GET_CURRENT_USER_SPOTs,
         spots
     };
+};
+
+export const actionClearSpot = () => {
+    return {
+        type: CLEAR_SPOT,
+    }
 };
 
 //thunk action creator
@@ -202,6 +209,9 @@ const spotsReducer = (state = initialState, action) => {
                 spotsState[spot.id] = spot;
             })
             return spotsState;
+        };
+        case CLEAR_SPOT: {
+            return {}
         }
         default:
             return state;

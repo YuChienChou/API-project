@@ -1,15 +1,17 @@
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useModal } from "../../context/Modal";
-import { thunkEditReview, thunkGetCurrentUserReview } from "../../store/reviews";
+import { thunkEditReview, thunkGetCurrentUserReview, loadReviewsThunk, actionClearReview } from "../../store/reviews";
 import EditStarRating from './EditStars';
 import './EditReviewModal.css'
+import { fetchDetailedSpotThunk } from "../../store/spots";
 
+const EditReviewModal = ({ spot, review }) => {
+// const EditReviewModal = ({ spot, review }) => {
 
-
-const EditReviewModal = ({ review }) => {
-
+    // console.log("spot in EditReviewModal: ", spot);
     // console.log("review in EditReviewModal: ", review);
+    // console.log("spot in EditReviewModal: ", spot);
 
     const dispatch = useDispatch();
     const [editReview, setEditReview] = useState("");
@@ -28,13 +30,13 @@ const EditReviewModal = ({ review }) => {
     }, [editReview, editStars]);
 
     const onSubmit = async (e) => {
-
         e.preventDefault();
-
         setHasSebmitted(true);
 
         const payload = {
-            spotId: review.Spot.id,
+            // spotId: review.Spot.id ? review.Spot.id : spot.id,
+            spotId: spot?.id ? spot.id : review.Spot.id,
+            // spotId: review.Spot.id,
             userId: review.userId,
             review: editReview,
             stars: editStars,
@@ -49,7 +51,8 @@ const EditReviewModal = ({ review }) => {
             setErrors(editedReview.errors);
             return
         } else { 
-            dispatch(thunkGetCurrentUserReview()); 
+            spot ? dispatch(loadReviewsThunk(spot.id)) : dispatch(thunkGetCurrentUserReview());
+            spot ? dispatch(fetchDetailedSpotThunk(spot.id)) : dispatch(fetchDetailedSpotThunk(review.Spot.id))
             closeModal();
         }        
     };
@@ -64,7 +67,11 @@ const EditReviewModal = ({ review }) => {
         <div id='update-review-modal'>
             
             <h3>How was your stay at</h3>
-            <h3>{review.Spot.name} ?</h3>
+            {/* <h3>{review.Spot.name} ?</h3> */}
+            {/* <h3>{review.Spot.name ? review.Spot.name : spot.name} ?</h3> */}
+            {/* <h3>{spot.name} ?</h3> */}
+            <h3>{spot?.name ? spot.name : review.Spot.name} ?</h3>
+
             {hasSubmitted && errors.review && <p className='update-review-errors'>{errors.review}</p>}
             {hasSubmitted && errors.stars && <p className='update-review-errors'>{errors.stars}</p>}
             <input 

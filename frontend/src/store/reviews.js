@@ -5,6 +5,7 @@ export const LOAD_REVIEWS = "review/LOAD_REVIEWS";
 export const RECEIVE_REVIEW = "review/RECEIVE_REVIEW";
 export const REMOVE_REVIEW = "review/REMOVE_REVIEW";
 export const EDIT_REVIEW = 'reviwe/EDIT_REVIEW';
+export const CLEAR_REVIEW = 'review/CLEAN_REVIEW';
 
 
 
@@ -34,6 +35,12 @@ export const actionEditReview = (reviewId) => {
     return {
         type: EDIT_REVIEW,
         reviewId
+    }
+}
+
+export const actionClearReview = () => {
+    return {
+        type: CLEAR_REVIEW,
     }
 }
 
@@ -122,12 +129,15 @@ export const thunkEditReview = (reviewId, payload) => async (dispatch) => {
             const editedReview = await res.json();
             dispatch(receiveReviewAction(editedReview));
             return editedReview;
+        } else { 
+            throw new Error("something went wrong");
         }
     } catch (err) {
         const errors = await err.json();
         return errors;
     }
 };
+
 
 //reducer
 
@@ -157,6 +167,12 @@ const reviewReducer = (state = initialState, action) => {
             const reviewsState = {...state, [action.review.id]: action.review};
             return reviewsState;
         }
+
+        case CLEAR_REVIEW: {
+            // return { ...state, currentUserReviews: {}}
+            return {};
+        }
+            
 
         default: 
             return state;

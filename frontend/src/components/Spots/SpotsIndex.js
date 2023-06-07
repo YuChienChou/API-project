@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { loadSpotsThunk } from '../../store/spots';
+import { loadSpotsThunk, actionClearSpot } from '../../store/spots';
 import { useEffect } from 'react';
 import './Spots.css';
 
@@ -13,6 +13,8 @@ const SpotsIndex = () => {
 
     useEffect(() => {
         dispatch(loadSpotsThunk());
+        
+        return () => dispatch(actionClearSpot());
     }, [dispatch]);
 
     if(spots.length < 1) return null;

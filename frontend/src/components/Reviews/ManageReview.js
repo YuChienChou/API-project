@@ -1,6 +1,6 @@
 import { useSelector, useDispatch} from "react-redux";
 import { useEffect } from "react";
-import { thunkGetCurrentUserReview } from '../../store/reviews';
+import { thunkGetCurrentUserReview, actionClearReview } from '../../store/reviews';
 import OpenModalMenuItem from "../Navigation/OpenModalMenuItem";
 import DeleteReviewModal from '../DeleteReviewModal/deleteReviewModal';
 import EditReviewModal from '../EditReviewModal/EditReviewModal';
@@ -10,25 +10,30 @@ import './ManageReview.css';
 export default function ManageReviews() {
 
     const currentUserReviewStore = useSelector((state) => state.reviews);
-    console.log("currentUserReviewStore in ManageReview: ", currentUserReviewStore);
+    // console.log("currentUserReviewStore in ManageReview: ", currentUserReviewStore);
     const currentUserReviews = Object.values(currentUserReviewStore);
-    console.log("currentUserReviews-1 in ManageReviews: ", currentUserReviews);
+    // console.log("currentUserReviews in ManageReviews: ", currentUserReviews);
     const dispatch = useDispatch();
 
     useEffect(() => {
+        dispatch(actionClearReview());
+        // console.log("actionClearReview run in ManageReview");
         dispatch(thunkGetCurrentUserReview());
+        // console.log("thunkGetCurrentUserReview run in ManageReview");
+        // return () => dispatch(actionClearReview());
     }, [dispatch]);
 
     //if the currentUserReviews array is empty and the obj inside of the array doesn't have 
     // a Spot key, return null to run the useEffect();
-    if(!currentUserReviews.length || !currentUserReviews[0].Spot) return null;
+    // if(!currentUserReviews.length || !currentUserReviews[0].Spot) return null;
+    if(!currentUserReviews.length) {
+        console.log("guard is running");
+        return null;}
 
 
     // for (let i = 0; i < currentUserReviews.length;  i++) {
     //     if(!currentUserReviews.length || !currentUserReviews[i].Spot) return null;
     // }
-    
-    
 
     return (
         <>
@@ -36,7 +41,7 @@ export default function ManageReviews() {
             <h2>Manage Reviews</h2>
             {currentUserReviews && currentUserReviews.map((review) => (
                 <li key={review.id} id='current-user-reviews-list'>
-                    <h3>{review.Spot.name}</h3>
+                    <h3>{review.Spot?.name}</h3>
                     {(() => {
                                 const month = {
                                     "01": "Jan",
