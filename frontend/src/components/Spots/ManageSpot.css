@@ -21,6 +21,7 @@
 .manage-spot-spot-li img{
     width: 100%;
     height: 180px;
+    border-radius: 5px;
 }
 
 .manage-spot-spot-details {
