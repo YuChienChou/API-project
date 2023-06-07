@@ -19,7 +19,7 @@ const SpotShow = () => {
 
         return () =>{
             console.log("useEffect in SpotShow is running");
-            dispatch(actionClearReview());
+            // dispatch(actionClearReview());
             dispatch(actionClearSpot());
         }
         

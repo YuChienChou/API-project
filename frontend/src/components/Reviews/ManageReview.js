@@ -16,10 +16,10 @@ export default function ManageReviews() {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        dispatch(actionClearReview());
+        // dispatch(actionClearReview());
         // console.log("actionClearReview run in ManageReview");
         dispatch(thunkGetCurrentUserReview());
-        // console.log("thunkGetCurrentUserReview run in ManageReview");
+        console.log("thunkGetCurrentUserReview run in ManageReview");
         // return () => dispatch(actionClearReview());
     }, [dispatch]);
 
@@ -41,7 +41,7 @@ export default function ManageReviews() {
             <h2>Manage Reviews</h2>
             {currentUserReviews && currentUserReviews.map((review) => (
                 <li key={review.id} id='current-user-reviews-list'>
-                    <h3>{review.Spot?.name}</h3>
+                    <h3>{review.Spot.name}</h3>
                     {(() => {
                                 const month = {
                                     "01": "Jan",

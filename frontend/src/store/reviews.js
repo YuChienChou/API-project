@@ -31,10 +31,10 @@ export const actionRemoveReview = (reviewId) => {
     }
 }
 
-export const actionEditReview = (reviewId) => {
+export const actionEditReview = (editedReview) => {
     return {
         type: EDIT_REVIEW,
-        reviewId
+        editedReview
     }
 }
 
@@ -127,11 +127,9 @@ export const thunkEditReview = (reviewId, payload) => async (dispatch) => {
 
         if(res.ok) {
             const editedReview = await res.json();
-            dispatch(receiveReviewAction(editedReview));
+            dispatch(actionEditReview(editedReview));
             return editedReview;
-        } else { 
-            throw new Error("something went wrong");
-        }
+        } 
     } catch (err) {
         const errors = await err.json();
         return errors;
@@ -164,13 +162,21 @@ const reviewReducer = (state = initialState, action) => {
         }
 
         case EDIT_REVIEW: {
-            const reviewsState = {...state, [action.review.id]: action.review};
+            // console.log("old state in review reducer: ", state);
+            // console.log("action.editedReview.id in review reducer: ", action.editedReview.id);
+            // console.log("edited review in review reducer: ", action.editedReview);
+            const reviewsState = {...state, [action.editedReview.id]: {...state[action.editedReview.id], ...action.editedReview}};
+            //in the new state, first, copy the old state by spread operator, find the key I want to edit, then assign it a new value. 
+            //However, I don't want to replace the every key in the state because I only want to update the key/vaule pairs in my edited review. 
+            //for doing that, I need to copy the original value from my old state for the specific key, 
+            
+            // console.log("reviewsState in review reducer: ", reviewsState);
             return reviewsState;
         }
 
         case CLEAR_REVIEW: {
             // return { ...state, currentUserReviews: {}}
-            return {};
+            return {}
         }
             
 
