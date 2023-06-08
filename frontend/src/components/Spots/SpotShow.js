@@ -18,9 +18,9 @@ const SpotShow = () => {
         // dispatch(actionClearReview());
 
         return () =>{
-            console.log("useEffect in SpotShow is running");
+            console.log("actionClearReview in the useEffect in SpotShow is running");
             dispatch(actionClearReview());
-            dispatch(actionClearSpot());
+            // dispatch(actionClearSpot());
         }
         
     }, [dispatch, spotId]);

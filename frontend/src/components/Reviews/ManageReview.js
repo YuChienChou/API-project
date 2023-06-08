@@ -23,7 +23,7 @@ export default function ManageReviews() {
         // return () => dispatch(actionClearReview());
     }, [dispatch]);
 
-   console.log('%c Current user reviews: ', 'color:yellow;', currentUserReviews);
+   console.log('%c Current user reviews in ManageReview: ', 'color:yellow;', currentUserReviews);
     //if the currentUserReviews array is empty and the obj inside of the array doesn't have 
     // a Spot key, return null to run the useEffect();
     // if(!currentUserReviews.length || !currentUserReviews[0].Spot) return null;

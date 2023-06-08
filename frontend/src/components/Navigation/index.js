@@ -2,6 +2,8 @@ import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import ProfileButton from './ProfileButton';
+import OpenModalMenuItem from './OpenModalMenuItem';
+import SearchSpotModal from '../SearchSpotModal/SearchSpotModal';
 import './Navigation.css';
 // import logo from './logo.png'
 
@@ -17,6 +19,14 @@ function Navigation({ isLoaded }){
             <h6>HaveFunBnb</h6>
           </NavLink>
         </li>
+
+        <div id='spot-search'>
+          <OpenModalMenuItem
+                  itemText="Search Spots"
+                  // onItemClick={closeMenu}
+                  modalComponent={<SearchSpotModal />}
+                />
+        </div>
         <div id='login-user'>
           {(()=> {
             if(sessionUser) {

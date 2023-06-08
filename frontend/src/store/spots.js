@@ -7,7 +7,8 @@ const RECEIVE_SPOT = "spots/RECEIVE_SPOT";
 const UPDATE_SPOT = 'spots/UPDATE_SPOT';
 const DELETE_SPOT = 'spots/DELETE_SPOT';
 const GET_CURRENT_USER_SPOTs = 'spots/GET_CURRENT_USER_SPOTS';
-const CLEAR_SPOT = "spots/CLEAR_SPOT"
+const CLEAR_SPOT = "spots/CLEAR_SPOT";
+const SEARCH_SPOTS = "spots/SEARCH_SPOTS";
 
 
 //action creator
@@ -47,6 +48,8 @@ export const actionClearSpot = () => {
         type: CLEAR_SPOT,
     }
 };
+
+
 
 //thunk action creator
 
@@ -170,6 +173,23 @@ export const getCurrentUserSpotsThunk = () => async (dispatch) => {
     };
 
 };
+
+export const searchSpotThunk = (query) => async (dispatch) => {
+
+    try {
+        const res = await csrfFetch(`/api/spots/${query}`);
+
+        if(res.ok) {
+            const spots = await res.json();
+            dispatch(loadSpotsAction(spots));
+            return spots;
+        }
+    } catch(err) {
+        const errors = await err.json();
+        console.log("errors in spot reducer: ", errors)
+        return errors;
+    }
+}
 
 //reducer: case in the reducer for all user reviews
 //normalize review data
