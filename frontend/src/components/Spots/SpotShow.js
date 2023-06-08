@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import { fetchDetailedSpotThunk, actionClearSpot } from '../../store/spots';
+import { fetchDetailedSpotThunk } from '../../store/spots';
 import SpotReviews from '../Reviews/SpotReviews';
 import './Spots.css';
 import { actionClearReview } from "../../store/reviews";
@@ -9,16 +9,15 @@ import { actionClearReview } from "../../store/reviews";
 
 const SpotShow = () => {
     const { spotId } = useParams();
-    const spot = useSelector((state) => state.spots[spotId]);    
+    const spot = useSelector((state) => state.spots.singleSpot[spotId]);    
     const dispatch = useDispatch();
 
     useEffect(() => {
         dispatch(fetchDetailedSpotThunk(spotId));
         // console.log("clear review action is running in SpotShow");
-        // dispatch(actionClearReview());
 
         return () =>{
-            console.log("actionClearReview in the useEffect in SpotShow is running");
+            // console.log("actionClearReview in the useEffect in SpotShow is running");
             dispatch(actionClearReview());
             // dispatch(actionClearSpot());
         }

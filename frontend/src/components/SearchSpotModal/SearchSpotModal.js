@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
+import { useHistory } from "react-router-dom";
 import { searchSpotThunk } from "../../store/spots";
+import SearchSpots from "../Spots/SearchSpots";
 import { useModal } from "../../context/Modal";
 
 export default function SearchSpotModal() {
@@ -8,12 +10,13 @@ export default function SearchSpotModal() {
     const [maxLat, setMaxLat] = useState(0);
     const [minLng, setMinLng] = useState(0);
     const [maxLng, setMaxLng] = useState(0);
-    const [minPrice, setMinPrice] = useState();
-    const [maxPrice, setMaxPrice] = useState();
+    const [minPrice, setMinPrice] = useState(50);
+    const [maxPrice, setMaxPrice] = useState(120);
     const [errors, setErrors] = useState({});
     const [isSubmit, setIsSubmit] = useState(false);
     const dispatch = useDispatch();
     const { closeModal } = useModal();
+    const history = useHistory();
 
     useEffect(() => {
     
@@ -28,13 +31,15 @@ export default function SearchSpotModal() {
 
         const spotResults = await dispatch(searchSpotThunk(query));
 
-        console.log("spotResults in SearchSpotModal: ", spotResults)
+        console.log("spotResults in SearchSpotModal: ", spotResults);
 
         if(spotResults.errors) {
             setErrors(spotResults.errors);
             console.log("errors in SearchSpotModal: ", errors)
         } else {
             console.log("query in searchSpotModal", query);
+            history.push(`/spots/query`);
+            // <SearchSpots spotResult={spotResults} />
             closeModal();
         }
 

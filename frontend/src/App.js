@@ -9,6 +9,7 @@ import CreateSpotForm from "./components/Spots/CreateSpotForm";
 import EditSpotForm from "./components/Spots/EditSpotForm";
 import ManageSpot from "./components/Spots/ManageSpot";
 import ManageReviews from './components/Reviews/ManageReview';
+import SearchSpots from './components/Spots/SearchSpots';
 
 function App() {
   const dispatch = useDispatch();
@@ -24,11 +25,13 @@ function App() {
       {isLoaded && 
       <Switch>
            <Route exact path='/' component={SpotsIndex} />
-           <Route path='/spots/current' component={ManageSpot} />
-           <Route path='/spots/new' component={CreateSpotForm} />
-           <Route path='/spots/:spotId/edit' component={EditSpotForm} /> 
-           <Route path='/spots/:spotId' component={SpotShow} />
-           <Route path='/reviews/current' component={ManageReviews} />
+           <Route exact path='/spots/current' component={ManageSpot} />
+           <Route exact path='/spots/new' component={CreateSpotForm} />
+           <Route exact path='/spots/query' component={SearchSpots}/>
+           <Route exact path='/spots/:spotId/edit' component={EditSpotForm} /> 
+           <Route exact path='/spots/:spotId' component={SpotShow} />
+           <Route exact path='/reviews/current' component={ManageReviews} />
+           
       </Switch>}
       
     </>

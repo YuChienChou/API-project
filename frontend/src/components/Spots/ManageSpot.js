@@ -10,12 +10,15 @@ import './ManageSpot.css';
 const ManageSpot = () => {
  
     const dispatch = useDispatch();
-    const spotsStore = useSelector((state) => state.spots);
+    const spotsStore = useSelector((state) => state.spots.allState);
     const spots = Object.values(spotsStore);
+
 
     useEffect(() => {
         dispatch(getCurrentUserSpotsThunk());
     }, [dispatch]);
+
+    if(spots === undefined) return null;
 
     if(spots.length < 1) {
         return (

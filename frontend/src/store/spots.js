@@ -49,6 +49,13 @@ export const actionClearSpot = () => {
     }
 };
 
+export const loadSearchSpotsAction = (spots) => {
+    return {
+        type: SEARCH_SPOTS,
+        spots
+    }
+}
+
 
 
 //thunk action creator
@@ -67,6 +74,7 @@ export const loadSpotsThunk = () => async (dispatch) => {
 export const fetchDetailedSpotThunk = (spotId) => async (dispatch) => {
     const res = await csrfFetch(`/api/spots/${spotId}`);
 
+    console.log("!!!!!!!!!!!detailSpot in Thunk~~~~: ")
     if(res.ok) {
         const spotDetails =await res.json();
         // console.log("spotDetails in thunk: ", spotDetails);
@@ -177,11 +185,14 @@ export const getCurrentUserSpotsThunk = () => async (dispatch) => {
 export const searchSpotThunk = (query) => async (dispatch) => {
 
     try {
-        const res = await csrfFetch(`/api/spots/${query}`);
+        const res = await csrfFetch(`/api/spots${query}`);
+
+        console.log("query in thunk: ", `/api/spots/${query}`)
 
         if(res.ok) {
             const spots = await res.json();
-            dispatch(loadSpotsAction(spots));
+            console.log("spots in Spot Thunk: ", spots)
+            dispatch(loadSearchSpotsAction(spots));
             return spots;
         }
     } catch(err) {
@@ -197,16 +208,16 @@ export const searchSpotThunk = (query) => async (dispatch) => {
 
 // const initialState = {};
 
-const initialState = {allState:{}, singleSpot:{}}
+const initialState = {allState:{}, singleSpot:{}, searchSpot: {}};
 
 const spotsReducer = (state = initialState, action) => {
     switch(action.type) {
 
         case LOAD_SPOTS: {
 
-            const newState = {};
+            const newState = {...state, allState: {}, singleSpot: {}, searchSpot: {}};
             action.spots.Spots.forEach((spot) => {
-                newState[spot.id] = spot;
+                newState.allState[spot.id] = spot;
             });
             
             // console.log("newState in spot reducer: ", newState);
@@ -215,9 +226,10 @@ const spotsReducer = (state = initialState, action) => {
             
         };
         case RECEIVE_SPOT: {
-            const spotState = {...state, singleSpot: {[action.spot.id]: action.spot}}
+            const spotState = {...state, allState: {...state.allState}, singleSpot: {[action.spot.id]: action.spot}}
             // console.log("single spot in Spot reducer: ", spotState.singleSpot);
-            return spotState.singleSpot; 
+            return spotState; 
+            // return spotState;
         };
         case UPDATE_SPOT: {
             const spotState = {...state, singleSpot: {[action.spot.id]: action.spot}}
@@ -229,15 +241,29 @@ const spotsReducer = (state = initialState, action) => {
             return spotsState;
         };
         case GET_CURRENT_USER_SPOTs: {
-            const spotsState = {...state};
+            const spotsState = {...state, allState: {}, singleSpot: {}, searchSpot: {}};
             // console.log("spotsState in spot reducer: ", spotsState);
             action.spots.Spots.forEach((spot) => {
-                spotsState[spot.id] = spot;
+                spotsState.allState[spot.id] = spot;
             })
             return spotsState;
         };
+        case SEARCH_SPOTS: {
+            const spotState = {...state, allState: {...state.allState}, singleSpot: {...state.singleSpot}, searchSpot: {}};
+            console.log("action.spots in reducer: ", action.spots);
+            action.spots.Spots.forEach((spot) => {
+                console.log("spot state in reducer: ", spotState);
+                console.log("spot in reducer: ", spot);
+                console.log("spot.id ", spot.id);
+                spotState.searchSpot[spot.id] = spot;
+            });
+            
+            return spotState;
+
+        }
         case CLEAR_SPOT: {
-            return {}
+            const emptyState = {...state, allState: {}, singleSpot: {}, searchSpot: {...state.searchSpot}}
+            return emptyState;
         }
         default:
             return state;
