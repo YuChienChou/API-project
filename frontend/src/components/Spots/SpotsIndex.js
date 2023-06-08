@@ -14,7 +14,7 @@ const SpotsIndex = () => {
     useEffect(() => {
         dispatch(loadSpotsThunk());
         
-        // return () => dispatch(actionClearSpot());
+        return () => dispatch(actionClearSpot());
     }, [dispatch]);
 
     if(spots === undefined || spots.length < 1) return null;

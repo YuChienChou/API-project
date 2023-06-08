@@ -71,7 +71,7 @@ router.get('/', async (req, res, next) => {
 
     let {page, size, minLat, maxLat, minLng, maxLng, minPrice, maxPrice} = req.query;
 
-    console.log("~~~~~~~~~~~query in Rout: ~~~", req.query);
+    // console.log("~~~~~~~~~~~query in Rout: ~~~", req.query);
     
     if(!page) page = 1;
     if(!size) size = 100; 
@@ -138,7 +138,7 @@ router.get('/', async (req, res, next) => {
 
 
     const spots = await Spot.findAll(query);
-    console.log("spots in spots ROUTE: ", spots);
+    // console.log("spots in spots ROUTE: ", spots);
     const payload = [];
 
     for(let i = 0; i <spots.length; i++) {

@@ -74,7 +74,7 @@ export const loadSpotsThunk = () => async (dispatch) => {
 export const fetchDetailedSpotThunk = (spotId) => async (dispatch) => {
     const res = await csrfFetch(`/api/spots/${spotId}`);
 
-    console.log("!!!!!!!!!!!detailSpot in Thunk~~~~: ")
+    // console.log("!!!!!!!!!!!detailSpot in Thunk~~~~: ");
     if(res.ok) {
         const spotDetails =await res.json();
         // console.log("spotDetails in thunk: ", spotDetails);
@@ -226,7 +226,7 @@ const spotsReducer = (state = initialState, action) => {
             
         };
         case RECEIVE_SPOT: {
-            const spotState = {...state, allState: {...state.allState}, singleSpot: {[action.spot.id]: action.spot}}
+            const spotState = {...state, allState: {...state.allState}, singleSpot: {[action.spot.id]: action.spot}, searchSpot: {}}
             // console.log("single spot in Spot reducer: ", spotState.singleSpot);
             return spotState; 
             // return spotState;
@@ -250,11 +250,11 @@ const spotsReducer = (state = initialState, action) => {
         };
         case SEARCH_SPOTS: {
             const spotState = {...state, allState: {...state.allState}, singleSpot: {...state.singleSpot}, searchSpot: {}};
-            console.log("action.spots in reducer: ", action.spots);
+            // console.log("action.spots in reducer: ", action.spots);
             action.spots.Spots.forEach((spot) => {
-                console.log("spot state in reducer: ", spotState);
-                console.log("spot in reducer: ", spot);
-                console.log("spot.id ", spot.id);
+                // console.log("spot state in reducer: ", spotState);
+                // console.log("spot in reducer: ", spot);
+                // console.log("spot.id ", spot.id);
                 spotState.searchSpot[spot.id] = spot;
             });
             
