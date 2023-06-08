@@ -14,12 +14,12 @@ const SpotReviews = ({ spot }) => {
 
     
     // const { spotId } = useParams();
-    // console.log("spot in SpotReviews: ", spot);
+    console.log("spot in SpotReviews: ", spot);
     const reviewsStore = useSelector((state) => state.reviews);
-    // console.log("reviewsStore in spotreviews: ", reviewsStore);
+    console.log("reviewsStore in spotreviews: ", reviewsStore);
     const reviews = Object.values(reviewsStore);
     const user = useSelector((state) => state.session.user);
-    // console.log("reviews in SpotReviews: ", reviews);
+    console.log("reviews in SpotReviews: ", reviews);
     const dispatch = useDispatch();
 
     // const userReview = reviews.find((review) => review.userId === user.id);
@@ -28,7 +28,7 @@ const SpotReviews = ({ spot }) => {
 
 
     useEffect(() => {
-        dispatch(fetchDetailedSpotThunk(spot.id));
+        // dispatch(fetchDetailedSpotThunk(spot.id));
         // console.log("loadReviewsThunk runs in SpotReview");
         dispatch(loadReviewsThunk(spot.id));
 
@@ -40,7 +40,7 @@ const SpotReviews = ({ spot }) => {
     }, [dispatch, spot.id]);
 
 
-    // if(!reviews || !reviews[reviews.length-1].User) return null;
+    if(!reviews) return null;
 
     // if(!user) {
         return (

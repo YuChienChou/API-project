@@ -23,10 +23,11 @@ export default function ManageReviews() {
         // return () => dispatch(actionClearReview());
     }, [dispatch]);
 
+   console.log('%c Current user reviews: ', 'color:yellow;', currentUserReviews);
     //if the currentUserReviews array is empty and the obj inside of the array doesn't have 
     // a Spot key, return null to run the useEffect();
     // if(!currentUserReviews.length || !currentUserReviews[0].Spot) return null;
-    if(!currentUserReviews.length) {
+    if(!currentUserReviews.length || !currentUserReviews[0].Spot) {
         console.log("guard is running");
         return null;}
 
@@ -34,6 +35,9 @@ export default function ManageReviews() {
     // for (let i = 0; i < currentUserReviews.length;  i++) {
     //     if(!currentUserReviews.length || !currentUserReviews[i].Spot) return null;
     // }
+
+    // console.log("Current user reviews: ", currentUserReviews);
+   
 
     return (
         <>

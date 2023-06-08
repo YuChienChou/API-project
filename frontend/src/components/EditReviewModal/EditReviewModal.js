@@ -9,7 +9,7 @@ import { fetchDetailedSpotThunk } from "../../store/spots";
 const EditReviewModal = ({ spot, review }) => {
 // const EditReviewModal = ({ spot, review }) => {
 
-    // console.log("spot in EditReviewModal: ", spot);
+    console.log("spot in EditReviewModal: ", spot);
     // console.log("review in EditReviewModal: ", review);
     // console.log("spot in EditReviewModal: ", spot);
 

@@ -144,6 +144,7 @@ const initialState = {};
 const reviewReducer = (state = initialState, action) => {
     switch(action.type) {
         case LOAD_REVIEWS: {
+            console.log('%c Current user reviews: ', 'color:pink;', action.reviews);
             const reviewsState = {};
             action.reviews.Reviews.forEach((review) => {
                 reviewsState[review.id] = review

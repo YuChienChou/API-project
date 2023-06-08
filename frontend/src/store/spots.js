@@ -175,27 +175,33 @@ export const getCurrentUserSpotsThunk = () => async (dispatch) => {
 //normalize review data
 
 
-const initialState = {};
+// const initialState = {};
+
+const initialState = {allState:{}, singleSpot:{}}
 
 const spotsReducer = (state = initialState, action) => {
     switch(action.type) {
 
         case LOAD_SPOTS: {
-            const spotsState = {};
+
+            const newState = {};
             action.spots.Spots.forEach((spot) => {
-                // console.log("spot in for each loop: ", spot);
-                spotsState[spot.id] = spot;
+                newState[spot.id] = spot;
             });
-            // console.log('spotsState in reducer: ', spotsState);
-            return spotsState;
+            
+            // console.log("newState in spot reducer: ", newState);
+    
+            return newState;
+            
         };
         case RECEIVE_SPOT: {
-            const spotState = {...state, [action.spot.id]: action.spot}
-            return spotState; 
+            const spotState = {...state, singleSpot: {[action.spot.id]: action.spot}}
+            // console.log("single spot in Spot reducer: ", spotState.singleSpot);
+            return spotState.singleSpot; 
         };
         case UPDATE_SPOT: {
-            const spotState = {...state, [action.spot.id]: action.spot}
-            return spotState;
+            const spotState = {...state, singleSpot: {[action.spot.id]: action.spot}}
+            return spotState.singleSpot;
         };
         case DELETE_SPOT: {
             const spotsState = {...state};
