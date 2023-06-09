@@ -33,7 +33,7 @@ const SpotReviews = ({ spot }) => {
         dispatch(loadReviewsThunk(spot.id));
 
         return () => {
-            console.log("actionClearReview is running in useEffect in SpotReview");
+            // console.log("actionClearReview is running in useEffect in SpotReview");
             dispatch(actionClearReview());
         }
         

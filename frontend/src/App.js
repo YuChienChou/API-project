@@ -10,6 +10,7 @@ import EditSpotForm from "./components/Spots/EditSpotForm";
 import ManageSpot from "./components/Spots/ManageSpot";
 import ManageReviews from './components/Reviews/ManageReview';
 import SearchSpots from './components/Spots/SearchSpots';
+import BookingIndex from "./components/Bookings/BookingIndex";
 
 function App() {
   const dispatch = useDispatch();
@@ -29,6 +30,7 @@ function App() {
            <Route exact path='/spots/new' component={CreateSpotForm} />
            <Route exact path='/spots/query' component={SearchSpots}/>
            <Route exact path='/spots/:spotId/edit' component={EditSpotForm} /> 
+           <Route exact path='/spots/:spotId/bookings' component={BookingIndex} />
            <Route exact path='/spots/:spotId' component={SpotShow} />
            <Route exact path='/reviews/current' component={ManageReviews} />
            

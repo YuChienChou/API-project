@@ -11,6 +11,7 @@ const ManageSpot = () => {
  
     const dispatch = useDispatch();
     const spotsStore = useSelector((state) => state.spots.allState);
+    console.log("spotStore in ManageSpot: ", spotsStore);
     const spots = Object.values(spotsStore);
 
 
@@ -18,7 +19,7 @@ const ManageSpot = () => {
         dispatch(getCurrentUserSpotsThunk());
     }, [dispatch]);
 
-    if(spots === undefined) return null;
+    // if(spots === undefined) return null;
 
     if(spots.length < 1) {
         return (

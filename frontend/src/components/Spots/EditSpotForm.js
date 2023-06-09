@@ -5,7 +5,7 @@ import SpotFormEdit from './SpotFormEdit';
 const EditSpotForm = () => {
     const { spotId } = useParams();
     const spot = useSelector((state) => state.spots.allState[spotId]);
-    console.log("spot in EditSpotForm: ", spot);
+    // console.log("spot in EditSpotForm: ", spot);
 
 
     if(!spot.id) return (<></>);

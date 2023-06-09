@@ -19,16 +19,16 @@ export default function ManageReviews() {
         // dispatch(actionClearReview());
         // console.log("actionClearReview run in ManageReview");
         dispatch(thunkGetCurrentUserReview());
-        console.log("thunkGetCurrentUserReview run in ManageReview");
+        // console.log("thunkGetCurrentUserReview run in ManageReview");
         // return () => dispatch(actionClearReview());
     }, [dispatch]);
 
-   console.log('%c Current user reviews in ManageReview: ', 'color:yellow;', currentUserReviews);
+//    console.log('%c Current user reviews in ManageReview: ', 'color:yellow;', currentUserReviews);
     //if the currentUserReviews array is empty and the obj inside of the array doesn't have 
     // a Spot key, return null to run the useEffect();
     // if(!currentUserReviews.length || !currentUserReviews[0].Spot) return null;
     if(!currentUserReviews.length || !currentUserReviews[0].Spot) {
-        console.log("guard is running");
+        // console.log("guard is running");
         return null;}
 
 

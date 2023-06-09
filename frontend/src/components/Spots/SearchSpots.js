@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { loadSpotsThunk, actionClearSpot, searchSpotThunk } from '../../store/spots';
 import { useEffect } from 'react';
 
-const SearchSpots = () => {
+const SearchSpots = ({query}) => {
     const spotsStore =useSelector((state) => state.spots.searchSpot);
     console.log("spotStore in SearchSpots:", spotsStore);
     
@@ -12,12 +12,12 @@ const SearchSpots = () => {
     console.log("spotResult in SearchSpots: ", spots);
     const dispatch = useDispatch();
 
-    useEffect(() => {
-        console.log("loadSpotsThunk running in SearchSpots");
-        // dispatch(searchSpotThunk());
+    // useEffect(() => {
+    //     console.log("loadSpotsThunk running in SearchSpots");
+    //     dispatch(searchSpotThunk(query));
         
-        // return () => dispatch(actionClearSpot());
-    }, [dispatch]);
+    //     // return () => dispatch(actionClearSpot());
+    // }, [dispatch]);
 
     if(spots === undefined || spots.length === 0) return null;
 

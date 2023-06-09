@@ -236,8 +236,8 @@ const spotsReducer = (state = initialState, action) => {
             return spotState.singleSpot;
         };
         case DELETE_SPOT: {
-            const spotsState = {...state};
-            delete spotsState[action.spotId];
+            const spotsState = {...state, allState: { ...state.allState}, singleSpot: {}, searchSpot: {}};
+            delete spotsState.allState[action.spotId];
             return spotsState;
         };
         case GET_CURRENT_USER_SPOTs: {
