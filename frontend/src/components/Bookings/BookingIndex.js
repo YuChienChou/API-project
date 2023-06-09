@@ -2,8 +2,8 @@ import { useSelector, useDispatch } from "react-redux";
 import { loadBookingThunk } from "../../store/booking";
 import { useEffect } from "react";
 import { fetchDetailedSpotThunk } from "../../store/spots";
-
-
+import OpenModalMenuItem from "../Navigation/OpenModalMenuItem";
+import CreateBookingModal from '../Bookings/CreateBookingModal';
 
 
 export default function BookingIndex () {
@@ -12,6 +12,8 @@ export default function BookingIndex () {
     const spot = Object.values(spotStore);
     console.log("spot in BookingIndex: ", spot)
 
+    const user = useSelector((state) => state.session.user);
+
     const bookingsStore = useSelector((state) => state.bookings.allBookings);
     console.log("bookings in BookingIndex: ", bookingsStore);
     const bookingArr = Object.values(bookingsStore);
@@ -19,10 +21,10 @@ export default function BookingIndex () {
     const dispatch = useDispatch();
 
     
-    // useEffect(() => {
-    //     dispatch(fetchDetailedSpotThunk(spot.id));
-    //     dispatch(loadBookingThunk(spot.id));
-    // }, [dispatch]);
+    useEffect(() => {
+        dispatch(fetchDetailedSpotThunk(spot[0].id));
+        dispatch(loadBookingThunk(spot[0].id));
+    }, [dispatch]);
   
     
     // if(!bookingArr.length) return null;
@@ -30,6 +32,16 @@ export default function BookingIndex () {
         return (
             <>
             <div>This spot is available at any time!</div>
+            <div>
+                {spot[0].ownerId !== user.id ? 
+                    <button>
+                        <OpenModalMenuItem
+                            modalComponent={<CreateBookingModal spot={spot} />}
+                            itemText='Make your reservation' 
+                            
+                    /></button> : ""
+                }
+            </div>
             </>
         )
     }
@@ -38,7 +50,7 @@ export default function BookingIndex () {
 
     return (
         <>
-        <h3>{spot[0].name} Reservation</h3>
+        <h3>{spot[0].name} Reserved Schedule</h3>
         {bookingArr.map((booking) => (
             <li key={booking.id}>
                 {(() => {
@@ -63,12 +75,23 @@ export default function BookingIndex () {
                     const endDateString = booking.endDate.split("-")[2].split("T");
                     console.log("This is endDateString: ", endDateString)
                 
-                    return <p>This spot is reserved between {startDateString[0]} {month[booking.startDate.split("-")[1]]} {booking.startDate.split("-")[0]} / {endDateString[0]} {month[booking.endDate.split("-")[1]]} {booking.endDate.split("-")[0]}
+                    return <p>This spot is reserved by {user.firstName} between {month[booking.startDate.split("-")[1]]} {startDateString[0]} {booking.startDate.split("-")[0]} / {endDateString[0]} {month[booking.endDate.split("-")[1]]} {booking.endDate.split("-")[0]}
                         </p>
 
                 })()}
             </li>
         ))}
+
+        <div>
+            {spot[0].ownerId !== user.id ? 
+            <button>
+                <OpenModalMenuItem
+                    modalComponent={<CreateBookingModal spot={spot} />}
+                    itemText='Make your reservation' 
+                    
+            /></button> : ""
+        }
+        </div>
         </>
     )
 }
