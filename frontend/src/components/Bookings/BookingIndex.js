@@ -8,14 +8,14 @@ import CreateBookingModal from '../Bookings/CreateBookingModal';
 
 export default function BookingIndex () {
     const spotStore = useSelector((state) => state.spots.singleSpot);
-    console.log("spotStore in BookingIndex: ", spotStore);
+    // console.log("spotStore in BookingIndex: ", spotStore);
     const spot = Object.values(spotStore);
-    console.log("spot in BookingIndex: ", spot)
+    console.log("spot in BookingIndex: ", spot);
 
     const user = useSelector((state) => state.session.user);
 
     const bookingsStore = useSelector((state) => state.bookings.allBookings);
-    console.log("bookings in BookingIndex: ", bookingsStore);
+    console.log("bookingsStore in BookingIndex: ", bookingsStore);
     const bookingArr = Object.values(bookingsStore);
     console.log("bookingArr in BookingIndex: ", bookingArr);
     const dispatch = useDispatch();
@@ -25,13 +25,15 @@ export default function BookingIndex () {
         dispatch(fetchDetailedSpotThunk(spot[0].id));
         dispatch(loadBookingThunk(spot[0].id));
     }, [dispatch]);
+
+    if(!user) return "Please log in to make a reservation."
   
     
     // if(!bookingArr.length) return null;
     if(bookingArr.length === 0) {
         return (
             <>
-            <div>This spot is available at any time!</div>
+            <div>{spot[0].name} is available at any time!</div>
             <div>
                 {spot[0].ownerId !== user.id ? 
                     <button>
@@ -71,12 +73,22 @@ export default function BookingIndex () {
                     }
                    
                     const startDateString = booking.startDate.split("-")[2].split("T");
-                    console.log("This is startDateString", startDateString);
+                    // console.log("This is startDateString", startDateString);
                     const endDateString = booking.endDate.split("-")[2].split("T");
-                    console.log("This is endDateString: ", endDateString)
+                    // console.log("This is endDateString: ", endDateString);
                 
-                    return <p>This spot is reserved by {user.firstName} between {month[booking.startDate.split("-")[1]]} {startDateString[0]} {booking.startDate.split("-")[0]} / {endDateString[0]} {month[booking.endDate.split("-")[1]]} {booking.endDate.split("-")[0]}
+                    // return <p>This spot is reserved by {booking.User ? booking.User.firstName : user.firstName} between {month[booking.startDate.split("-")[1]]} {startDateString[0]} {booking.startDate.split("-")[0]} / {endDateString[0]} {month[booking.endDate.split("-")[1]]} {booking.endDate.split("-")[0]}
+                    //     </p>
+                    if (booking.User) {
+                        return <p>This spot is reserved by {booking.User.firstName} between {month[booking.startDate.split("-")[1]]} {startDateString[0]} {booking.startDate.split("-")[0]} / {endDateString[0]} {month[booking.endDate.split("-")[1]]} {booking.endDate.split("-")[0]}
                         </p>
+                    } else {
+                        return <p>This spot is reserved between {month[booking.startDate.split("-")[1]]} {startDateString[0]} {booking.startDate.split("-")[0]} / {endDateString[0]} {month[booking.endDate.split("-")[1]]} {booking.endDate.split("-")[0]}
+                        </p>
+                    }
+
+                })()}
+                {(() => {
 
                 })()}
             </li>

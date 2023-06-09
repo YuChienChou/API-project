@@ -1,13 +1,12 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { createBookingThunk } from '../../store/booking';
+import { createBookingThunk, loadBookingThunk } from '../../store/booking';
 import { useModal } from '../../context/Modal';
-import { loadBookingThunk } from '../../store/booking';
 import { useHistory } from 'react-router-dom';
 
 export default function CreateBookingModal({ spot }) {
 
-    console.log("spot in CreateBookingModal: ", spot);
+    // console.log("spot in CreateBookingModal: ", spot);
     const [bookingStartDate, setBookingStartDate] = useState("");
     const [bookingEndDate, setBookingEndDate] = useState("");
     const [errors, setErrors] = useState({});
@@ -17,7 +16,7 @@ export default function CreateBookingModal({ spot }) {
     const { closeModal } = useModal();
     
     const user = useSelector((state) => state.session.user);
-    console.log("user in createBookingModal: ", user);
+    // console.log("user in createBookingModal: ", user);
 
    
     const onSubmit = async (e) => {
@@ -38,7 +37,7 @@ export default function CreateBookingModal({ spot }) {
             setErrors(newBooking.errors);
             console.log("errors : ", errors);
         } else {
-            // dispatch(loadBookingThunk(spot.id));
+            dispatch(loadBookingThunk(spot[0].id));
             window.alert("Reservation success!");
             history.push(`/spots/${spot[0].id}/bookings`)
             closeModal();

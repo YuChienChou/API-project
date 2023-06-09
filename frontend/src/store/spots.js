@@ -6,7 +6,7 @@ const LOAD_SPOTS = "spots/LOAD_SPOTS";
 const RECEIVE_SPOT = "spots/RECEIVE_SPOT";
 const UPDATE_SPOT = 'spots/UPDATE_SPOT';
 const DELETE_SPOT = 'spots/DELETE_SPOT';
-const GET_CURRENT_USER_SPOTs = 'spots/GET_CURRENT_USER_SPOTS';
+const GET_CURRENT_USER_SPOTS = 'spots/GET_CURRENT_USER_SPOTS';
 const CLEAR_SPOT = "spots/CLEAR_SPOT";
 const SEARCH_SPOTS = "spots/SEARCH_SPOTS";
 
@@ -38,7 +38,7 @@ export const deleteSpotAction = (spotId) => {
 
 export const getCurrentUserSpotsAction = (spots) => {
     return {
-        type: GET_CURRENT_USER_SPOTs,
+        type: GET_CURRENT_USER_SPOTS,
         spots
     };
 };
@@ -240,7 +240,7 @@ const spotsReducer = (state = initialState, action) => {
             delete spotsState.allState[action.spotId];
             return spotsState;
         };
-        case GET_CURRENT_USER_SPOTs: {
+        case GET_CURRENT_USER_SPOTS: {
             const spotsState = {...state, allState: {}, singleSpot: {}, searchSpot: {}};
             // console.log("spotsState in spot reducer: ", spotsState);
             action.spots.Spots.forEach((spot) => {
