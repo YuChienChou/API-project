@@ -1,46 +1,46 @@
 import { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
-import { searchSpotThunk } from "../../store/spots";
+import { loadSearchSpotsAction, searchSpotThunk} from "../../store/spots";
 import SearchSpots from "../Spots/SearchSpots";
 import { useModal } from "../../context/Modal";
 
 export default function SearchSpotModal() {
-    const [minLat, setMinLat] = useState(0);
-    const [maxLat, setMaxLat] = useState(0);
-    const [minLng, setMinLng] = useState(0);
-    const [maxLng, setMaxLng] = useState(0);
-    const [minPrice, setMinPrice] = useState(0);
-    const [maxPrice, setMaxPrice] = useState(0);
+    const [minLat, setMinLat] = useState("");
+    const [maxLat, setMaxLat] = useState("");
+    const [minLng, setMinLng] = useState("");
+    const [maxLng, setMaxLng] = useState("");
+    const [minPrice, setMinPrice] = useState("");
+    const [maxPrice, setMaxPrice] = useState("");
     const [name, setName] = useState("");
+    const [startDate, setStartDate] = useState("");
+    const [endDate, setEndDate] = useState("");
     const [errors, setErrors] = useState({});
     const [isSubmit, setIsSubmit] = useState(false);
     const dispatch = useDispatch();
     const { closeModal } = useModal();
     const history = useHistory();
 
-    useEffect(() => {
-    
-    })
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         setIsSubmit(true);
 
-        
 
         // const query = `?minLat=${minLat}&maxLat=${maxLat}&minLng=${minLng}&maxLng=${maxLng}&minPrice=${minPrice}&maxPrice=${maxPrice}&name=${(`%${name}%`)}`
-        const queryParams = [];
+        const queryArr = [];
     
-        if (minLat) queryParams.push(`minLat=${minLat}`);
-        if (maxLat) queryParams.push(`maxLat=${maxLat}`);
-        if (minLng) queryParams.push(`minLng=${minLng}`);
-        if (maxLng) queryParams.push(`maxLng=${maxLng}`);
-        if (minPrice) queryParams.push(`minPrice=${minPrice}`);
-        if (maxPrice) queryParams.push(`maxPrice=${maxPrice}`);
-        if (name) queryParams.push(`name=${(`%${name}%`)}`);
+        if (minLat) queryArr.push(`minLat=${minLat}`);
+        if (maxLat) queryArr.push(`maxLat=${maxLat}`);
+        if (minLng) queryArr.push(`minLng=${minLng}`);
+        if (maxLng) queryArr.push(`maxLng=${maxLng}`);
+        if (minPrice) queryArr.push(`minPrice=${minPrice}`);
+        if (maxPrice) queryArr.push(`maxPrice=${maxPrice}`);
+        if (name) queryArr.push(`name=${(`%${name}%`)}`);
+        if (startDate) queryArr.push(`startDate=${startDate}`);
+        if (endDate) queryArr.push(`endDate=${endDate}`);
     
-        const query = queryParams.join('&');
+        const query = queryArr.join('&');
 
         console.log("qurey in SearchSpotModal: ", query);
         
@@ -59,13 +59,18 @@ export default function SearchSpotModal() {
             closeModal();
         }
 
-        setMinLat(0);
-        setMaxLat(0);
-        setMinLng(0);
-        setMaxLng(0);
-        setMinPrice(0);
-        setMaxPrice(0);
+        setMinLat("");
+        setMaxLat("");
+        setMinLng("");
+        setMaxLng("");
+        setMinPrice("");
+        setMaxPrice("");
         setName("");
+        setStartDate("");
+        setEndDate("");
+
+        dispatch(searchSpotThunk(query));
+
     }
 
 
@@ -162,6 +167,28 @@ export default function SearchSpotModal() {
                 placeholder="Please enter the spot name"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
+            />
+        </label>
+        <label>
+            <span>
+                Check-In Date
+            </span>
+            <input 
+                type="date"
+                placeholder="Please enter prefer check-in date"
+                value={startDate}
+                onChange={(e) => setStartDate(e.target.value)}
+            />
+        </label>
+        <label>
+            <span>
+                Check Out Date
+            </span>
+            <input 
+                type="date"
+                placeholder="Please enter prefer check-out date"
+                value={endDate}
+                onChange={(e) => setEndDate(e.target.value)}
             />
         </label>
         <button

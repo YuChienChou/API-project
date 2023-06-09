@@ -249,6 +249,7 @@ const spotsReducer = (state = initialState, action) => {
             return spotsState;
         };
         case SEARCH_SPOTS: {
+            console.log("Search spots in reducer: ", action.spots);
             const spotState = {...state, allState: {...state.allState}, singleSpot: {...state.singleSpot}, searchSpot: {}};
             // console.log("action.spots in reducer: ", action.spots);
             action.spots.Spots.forEach((spot) => {

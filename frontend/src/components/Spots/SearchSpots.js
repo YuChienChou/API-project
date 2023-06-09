@@ -12,14 +12,20 @@ const SearchSpots = ({query}) => {
     console.log("spotResult in SearchSpots: ", spots);
     const dispatch = useDispatch();
 
-    // useEffect(() => {
-    //     console.log("loadSpotsThunk running in SearchSpots");
-    //     dispatch(searchSpotThunk(query));
+    useEffect(() => {
+        console.log("loadSpotsThunk running in SearchSpots");
+        dispatch(loadSpotsThunk());
         
-    //     // return () => dispatch(actionClearSpot());
-    // }, [dispatch]);
+        // return () => dispatch(actionClearSpot());
+    }, [dispatch]);
 
-    if(spots === undefined || spots.length === 0) return null;
+    if(spots === undefined || spots.length === 0) return (
+        <>
+        <p>
+            No result meets the search criteria
+        </p>
+        </>
+    )
 
     return (
         <>
