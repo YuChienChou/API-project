@@ -69,7 +69,7 @@ router.get('/', async (req, res, next) => {
         where: {},
     };
 
-    let {page, size, minLat, maxLat, minLng, maxLng, minPrice, maxPrice, name} = req.query;
+    let {page, size, minLat, maxLat, minLng, maxLng, minPrice, maxPrice, name, startDate, endDate} = req.query;
 
     // console.log("~~~~~~~~~~~query in Rout: ~~~", req.query);
     
@@ -137,14 +137,51 @@ router.get('/', async (req, res, next) => {
 
     if(name) query.where.name = {[Op.like]: (`%${name}%`)};
 
+    let spotResults;
+
+    console.log("startDate and endDate not in the if statement", {startDate, endDate})
+    if (startDate && endDate) {
+        console.log("startDate and endDate", {startDate, endDate})
+        const spots = await Spot.findAll({
+          include: [
+            {
+              model: Booking,
+              attributes: ['id', 'startDate', 'endDate'],
+              where: {
+                [Op.or]: [
+                  {
+                    startDate: {
+                      [Op.gt]: new Date(endDate)
+                    }
+                  },
+                  {
+                    endDate: {
+                      [Op.lt]: new Date(startDate)
+                    }
+                  }
+                ]
+              },
+            }
+          ],
+          where: {
+            '$Bookings.id$': null // Include spots that have no bookings
+          }
+        });
+        spotResults = spots;
+      } else {
+        const spots = await Spot.findAll(query);
+        spotResults = spots;
+      }
 
 
-    const spots = await Spot.findAll(query);
+    // const spots = await Spot.findAll(query);
     // console.log("spots in spots ROUTE: ", spots);
+ 
+
     const payload = [];
 
-    for(let i = 0; i <spots.length; i++) {
-        let spot = spots[i];
+    for(let i = 0; i <spotResults.length; i++) {
+        let spot = spotResults[i];
 
         let previewImage = await SpotImage.findOne({
             where: {
