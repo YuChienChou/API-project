@@ -2,7 +2,6 @@ import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
 import OpenModalMenuItem from "../Navigation/OpenModalMenuItem";
 import { getCurrentUserBookingsThunk } from '../../store/booking';
-import { get } from "../../../../backend/routes/api/bookings";
 
 
 
@@ -26,20 +25,20 @@ export default function ManageBookings () {
     }
 
     return (
-        // <>
-        // <h2>Manage Bookings</h2>
-        // {userBookingsArr.map((booking) => (
-        //     <li key={booking.id}>
-        //         <p>{booking.Spot.name}</p>
-        //         <div>
-        //             <img
-        //         </div>
-        //         <p>{booking.startDate}</p>
-        //         <p>{booking.endDate}</p>
-        //         <p>{booking.createdAt}</p>
-        //         <p>{booking.updatedAt}</p>
-        //     </li>
-        // ))}
-        // </>
+        <>
+        {/* <h2>Manage Bookings</h2>
+        {userBookingsArr.map((booking) => (
+            <li key={booking.id}>
+                <p>{booking.Spot.name}</p>
+                <div>
+                    
+                </div>
+                <p>{booking.startDate}</p>
+                <p>{booking.endDate}</p>
+                <p>{booking.createdAt}</p>
+                <p>{booking.updatedAt}</p>
+            </li>
+        ))} */}
+        </>
     )
 }

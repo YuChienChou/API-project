@@ -10,8 +10,9 @@ export default function SearchSpotModal() {
     const [maxLat, setMaxLat] = useState(0);
     const [minLng, setMinLng] = useState(0);
     const [maxLng, setMaxLng] = useState(0);
-    const [minPrice, setMinPrice] = useState(50);
-    const [maxPrice, setMaxPrice] = useState(120);
+    const [minPrice, setMinPrice] = useState(0);
+    const [maxPrice, setMaxPrice] = useState(0);
+    const [name, setName] = useState("");
     const [errors, setErrors] = useState({});
     const [isSubmit, setIsSubmit] = useState(false);
     const dispatch = useDispatch();
@@ -24,10 +25,25 @@ export default function SearchSpotModal() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        setIsSubmit(true)
+        setIsSubmit(true);
 
-        const query = `?minLat=${minLat}&maxLat=${maxLat}&minLng=${minLng}&maxLng=${maxLng}&minPrice=${minPrice}&maxPrice=${maxPrice}`
+        
+
+        // const query = `?minLat=${minLat}&maxLat=${maxLat}&minLng=${minLng}&maxLng=${maxLng}&minPrice=${minPrice}&maxPrice=${maxPrice}&name=${(`%${name}%`)}`
+        const queryParams = [];
     
+        if (minLat) queryParams.push(`minLat=${minLat}`);
+        if (maxLat) queryParams.push(`maxLat=${maxLat}`);
+        if (minLng) queryParams.push(`minLng=${minLng}`);
+        if (maxLng) queryParams.push(`maxLng=${maxLng}`);
+        if (minPrice) queryParams.push(`minPrice=${minPrice}`);
+        if (maxPrice) queryParams.push(`maxPrice=${maxPrice}`);
+        if (name) queryParams.push(`name=${(`%${name}%`)}`);
+    
+        const query = queryParams.join('&');
+
+        console.log("qurey in SearchSpotModal: ", query);
+        
 
         const spotResults = await dispatch(searchSpotThunk(query));
 
@@ -43,12 +59,13 @@ export default function SearchSpotModal() {
             closeModal();
         }
 
-        setMinLat();
-        setMaxLat();
-        setMinLng();
-        setMaxLng();
-        setMinPrice();
-        setMaxPrice();
+        setMinLat(0);
+        setMaxLat(0);
+        setMinLng(0);
+        setMaxLng(0);
+        setMinPrice(0);
+        setMaxPrice(0);
+        setName("");
     }
 
 
@@ -134,6 +151,17 @@ export default function SearchSpotModal() {
                 step='any'
                 value={maxPrice}
                 onChange={(e) => setMaxPrice(e.target.value)}
+            />
+        </label>
+        <label>
+            <span>
+                Spot Name
+            </span>
+            <input 
+                type="text"
+                placeholder="Please enter the spot name"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
             />
         </label>
         <button

@@ -185,7 +185,7 @@ export const getCurrentUserSpotsThunk = () => async (dispatch) => {
 export const searchSpotThunk = (query) => async (dispatch) => {
 
     try {
-        const res = await csrfFetch(`/api/spots${query}`);
+        const res = await csrfFetch(`/api/spots?${query}`);
 
         console.log("query in thunk: ", `/api/spots/${query}`)
 

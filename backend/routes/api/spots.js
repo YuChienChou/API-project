@@ -69,7 +69,7 @@ router.get('/', async (req, res, next) => {
         where: {},
     };
 
-    let {page, size, minLat, maxLat, minLng, maxLng, minPrice, maxPrice} = req.query;
+    let {page, size, minLat, maxLat, minLng, maxLng, minPrice, maxPrice, name} = req.query;
 
     // console.log("~~~~~~~~~~~query in Rout: ~~~", req.query);
     
@@ -134,6 +134,8 @@ router.get('/', async (req, res, next) => {
     if(minPrice) query.where.price = {[Op.gte]: (minPrice)} ;
     if(maxPrice) query.where.price = {[Op.lte]: (maxPrice)} ;
     if(minPrice && maxPrice) query.where.price = {[Op.between]: [(minPrice), (maxPrice)]};
+
+    if(name) query.where.name = {[Op.like]: (`%${name}%`)};
 
 
 
@@ -516,7 +518,7 @@ router.get('/:spotId/bookings', requireAuth, async(req, res, next) => {
             where: {
                 spotId: spot.id
             },
-            attributes: ['spotId', 'startDate', 'endDate']
+            attributes: ['spotId', 'startDate', 'endDate', 'id']
         });
 
         return res.status(200).json({Bookings: bookings});
@@ -615,6 +617,8 @@ router.post('/:spotId/bookings', requireAuth, async(req, res, next) => {
         startDate,
         endDate,
     });
+
+    console.log("newBooking in the route: ", newBooking);
 
     return res.status(200).json(newBooking)
 
