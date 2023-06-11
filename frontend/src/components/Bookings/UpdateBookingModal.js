@@ -1,5 +1,5 @@
-import { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { editBookingThunk, getCurrentUserBookingsThunk } from '../../store/booking'
 import { useHistory } from 'react-router-dom';
 import { useModal } from '../../context/Modal';
@@ -7,7 +7,7 @@ import { fetchDetailedSpotThunk } from '../../store/spots';
 
 export default function UpdateBookingMadal({ booking }) {
 
-    console.log("booking in UpdateBooingModal: ", booking);
+    // console.log("booking in UpdateBooingModal: ", booking);
 
     const [editStartDate, setEditStartDate] = useState();
     const [editEndDate, setEditEndDate] = useState();
@@ -38,12 +38,12 @@ export default function UpdateBookingMadal({ booking }) {
             setErrors(errors);
         };
 
-        console.log("editStartDate in UpdateBooking onSubmit function: ", editStartDate);
-        console.log("editEndDate in UpdateBooking onSubmit function: ", editEndDate);
+        // console.log("editStartDate in UpdateBooking onSubmit function: ", editStartDate);
+        // console.log("editEndDate in UpdateBooking onSubmit function: ", editEndDate);
 
         const editBooking = await dispatch(editBookingThunk(booking.id, payload));
 
-        console.log("EditBooking in UpdateBookingModal: ", editBooking)
+        // console.log("EditBooking in UpdateBookingModal: ", editBooking)
 
         if(editBooking.message) {
             console.log("editBooking in onSubmit function: ", editBooking);
@@ -53,7 +53,8 @@ export default function UpdateBookingMadal({ booking }) {
             dispatch(getCurrentUserBookingsThunk());
             dispatch(fetchDetailedSpotThunk(booking.Spot.id));
             window.alert("Reservation Updated!");
-            history.push(`/spots/${booking.Spot.id}/bookings`);
+            // history.push(`/spots/${booking.Spot.id}/bookings`);
+            history.push('/bookings/current');
             closeModal();
         }
 

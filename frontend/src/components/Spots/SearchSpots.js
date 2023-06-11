@@ -14,7 +14,7 @@ const SearchSpots = ({query}) => {
 
     useEffect(() => {
         console.log("loadSpotsThunk running in SearchSpots");
-        dispatch(loadSpotsThunk());
+        // dispatch(loadSpotsThunk());
         
         // return () => dispatch(actionClearSpot());
     }, [dispatch]);

@@ -3,6 +3,7 @@ import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { searchSpotThunk} from "../../store/spots";
 import { useModal } from "../../context/Modal";
+import './SearchSpotModal.css';
 
 export default function SearchSpotModal() {
     const [minLat, setMinLat] = useState("");
@@ -77,119 +78,150 @@ export default function SearchSpotModal() {
         id='search-spot-form'
         onSubmit={handleSubmit}
         >
-        <h3>Search Spots</h3>
-        <h5>Latitude Range</h5>
-        {/* {isSubmit && <p>{errors.minPrice.message}</p> && <p>{errors.maxPrice.message}</p>}  */}
-    
-        <label>
-            <span>
-                Minimum Latitude
-            </span>
-            <input
-                type="number"
-                placeholder="Please enter the minimum latitude"
-                step='any'
-                value={minLat}
-                onChange={(e) => setMinLat(e.target.value)}
-            />
-        </label> 
-        <label>
-            <span>
-                Maximum Latitude
-            </span>
-            <input
-                type="number"
-                placeholder="Please enter the maximum latitude"
-                step='any'
-                value={maxLat}
-                onChange={(e) => setMaxLat(e.target.value)}
-            />
-        </label> 
-        <h5>Longitude Range</h5>
-        <label>
-            <span>
-                Minimum Longitude
-            </span>
-            <input 
-                type="number"
-                placeholder="Please enter the minimum longitude"
-                step='any'
-                value={minLng}
-                onChange={(e) => setMinLng(e.target.value)}
-            />
-        </label>
-        <label>
-            <span>
-                Maximum Longitude
-            </span>
-            <input 
-                type="number"
-                placeholder="Please enter the maximum longitude"
-                step='any'
-                value={maxLng}
-                onChange={(e) => setMaxLng(e.target.value)}
-            />
-        </label>
-        <h5>Price Range</h5>
-        <label>
-            <span>
-                Minimum price
-            </span>
-            <input 
-                type="number"
-                placeholder="Please enter the minimum price"
-                step='any'
-                value={minPrice}
-                onChange={(e) => setMinPrice(e.target.value)}
-            />
-        </label>
-        <label>
-            <span>
-                Maximum Price
-            </span>
-            <input 
-                type="number"
-                placeholder="Please enter the maximum longitude"
-                step='any'
-                value={maxPrice}
-                onChange={(e) => setMaxPrice(e.target.value)}
-            />
-        </label>
-        <label>
-            <span>
-                Spot Name
-            </span>
-            <input 
-                type="text"
-                placeholder="Please enter the spot name"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-            />
-        </label>
-        <label>
-            <span>
-                Check-In Date
-            </span>
-            <input 
-                type="date"
-                placeholder="Please enter prefer check-in date"
-                value={checkInDate}
-                onChange={(e) => setCheckInDate(e.target.value)}
-            />
-        </label>
-        <label>
-            <span>
-                Check Out Date
-            </span>
-            <input 
-                type="date"
-                placeholder="Please enter prefer check-out date"
-                value={checkOutDate}
-                onChange={(e) => setCheckOutDate(e.target.value)}
-            />
-        </label>
+        <h1>Search Spots</h1> 
+        <div className="search-item-div">
+            <h4>Search By Spot Name</h4>
+            <label>
+                {/* <span>
+                    Spot Name
+                </span> */}
+                <input 
+                    type="text"
+                    placeholder="Please enter the spot name"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                    className='search-input'
+                />
+            </label>
+        </div>
+        <div className='search-item-div'>
+            <h4>Search By Price Range</h4>
+            <div className="search-criteria-div">
+                <label>
+                    <span>
+                        Minimum price
+                    </span>
+                    <input 
+                        type="number"
+                        placeholder="minimum price"
+                        step='any'
+                        value={minPrice}
+                        onChange={(e) => setMinPrice(e.target.value)}
+                        className='search-input'
+                    />
+                </label>
+                <label>
+                    <span>
+                        Maximum Price
+                    </span>
+                    <input 
+                        type="number"
+                        placeholder="maximum price"
+                        step='any'
+                        value={maxPrice}
+                        onChange={(e) => setMaxPrice(e.target.value)}
+                        className='search-input'
+                    />
+                </label>
+            </div>
+        </div>
+        <div className="search-item-div">
+            <h4>Search By Preferred Schedule</h4>
+            <div className="search-criteria-div">
+                <label>
+                    <span>
+                        Preferred Check-In Date
+                    </span>
+                    <input 
+                        type="date"
+                        placeholder="Please enter prefer check-in date"
+                        value={checkInDate}
+                        onChange={(e) => setCheckInDate(e.target.value)}
+                        className='search-input'
+                    />
+                </label>
+                <label>
+                    <span>
+                        Preferred Check Out Date
+                    </span>
+                    <input 
+                        type="date"
+                        placeholder="Please enter prefer check-out date"
+                        value={checkOutDate}
+                        onChange={(e) => setCheckOutDate(e.target.value)}
+                        className='search-input'
+                    />
+                </label>
+            </div>
+        </div>
+        <div className='search-item-div'>
+            <h4>Search by Latitude Range</h4>
+            <div className="search-criteria-div">
+                <label>
+                    <span>
+                        Minimum Latitude
+                    </span>
+                    <input
+                        type="number"
+                        placeholder="minimum latitude"
+                        step='any'
+                        value={minLat}
+                        onChange={(e) => setMinLat(e.target.value)}
+                        className='search-input'
+                    />
+                </label> 
+                <label>
+                    <span>
+                        Maximum Latitude
+                    </span>
+                    <input
+                        type="number"
+                        placeholder="maximum latitude"
+                        step='any'
+                        value={maxLat}
+                        onChange={(e) => setMaxLat(e.target.value)}
+                        className='search-input'
+                    />
+                </label> 
+            </div>
+        </div>
+        <div className="search-item-div">
+            <h4>Search By Longitude Range</h4>
+            <div className="search-criteria-div">
+                <label>
+                    <span>
+                        Minimum Longitude
+                    </span>
+                    <input 
+                        type="number"
+                        placeholder="minimum longitude"
+                        step='any'
+                        value={minLng}
+                        onChange={(e) => setMinLng(e.target.value)}
+                        className='search-input'
+                    />
+                </label>
+                <label>
+                    <span>
+                        Maximum Longitude
+                    </span>
+                    <input 
+                        type="number"
+                        placeholder="maximum longitude"
+                        step='any'
+                        value={maxLng}
+                        onChange={(e) => setMaxLng(e.target.value)}
+                        className='search-input'
+                    />
+                </label>
+            </div>
+        </div>
+       
+       
+       
         <button
             type='submit'
+            id='search-button'
         >
             Search
         </button>

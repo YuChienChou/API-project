@@ -6,22 +6,29 @@ import { deleteBookingThunk, getCurrentUserBookingsThunk } from '../../store/boo
 
 export default function DeleteBookingModal({ booking }) {
 
-    const [errors, setErrors] = useState();
+    const [errors, setErrors] = useState({});
+    const [hasSubmit, setHasSubmit] = useState(false);
     const dispatch = useDispatch();
     const { closeModal } = useModal();
 
-    const handleBookingDelete = (e) => {
+    const handleBookingDelete = async (e) => {
         e.preventDefault();
 
-        return dispatch(deleteBookingThunk(booking.id))
-            .then(dispatch(getCurrentUserBookingsThunk()))
-            .then(closeModal())
-            .catch(async (res) => {
-                const data = await res.json();
-                if(data && data.errors) {
-                    setErrors.apply(data.errors);
-                }
-            } );
+        setHasSubmit(true);
+
+        const deleteBooking = await dispatch(deleteBookingThunk(booking.id));
+
+        if(deleteBooking.message) {
+            console.log("deleteBooking in handleBookingDelete funciton: ", deleteBooking);
+            setErrors(deleteBooking);
+            console.log("errors: ", errors);
+        } else {
+            dispatch(getCurrentUserBookingsThunk())
+            window.alert("Reservation deleted!");
+            // history.push('bookings/current');
+            closeModal();
+        }
+
     };
 
     
@@ -30,6 +37,7 @@ export default function DeleteBookingModal({ booking }) {
         <>
         <h1>Confirm Delete</h1>
         <p>Are you sure you want to delete this reservation?</p>
+        {hasSubmit && <p>{errors.message}</p>}
         <div className='confirm-delete-review-div'>
             <button 
                 type='submit'
