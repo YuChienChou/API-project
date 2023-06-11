@@ -2,6 +2,8 @@ import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
 import OpenModalMenuItem from "../Navigation/OpenModalMenuItem";
 import { getCurrentUserBookingsThunk } from '../../store/booking';
+import UpdateBookingModal from '../Bookings/UpdateBookingModal';
+import DeleteBookingModal from '../Bookings/DeleteBooiingModal';
 
 
 
@@ -15,6 +17,7 @@ export default function ManageBookings () {
     const dispatch = useDispatch();
 
     useEffect(() => {
+        console.log("getCurrentUserBookingsThuns runs in the ManageBooking useEffect");
         dispatch(getCurrentUserBookingsThunk());
     }, [dispatch]);
 
@@ -26,19 +29,53 @@ export default function ManageBookings () {
 
     return (
         <>
-        {/* <h2>Manage Bookings</h2>
+        <h2>Manage Bookings</h2>
         {userBookingsArr.map((booking) => (
             <li key={booking.id}>
                 <p>{booking.Spot.name}</p>
                 <div>
-                    
+                    <img src={booking.Spot.previewImage} alt=""/>
                 </div>
-                <p>{booking.startDate}</p>
-                <p>{booking.endDate}</p>
-                <p>{booking.createdAt}</p>
-                <p>{booking.updatedAt}</p>
+                {(() => {
+                    const month = booking.startDate.split("-")[1];
+                    const year = booking.startDate.split("-")[0];
+                    const date = booking.startDate.split("-")[2].split("T")[0];
+                    return <p>Check-in Date: {month}/{date}/{year}</p>
+                })()}
+                {(() => {
+                    const month = booking.endDate.split("-")[1];
+                    const year = booking.endDate.split("-")[0];
+                    const date = booking.endDate.split("-")[2].split("T")[0];
+                    return <p>Check-out Date: {month}/{date}/{year}</p>
+                })()}
+                {(() => {
+                    const month = booking.createdAt.split("-")[1];
+                    const year = booking.createdAt.split("-")[0];
+                    const date = booking.createdAt.split("-")[2].split("T")[0];
+                    return <p>Reserved At: {month}/{date}/{year}</p>
+                })()}
+                {(() => {
+                    const month = booking.updatedAt.split("-")[1];
+                    const year = booking.updatedAt.split("-")[0];
+                    const date = booking.updatedAt.split("-")[2].split("T")[0];
+                    return <p>Updated At: {month}/{date}/{year}</p>
+                })()}
+                <div>
+                    <button>
+                        <OpenModalMenuItem
+                            modalComponent={<UpdateBookingModal booking={booking}/>}
+                            itemText="Update"
+                        />
+                    </button>
+                    <button>
+                        <OpenModalMenuItem
+                            modalComponent={<DeleteBookingModal booking={booking}/>}
+                            itemText="Delete"
+                        />
+                    </button>
+                </div>
             </li>
-        ))} */}
+        ))}
         </>
     )
 }

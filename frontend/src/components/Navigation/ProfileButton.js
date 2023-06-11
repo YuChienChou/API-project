@@ -68,6 +68,11 @@ function ProfileButton({ user }) {
                 Manage Reviews
               </NavLink>
             </div>
+            <div id='manage-bookings-link'>
+              <NavLink to='/bookings/current'>
+                Manage Bookings
+              </NavLink>
+            </div>
             <li>
               <button 
               onClick={logout}

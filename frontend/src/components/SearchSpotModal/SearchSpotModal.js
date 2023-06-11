@@ -1,8 +1,7 @@
-import { useState, useEffect } from "react";
+import { useState,  } from "react";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
-import { loadSearchSpotsAction, searchSpotThunk} from "../../store/spots";
-import SearchSpots from "../Spots/SearchSpots";
+import { searchSpotThunk} from "../../store/spots";
 import { useModal } from "../../context/Modal";
 
 export default function SearchSpotModal() {
@@ -13,8 +12,8 @@ export default function SearchSpotModal() {
     const [minPrice, setMinPrice] = useState("");
     const [maxPrice, setMaxPrice] = useState("");
     const [name, setName] = useState("");
-    const [startDate, setStartDate] = useState("");
-    const [endDate, setEndDate] = useState("");
+    const [checkInDate, setCheckInDate] = useState("");
+    const [checkOutDate, setCheckOutDate] = useState("");
     const [errors, setErrors] = useState({});
     const [isSubmit, setIsSubmit] = useState(false);
     const dispatch = useDispatch();
@@ -37,8 +36,8 @@ export default function SearchSpotModal() {
         if (minPrice) queryArr.push(`minPrice=${minPrice}`);
         if (maxPrice) queryArr.push(`maxPrice=${maxPrice}`);
         if (name) queryArr.push(`name=${(`%${name}%`)}`);
-        if (startDate) queryArr.push(`startDate=${startDate}`);
-        if (endDate) queryArr.push(`endDate=${endDate}`);
+        if (checkInDate) queryArr.push(`startDate=${checkInDate}`);
+        if (checkOutDate) queryArr.push(`endDate=${checkOutDate}`);
     
         const query = queryArr.join('&');
 
@@ -66,10 +65,8 @@ export default function SearchSpotModal() {
         setMinPrice("");
         setMaxPrice("");
         setName("");
-        setStartDate("");
-        setEndDate("");
-
-        dispatch(searchSpotThunk(query));
+        setCheckInDate("");
+        setCheckOutDate("");
 
     }
 
@@ -176,8 +173,8 @@ export default function SearchSpotModal() {
             <input 
                 type="date"
                 placeholder="Please enter prefer check-in date"
-                value={startDate}
-                onChange={(e) => setStartDate(e.target.value)}
+                value={checkInDate}
+                onChange={(e) => setCheckInDate(e.target.value)}
             />
         </label>
         <label>
@@ -187,8 +184,8 @@ export default function SearchSpotModal() {
             <input 
                 type="date"
                 placeholder="Please enter prefer check-out date"
-                value={endDate}
-                onChange={(e) => setEndDate(e.target.value)}
+                value={checkOutDate}
+                onChange={(e) => setCheckOutDate(e.target.value)}
             />
         </label>
         <button

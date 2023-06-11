@@ -39,7 +39,7 @@ export default function CreateBookingModal({ spot }) {
         } else {
             dispatch(loadBookingThunk(spot[0].id));
             window.alert("Reservation success!");
-            history.push(`/spots/${spot[0].id}/bookings`)
+            history.push(`/bookings/current`);
             closeModal();
         }
 

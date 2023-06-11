@@ -30,12 +30,19 @@ export const editBookingAction = (editedBooking) => {
     }
 
 };
+
+export const deleteBookingAction = (bookingId) => {
+    return {
+        type: DELETE_BOOKING,
+        bookingId
+    }
+}
    
 
-export const getCurrentUserBookingsAction = (bookings) => {
+export const getCurrentUserBookingsAction = (userBookings) => {
     return {
         type: GET_CURRENT_USER_BOOKINGS,
-        bookings
+        userBookings
     };
 }; 
 
@@ -98,12 +105,30 @@ export const editBookingThunk = (bookingId, payload) => async (dispatch) => {
     }
 };
 
-export const getCurrentUserBookingsThunk = () => async (dispatch) => {
+export const deleteBookingThunk = (bookingId) => async (dispatch) => {
     try {
-        const res = csrfFetch('/api/bookings/current');
+        const res = await csrfFetch(`/api/bookings/${bookingId}`, {
+            method: "DELETE"
+        });
 
         if(res.ok) {
-            const userBookings = (await res).json();
+            dispatch(deleteBookingAction(bookingId));
+            return;
+        }
+    } catch(err) {
+        const errors = await err.json();
+        return errors;
+    }
+}
+
+
+export const getCurrentUserBookingsThunk = () => async (dispatch) => {
+    try {
+        const res = await csrfFetch('/api/bookings/current');
+
+        if(res.ok) {
+            const userBookings = await res.json();
+            console.log("userBookings in the thunk: ", userBookings);
             dispatch(getCurrentUserBookingsAction(userBookings));
             return userBookings;
         }
@@ -137,8 +162,8 @@ const bookingReducer = (state = initialState, action) => {
             return newState;
         }
         case EDIT_BOOKING: {
-            const newState = {...state, allBookings: {...state.allBookings}, singleBooking: {[action.editedBooking.id] : action.editedBooking}, userBookings : {}};
-            return newState.singleBooking;
+            const newState = {...state, allBookings: {...state.allBookings}, singleBooking: {[action.editedBooking.id] : action.editedBooking}, userBookings : {...state.userBookings}};
+            return newState;
         }
         case DELETE_BOOKING: {
             const newState = {...state, allBookings: {...state.allBookings}, singleBooking : {}, userBookings : {}};
@@ -146,8 +171,9 @@ const bookingReducer = (state = initialState, action) => {
             return newState;
         }
         case GET_CURRENT_USER_BOOKINGS: {
-            const newState = {...state, allBookings: {}, singleBooking : {}, userBookings : {}};
-            action.bookings.Bookings.forEach((booking) => {
+            console.log("userBookings in the reducer function: ", action.bookings);
+            const newState = {...state, allBookings: {...state.allBookings}, singleBooking : {}, userBookings : {}};
+            action.userBookings.Bookings.forEach((booking) => {
                 newState.userBookings[booking.id] = booking;
             });
             return newState;

@@ -33,9 +33,9 @@ export default function BookingIndex () {
     if(bookingArr.length === 0) {
         return (
             <>
-            <div>{spot[0].name} is available at any time!</div>
+            <div>{spot[0]?.name} is available at any time!</div>
             <div>
-                {spot[0].ownerId !== user.id ? 
+                {spot[0]?.ownerId !== user.id ? 
                     <button>
                         <OpenModalMenuItem
                             modalComponent={<CreateBookingModal spot={spot} />}
@@ -52,7 +52,7 @@ export default function BookingIndex () {
 
     return (
         <>
-        <h3>{spot[0].name} Reserved Schedule</h3>
+        <h3>{spot[0]?.name} Reserved Schedule</h3>
         {bookingArr.map((booking) => (
             <li key={booking.id}>
                 {(() => {
@@ -80,7 +80,7 @@ export default function BookingIndex () {
                     // return <p>This spot is reserved by {booking.User ? booking.User.firstName : user.firstName} between {month[booking.startDate.split("-")[1]]} {startDateString[0]} {booking.startDate.split("-")[0]} / {endDateString[0]} {month[booking.endDate.split("-")[1]]} {booking.endDate.split("-")[0]}
                     //     </p>
                     if (booking.User) {
-                        return <p>This spot is reserved by {booking.User.firstName} between {month[booking.startDate.split("-")[1]]} {startDateString[0]} {booking.startDate.split("-")[0]} / {endDateString[0]} {month[booking.endDate.split("-")[1]]} {booking.endDate.split("-")[0]}
+                        return <p>This spot is reserved by {booking.User.firstName} {booking.User.lastName} between {month[booking.startDate.split("-")[1]]} {startDateString[0]} {booking.startDate.split("-")[0]} / {endDateString[0]} {month[booking.endDate.split("-")[1]]} {booking.endDate.split("-")[0]}
                         </p>
                     } else {
                         return <p>This spot is reserved between {month[booking.startDate.split("-")[1]]} {startDateString[0]} {booking.startDate.split("-")[0]} / {endDateString[0]} {month[booking.endDate.split("-")[1]]} {booking.endDate.split("-")[0]}
