@@ -140,7 +140,7 @@ const SpotFormEdit = ({spot}) => {
                 <label>
                     <span className='label-error'>
                         Country
-                        {/* <p className='error'>{validationErrors.country}</p> */}
+                        <p className='error'>{validationErrors.country}</p>
                     </span>
                     <input 
                         type='text'
@@ -155,7 +155,6 @@ const SpotFormEdit = ({spot}) => {
                     
                     <input 
                         type="text"
-                        placeholder={address}
                         value={address}
                         onChange={(e) => setAddress(e.target.value)}
                     />
@@ -169,7 +168,6 @@ const SpotFormEdit = ({spot}) => {
                         
                         <input 
                             type="text"
-                            placeholder={city}
                             value={city}
                             onChange={(e) => setCity(e.target.value)}
                         />
@@ -182,7 +180,6 @@ const SpotFormEdit = ({spot}) => {
                         
                         <input 
                             type="text"
-                            placeholder={state}
                             value={state}
                             onChange={(e) => setState(e.target.value)}
                         />
@@ -194,7 +191,6 @@ const SpotFormEdit = ({spot}) => {
                         <input 
                             type='number'
                             step='any'
-                            placeholder={lat}
                             value={lat}
                             onChange={(e) => setLat(e.target.value)}
                         />
@@ -204,7 +200,6 @@ const SpotFormEdit = ({spot}) => {
                         <input 
                             type='number'
                             step='any'
-                            placeholder={lng}
                             value={lng}
                             onChange={(e) => setLng(e.target.value)}
                         />
@@ -216,7 +211,6 @@ const SpotFormEdit = ({spot}) => {
                 <label>
                 Mention the best features of your space, any special amentities like fast wif or parking, and what you love about the neighborhood.
                     <textarea
-                        placeholder={description}
                         value={description}
                         onChange={(e) => setDescription(e.target.value)}
                     />
@@ -230,7 +224,6 @@ const SpotFormEdit = ({spot}) => {
                 Catch guests' attention with a spot title that highlights what makes your place special.
                     <input 
                         type="text"
-                        placeholder='Name of your spot'
                         value={name}
                         onChange={(e) => setName(e.target.value)}
                     />
@@ -245,7 +238,6 @@ const SpotFormEdit = ({spot}) => {
                         <input 
                         type="number"
                         step='any'
-                        placeholder='Price per night (USD)'
                         value={price}
                         onChange={(e) => setPrice(e.target.value)}
                     />
