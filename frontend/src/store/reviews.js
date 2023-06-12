@@ -74,6 +74,8 @@ export const thunkRemoveReview = (reviewId) => async (dispatch) => {
         method: "DELETE",
     });
 
+    // console.log("res in thunkRevoeReview: ", res);
+
     if(res.ok) {
         dispatch(actionRemoveReview(reviewId));
         return;
