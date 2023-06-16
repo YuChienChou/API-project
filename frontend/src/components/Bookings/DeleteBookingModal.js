@@ -1,4 +1,4 @@
-import { useSeletor, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { useState } from 'react';
 import { useModal } from '../../context/Modal';
 import { deleteBookingThunk, getCurrentUserBookingsThunk } from '../../store/booking';
@@ -17,16 +17,16 @@ export default function DeleteBookingModal({ booking }) {
         setHasSubmit(true);
 
         const deleteBooking = await dispatch(deleteBookingThunk(booking.id));
+        console.log("deleteBooking in DeleteBookingModal: ", deleteBooking)
 
-        if(deleteBooking.message) {
+        if(deleteBooking && deleteBooking.message) {
             console.log("deleteBooking in handleBookingDelete funciton: ", deleteBooking);
             setErrors(deleteBooking);
             console.log("errors: ", errors);
         } else {
-            dispatch(getCurrentUserBookingsThunk())
             window.alert("Reservation deleted!");
-            // history.push('bookings/current');
-            closeModal();
+            closeModal(); 
+            dispatch(getCurrentUserBookingsThunk())
         }
 
     };

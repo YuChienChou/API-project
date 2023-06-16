@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import OpenModalMenuItem from "../Navigation/OpenModalMenuItem";
 import { getCurrentUserBookingsThunk } from '../../store/booking';
 import UpdateBookingModal from '../Bookings/UpdateBookingModal';
-import DeleteBookingModal from '../Bookings/DeleteBooiingModal';
+import DeleteBookingModal from '../Bookings/DeleteBookingModal';
 
 
 

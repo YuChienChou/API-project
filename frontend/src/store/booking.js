@@ -112,6 +112,7 @@ export const deleteBookingThunk = (bookingId) => async (dispatch) => {
         });
 
         if(res.ok) {
+            console.log("res in deleteBookingThunk: ", res)
             dispatch(deleteBookingAction(bookingId));
             return;
         }
