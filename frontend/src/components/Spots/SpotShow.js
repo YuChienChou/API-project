@@ -1,18 +1,33 @@
 import { useEffect } from "react";
+import { NavLink, useHistory } from 'react-router-dom'
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { fetchDetailedSpotThunk } from '../../store/spots';
+import { loadBookingThunk } from '../../store/booking';
 import SpotReviews from '../Reviews/SpotReviews';
+import BookingIndex from "../Bookings/BookingIndex";
 import './Spots.css';
+import { actionClearReview } from "../../store/reviews";
 
 
 const SpotShow = () => {
     const { spotId } = useParams();
-    const spot = useSelector((state) => state.spots[spotId]);    
+    const spot = useSelector((state) => state.spots.singleSpot[spotId]);    
     const dispatch = useDispatch();
+    const history = useHistory();
 
     useEffect(() => {
         dispatch(fetchDetailedSpotThunk(spotId));
+        dispatch(loadBookingThunk(spotId));
+        
+        // console.log("clear review action is running in SpotShow");
+
+        return () =>{
+            // console.log("actionClearReview in the useEffect in SpotShow is running");
+            dispatch(actionClearReview());
+            // dispatch(actionClearSpot());
+        }
+        
     }, [dispatch, spotId]);
 
     // console.log('spotImages in spotshow: ', spot.SpotImages);
@@ -56,9 +71,14 @@ const SpotShow = () => {
                     </div>
                     <button 
                     id='reserve-button'
-                    onClick={() => {alert("feature coming soon")}}
+                    onClick={() => {
+                       history.push(`/spots/${spot.id}/bookings`)}}
+                   
                     >reserve</button>
+
+        
                 </div>
+                
             </div>
                 <SpotReviews spot={spot}/>
         </div>

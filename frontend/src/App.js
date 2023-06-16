@@ -8,6 +8,10 @@ import SpotShow from "./components/Spots/SpotShow";
 import CreateSpotForm from "./components/Spots/CreateSpotForm";
 import EditSpotForm from "./components/Spots/EditSpotForm";
 import ManageSpot from "./components/Spots/ManageSpot";
+import ManageReviews from './components/Reviews/ManageReview';
+import SearchSpots from './components/Spots/SearchSpots';
+import BookingIndex from "./components/Bookings/BookingIndex";
+import ManageBookings from "./components/Bookings/ManageBooking";
 
 function App() {
   const dispatch = useDispatch();
@@ -23,12 +27,14 @@ function App() {
       {isLoaded && 
       <Switch>
            <Route exact path='/' component={SpotsIndex} />
-           <Route path='/spots/current' component={ManageSpot} />
-           <Route path='/spots/new' component={CreateSpotForm} />
-           <Route path='/spots/:spotId/edit' component={EditSpotForm} /> 
-           <Route path='/spots/:spotId' component={SpotShow} />
-
-           
+           <Route exact path='/spots/current' component={ManageSpot} />
+           <Route exact path='/spots/new' component={CreateSpotForm} />
+           <Route exact path='/spots/query' component={SearchSpots}/>
+           <Route exact path='/spots/:spotId/edit' component={EditSpotForm} /> 
+           <Route exact path='/spots/:spotId/bookings' component={BookingIndex} />
+           <Route exact path='/spots/:spotId' component={SpotShow} />
+           <Route exact path='/reviews/current' component={ManageReviews} />
+           <Route exact path='/bookings/current' component={ManageBookings} />
       </Switch>}
       
     </>

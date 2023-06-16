@@ -4,6 +4,8 @@ import { csrfFetch } from "./csrf";
 export const LOAD_REVIEWS = "review/LOAD_REVIEWS";
 export const RECEIVE_REVIEW = "review/RECEIVE_REVIEW";
 export const REMOVE_REVIEW = "review/REMOVE_REVIEW";
+export const EDIT_REVIEW = 'reviwe/EDIT_REVIEW';
+export const CLEAR_REVIEW = 'review/CLEAN_REVIEW';
 
 
 
@@ -26,6 +28,19 @@ export const actionRemoveReview = (reviewId) => {
     return {
         type: REMOVE_REVIEW,
         reviewId
+    }
+}
+
+export const actionEditReview = (editedReview) => {
+    return {
+        type: EDIT_REVIEW,
+        editedReview
+    }
+}
+
+export const actionClearReview = () => {
+    return {
+        type: CLEAR_REVIEW,
     }
 }
 
@@ -85,6 +100,45 @@ export const thunkRemoveReview = (reviewId) => async (dispatch) => {
     };
 };
 
+export const thunkGetCurrentUserReview = () => async (dispatch) => {
+    try {
+        const res = await csrfFetch('/api/reviews/current');
+        
+        if(res.ok) {
+            const currentUserReviews = await res.json();
+            // console.log("currentUserReviews in Thunk: ", currentUserReviews);
+            dispatch(loadReviewsAction(currentUserReviews));
+            return currentUserReviews;
+        }
+    } catch (err) {
+        const errors = await err.json();
+        return errors;
+    }
+};
+
+export const thunkEditReview = (reviewId, payload) => async (dispatch) => {
+
+    try {
+        const res = await csrfFetch(`/api/reviews/${reviewId}`, {
+            method: "PUT",
+            headers: {"Content-Type":"application/json"},
+            body: JSON.stringify(payload)
+        });
+
+        // console.log("editReview in thunk: ", res);
+
+        if(res.ok) {
+            const editedReview = await res.json();
+            dispatch(actionEditReview(editedReview));
+            return editedReview;
+        } 
+    } catch (err) {
+        const errors = await err.json();
+        return errors;
+    }
+};
+
+
 //reducer
 
 const initialState = {};
@@ -92,25 +146,46 @@ const initialState = {};
 const reviewReducer = (state = initialState, action) => {
     switch(action.type) {
         case LOAD_REVIEWS: {
+            // console.log('%c Current user reviews in review reducer: ', 'color:pink;', action.reviews);
             const reviewsState = {};
             action.reviews.Reviews.forEach((review) => {
                 reviewsState[review.id] = review
             });
             
             return reviewsState;
-        };
+        }
         case RECEIVE_REVIEW: {
-            const reviewsState = {...state, [action.review.id]: action.review}
+            const reviewsState = {...state, [action.review.id]: action.review};
             return reviewsState;
-        };
+        }
         case REMOVE_REVIEW: {
             const reviewsState = {...state};
             delete reviewsState[action.reviewId];
             return reviewsState;
         }
-        default: {
-            return state;
+
+        case EDIT_REVIEW: {
+            // console.log("old state in review reducer: ", state);
+            // console.log("action.editedReview.id in review reducer: ", action.editedReview.id);
+            // console.log("edited review in review reducer: ", action.editedReview);
+            const reviewsState = {...state, [action.editedReview.id]: {...state[action.editedReview.id], ...action.editedReview}};
+            //in the new state, first, copy the old state by spread operator, find the key I want to edit, then assign it a new value. 
+            //However, I don't want to replace the every key in the state because I only want to update the key/vaule pairs in my edited review. 
+            //for doing that, I need to copy the original value from my old state for the specific key, 
+            
+            // console.log("reviewsState in review reducer: ", reviewsState);
+            return reviewsState;
         }
+
+        case CLEAR_REVIEW: {
+            // return { ...state, currentUserReviews: {}}
+            return {}
+        }
+            
+
+        default: 
+            return state;
+        
     }
 }
 
