@@ -1,0 +1,51 @@
+#current-user-review-div {
+    padding: 20px 40px;
+}
+
+#current-user-review-div h2 {
+    margin-bottom: 30px;
+}
+
+#current-user-review-div h4 {
+    margin-bottom: 10px;
+}
+
+#current-user-reviews-list {
+    list-style: none;
+    margin-bottom: 40px;
+}
+
+#current-user-reviews-list p {
+    font-size: 14px;
+}
+
+#manage-review-buttons {
+    display: flex;
+    gap: 30px;
+}
+
+#update-review-button {
+    width: 60px;
+    height: 30px;
+    color: white;
+    border: none;
+    box-shadow: 2px 2px 2px rgb(126, 128, 130);
+    color: rgb(126, 128, 130);
+    border: 1px solid rgb(224, 218, 218);
+    border-radius: 5px;
+    cursor: pointer;
+    margin: 10px 0;
+}
+
+#delete-review-button {
+    width: 60px;
+    height: 30px;
+    color: white;
+    border: none;
+    box-shadow: 2px 2px 2px rgb(126, 128, 130);
+    color: rgb(126, 128, 130);
+    border: 1px solid rgb(224, 218, 218);
+    border-radius: 5px;
+    cursor: pointer;
+    margin: 10px 0;
+}

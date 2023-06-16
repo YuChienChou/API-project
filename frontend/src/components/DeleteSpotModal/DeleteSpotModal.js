@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useState } from 'react';
-import { deletSpotThunk } from "../../store/spots";
+import { deletSpotThunk, getCurrentUserSpotsThunk } from "../../store/spots";
 import { useModal } from '../../context/Modal'; //for using closeModal function
 import './DeleteSpotModal.css'
 
@@ -16,6 +16,7 @@ const DeleteSpotModal = ({spot}) => {
         e.preventDefault();
         setErrors({})
         return dispatch(deletSpotThunk(spot.id))
+        // .then (dispatch(getCurrentUserSpotsThunk()))
         .then(closeModal)
         .catch(async (res) => {
             const data = await res.json();

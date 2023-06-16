@@ -1,29 +1,37 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { loadSpotsThunk, actionClearSpot } from '../../store/spots';
+import { loadSpotsThunk, actionClearSpot, searchSpotThunk } from '../../store/spots';
 import { useEffect } from 'react';
-import './Spots.css';
 
-const SpotsIndex = () => {
-    const spotsStore =useSelector((state) => state.spots.allState);
-    // console.log("spotsStore in spotsIndex: ", spotsStore);
+const SearchSpots = ({query}) => {
+    const spotsStore =useSelector((state) => state.spots.searchSpot);
+    console.log("spotStore in SearchSpots:", spotsStore);
+    
     const spots = Object.values(spotsStore);
     // console.log('SPOTS IN SPOTSINDEX: ', spots);
+    console.log("spotResult in SearchSpots: ", spots);
     const dispatch = useDispatch();
 
     useEffect(() => {
-        dispatch(loadSpotsThunk());
+        console.log("loadSpotsThunk running in SearchSpots");
+        // dispatch(loadSpotsThunk());
         
-        return () => dispatch(actionClearSpot());
+        // return () => dispatch(actionClearSpot());
     }, [dispatch]);
 
-    if(spots === undefined || spots.length < 1) return null;
+    if(spots === undefined || spots.length === 0) return (
+        <>
+        <p>
+            No result meets the search criteria
+        </p>
+        </>
+    )
 
     return (
         <>
         <div className='spots-container'>
             <ul className='spots-ul'>
-                {spots.reverse().map((spot) => (
+                {spots.map((spot) => (
                     // {console.log("spot in spots.map funtion: ", spot)}
                     <li key={spot.id} className="spot-li">
                         <Link key={spot.id} to={`/spots/${spot.id}`}>                               
@@ -59,5 +67,4 @@ const SpotsIndex = () => {
     );
 };
 
-
-export default SpotsIndex;
+export default SearchSpots;

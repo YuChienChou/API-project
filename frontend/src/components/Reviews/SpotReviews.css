@@ -52,10 +52,16 @@
     height: 30px;
     color: white;
     border: none;
-    box-shadow: 3px 3px 5px rgb(126, 128, 130);
+    box-shadow: 2px 2px 2px rgb(126, 128, 130);
     color: rgb(126, 128, 130);
     border: 1px solid rgb(224, 218, 218);
     border-radius: 5px;
     cursor: pointer;
     margin: 10px 0;
+}
+
+
+#review-update-delete-div {
+    display: flex;
+    gap: 8px;
 }

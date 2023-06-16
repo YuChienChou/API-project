@@ -60,7 +60,17 @@ function ProfileButton({ user }) {
             <li className='profile-li'>{user.email}</li>
             <div id='manage-spot-link'>
               <NavLink to='/spots/current'>
-                Manage Spots
+                Manage Spotss
+              </NavLink>
+            </div>
+            <div id='update-review-link'>
+              <NavLink to='/reviews/current'>
+                Manage Reviews
+              </NavLink>
+            </div>
+            <div id='manage-bookings-link'>
+              <NavLink to='/bookings/current'>
+                Manage Bookings
               </NavLink>
             </div>
             <li>

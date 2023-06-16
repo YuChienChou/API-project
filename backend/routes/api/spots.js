@@ -69,8 +69,10 @@ router.get('/', async (req, res, next) => {
         where: {},
     };
 
-    let {page, size, minLat, maxLat, minLng, maxLng, minPrice, maxPrice} = req.query;
+    let {page, size, minLat, maxLat, minLng, maxLng, minPrice, maxPrice, name, checkInDate, checkOutDate} = req.query;
 
+    // console.log("~~~~~~~~~~~query in Rout: ~~~", req.query);
+    
     if(!page) page = 1;
     if(!size) size = 100; 
     if(page > 10) page = 10;
@@ -99,7 +101,7 @@ router.get('/', async (req, res, next) => {
     };
     
     if(maxLng) {
-        if (isNaN(maxLng)) errors.maxLg ={message: "Maximum longitude is invalid"};
+        if (isNaN(maxLng)) errors.maxLng ={message: "Maximum longitude is invalid"};
     };
     
     if(minPrice) {
@@ -133,13 +135,75 @@ router.get('/', async (req, res, next) => {
     if(maxPrice) query.where.price = {[Op.lte]: (maxPrice)} ;
     if(minPrice && maxPrice) query.where.price = {[Op.between]: [(minPrice), (maxPrice)]};
 
+    if(name) query.where.name = {[Op.like]: (`%${name}%`)};
+
+    let spotResults;
+
+    // console.log("startDate and endDate not in the if statement", {startDate, endDate})
+    if (checkInDate && checkOutDate) {
+        // console.log("startDate and endDate", {startDate, endDate})
+        const bookedSpots = await Spot.findAll(query, {
+            include: [
+              {
+                model: Booking,
+                attributes: ['id', 'startDate', 'endDate'],
+                where: {
+                  [Op.or]: [
+                    {
+                      startDate: {
+                        [Op.lte]: checkOutDate
+                      },
+                      endDate: {
+                        [Op.gte]: checkInDate
+                      }
+                    }
+                  ]
+                }
+              }
+            ]
+          });
+        
+          const bookedSpotIds = bookedSpots.map(spot => spot.id);
+        
+          const availableSpots = await Spot.findAll({
+            where: {
+                [Op.and]: [
+                  Sequelize.literal(query), // Include any additional filters from the query
+                  {
+                    id: {
+                      [Op.notIn]: bookedSpotIds
+                    },
+                    startDate: {
+                        [Op.gt]: checkOutDate
+                      },
+                      endDate: {
+                        [Op.lt]: checkInDate
+                      }
+                  }
+                ]
+              }
+            // where: {
+            //         id: {
+            //           [Op.notIn]: bookedSpotIds
+            //         }
+            //       }
+          });
+        
+          spotResults = availableSpots;
+      } else {
+        const spots = await Spot.findAll(query);
+        spotResults = spots;
+      }
 
 
-    const spots = await Spot.findAll(query);
+    // const spots = await Spot.findAll(query);
+    // console.log("spots in spots ROUTE: ", spots);
+ 
+
     const payload = [];
 
-    for(let i = 0; i <spots.length; i++) {
-        let spot = spots[i];
+    for(let i = 0; i <spotResults.length; i++) {
+        let spot = spotResults[i];
 
         let previewImage = await SpotImage.findOne({
             where: {
@@ -513,7 +577,7 @@ router.get('/:spotId/bookings', requireAuth, async(req, res, next) => {
             where: {
                 spotId: spot.id
             },
-            attributes: ['spotId', 'startDate', 'endDate']
+            attributes: ['spotId', 'startDate', 'endDate', 'id']
         });
 
         return res.status(200).json({Bookings: bookings});
@@ -612,6 +676,8 @@ router.post('/:spotId/bookings', requireAuth, async(req, res, next) => {
         startDate,
         endDate,
     });
+
+    console.log("newBooking in the route: ", newBooking);
 
     return res.status(200).json(newBooking)
 
