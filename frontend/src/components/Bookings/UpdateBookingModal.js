@@ -1,9 +1,10 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { editBookingThunk, getCurrentUserBookingsThunk } from '../../store/booking'
 import { useHistory } from 'react-router-dom';
 import { useModal } from '../../context/Modal';
 import { fetchDetailedSpotThunk } from '../../store/spots';
+import './UpdateBookingModal.css'
 
 export default function UpdateBookingMadal({ booking }) {
 
@@ -17,6 +18,14 @@ export default function UpdateBookingMadal({ booking }) {
     const history = useHistory();
     const { closeModal } = useModal();
 
+    useEffect(() => {
+        const errorLi = {};
+        if(editStartDate === undefined) errorLi.editStartDate = "Please enter new check-in date.";
+        if(editEndDate === undefined) errorLi.editEndDate = "Please enter new check-out date.";
+            
+        setErrors(errorLi);
+    }, [editStartDate, editEndDate])
+    
 
     const onSubmit = async (e) => {
         e.preventDefault();
@@ -27,20 +36,15 @@ export default function UpdateBookingMadal({ booking }) {
             startDate: editStartDate,
             endDate: editEndDate,
         }
+        console.log("editStartDate in UpdateBooking onSubmit function: ", editStartDate);
+        console.log("editEndDate in UpdateBooking onSubmit function: ", editEndDate);
+        // const errorLi = {};
+        // if(editStartDate === undefined) errorLi.editStartDate = "Please enter new check-in date.";
+        // if(editEndDate === undefined) errorLi.editEndDate = "Please enter new check-out date.";
+            
+        // setErrors(errorLi);
 
-        const errors = {};
-        if(!editStartDate) {
-            errors.editStartDate = "Please enter new check-in date.";
-            setErrors(errors);
-        }
-        if(!editEndDate) {
-            errors.editEndDate = "Please enter new check-out date.";
-            setErrors(errors);
-        };
-
-        // console.log("editStartDate in UpdateBooking onSubmit function: ", editStartDate);
-        // console.log("editEndDate in UpdateBooking onSubmit function: ", editEndDate);
-
+        // console.log("errors in submit function: ", Object.values(errors).length)
         const editBooking = await dispatch(editBookingThunk(booking.id, payload));
 
         // console.log("EditBooking in UpdateBookingModal: ", editBooking)
@@ -67,13 +71,16 @@ export default function UpdateBookingMadal({ booking }) {
 
     return (
         <>
-        <h3>Update Your Reservation at</h3>
-        <h3>{booking.Spot.name}</h3>
-        {hasSubmit && <p>{errors.editStartDate}</p>}
-        {hasSubmit && <p>{errors.editEndDate}</p>}
-        {hasSubmit && <p>{errors.message}</p>}
+        <div id='update-booking-title'>
+            <h3>Update Your Reservation at</h3>
+            <h3>{booking.Spot.name}</h3>
+        </div>
+        {hasSubmit && <p className='error'>{errors.editStartDate}</p>}
+        {hasSubmit && <p className='error'>{errors.editEndDate}</p>}
+        {hasSubmit && <p className='error'>{errors.message}</p>}
         <form
             onSubmit={onSubmit} 
+            id='update-booking-form'
         >
             <label>Check In Date</label>
             <input
@@ -89,7 +96,10 @@ export default function UpdateBookingMadal({ booking }) {
                 value={editEndDate}
                 onChange={(e) => setEditEndDate(e.target.value)}
             />
-            <button>Update Reservation</button>
+            <button 
+            disabled={Object.values(errors).length > 0}
+            id={Object.values(errors).length === 0 ? 'update-booking-button-active' : 'update-booking-button-disabled'}
+            >Update Reservation</button>
         </form>
         </>
     )
