@@ -2,6 +2,7 @@ import { useDispatch } from 'react-redux';
 import { useState } from 'react';
 import { useModal } from '../../context/Modal';
 import { deleteBookingThunk, getCurrentUserBookingsThunk } from '../../store/booking';
+import './DeleteBookingModal.css'
 
 
 export default function DeleteBookingModal({ booking }) {
@@ -38,7 +39,7 @@ export default function DeleteBookingModal({ booking }) {
         <h1>Confirm Delete</h1>
         <p>Are you sure you want to delete this reservation?</p>
         {hasSubmit && <p>{errors.message}</p>}
-        <div className='confirm-delete-review-div'>
+        <div className='confirm-delete-booking-div'>
             <button 
                 type='submit'
                 onClick={handleBookingDelete}
