@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { createBookingThunk, loadBookingThunk } from '../../store/booking';
 import { useModal } from '../../context/Modal';
 import { useHistory } from 'react-router-dom';
+import './CreateBookingModal.css'
 
 export default function CreateBookingModal({ spot }) {
 
@@ -48,12 +49,15 @@ export default function CreateBookingModal({ spot }) {
 
     return (
         <>
+        <div id='make-reservation-spot'>
         <h2>Make a reservation at</h2> 
         <h2>{spot[0].name}!</h2>
-        {hasSubmit && <p>{errors.startDate}</p>}
-        {hasSubmit && <p>{errors.endDate}</p>}
+        {hasSubmit && <p className="error">{errors.startDate}</p>}
+        {hasSubmit && <p className="error">{errors.endDate}</p>}
+        </div>
         <form
             onSubmit={onSubmit} 
+            id="make-reservation-form"
         >
             <label>Check In Date</label>
             <input
@@ -69,7 +73,7 @@ export default function CreateBookingModal({ spot }) {
                 value={bookingEndDate}
                 onChange={(e) => setBookingEndDate(e.target.value)}
             />
-            <button>Reserve</button>
+            <button id='make-reserve-button'>Reserve</button>
         </form>
         </>
     );

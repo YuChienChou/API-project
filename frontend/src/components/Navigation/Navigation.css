@@ -140,9 +140,9 @@
 
 #update-review-link {
     padding: 5px;
-    margin-bottom: 5px;
+    /* margin-bottom: 5px; */
     width: 120px;
-    border-bottom: 1px solid;
+    /* border-bottom: 1px solid; */
 }
 
 #spot-search {
@@ -156,5 +156,12 @@
     justify-content: space-around;
 }
 
+
+#manage-bookings-link {
+    padding: 5px;
+    width: 120px;
+    border-bottom: 1px solid;
+    margin-bottom: 5px;
+}
 
 
