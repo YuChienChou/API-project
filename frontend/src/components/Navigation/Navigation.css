@@ -33,7 +33,7 @@
 }
 
 #logo-link i {
-    font-size: 18px;
+    font-size: 20px;
     /* color: #FF385C; */
     color: rgb(232, 118, 118);
     font-weight: bold;
@@ -43,6 +43,12 @@
     font-size: 16px;
     /* color: #FF385C; */
     color: rgb(232, 118, 118);
+}
+
+#logo-link img {
+    width: 20px;
+    height: 20px; 
+    border-radius: 5px;
 }
 
 .logo-img {
@@ -133,6 +139,10 @@
     font-size: 13px;
 }
 
+#creat-new-spot-div {
+    width: 106px;
+}
+
 #creat-new-spot-link {
     text-decoration: underline;
 }
@@ -151,11 +161,17 @@
     border: 1px solid rgb(224, 218, 218);
     border-radius: 50px;
     padding: 10px 8px;
-    width: 180px;
+    width: 300px;
     display: flex;
+    /* justify-content: center; */
     justify-content: space-around;
 }
 
+#spot-search li {
+    width: 400px;
+    display: flex;
+    justify-content: center;
+}
 
 #manage-bookings-link {
     padding: 5px;

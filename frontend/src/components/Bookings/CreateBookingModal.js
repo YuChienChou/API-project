@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { createBookingThunk, loadBookingThunk } from '../../store/booking';
 import { useModal } from '../../context/Modal';
@@ -15,9 +15,19 @@ export default function CreateBookingModal({ spot }) {
     const dispatch = useDispatch();
     const history = useHistory();
     const { closeModal } = useModal();
+    const currentDate = new Date()
+    console.log(currentDate)
     
     const user = useSelector((state) => state.session.user);
     // console.log("user in createBookingModal: ", user);
+
+    useEffect(() => {
+        const errorLi = {};
+        if (bookingStartDate === undefined || bookingStartDate < currentDate) errorLi.bookingStartDate = "Please enter valid check-in date.";
+        if (bookingEndDate === undefined || bookingEndDate < currentDate) errorLi.bookingEndDate = "Please enter valid check-out date.";
+
+        setErrors(errorLi)
+    }, [bookingStartDate, bookingEndDate])
 
    
     const onSubmit = async (e) => {
@@ -73,7 +83,10 @@ export default function CreateBookingModal({ spot }) {
                 value={bookingEndDate}
                 onChange={(e) => setBookingEndDate(e.target.value)}
             />
-            <button id='make-reserve-button'>Reserve</button>
+            <button
+            disabled={Object.values(errors).length > 0}
+             id={Object.values(errors).length === 0 ? 'make-reserve-button-active' : 'make-reserve-button-disabled'}
+             >Reserve</button>
         </form>
         </>
     );
