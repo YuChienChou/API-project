@@ -21,12 +21,23 @@
     padding: 2px 0 2px 5px;
 }
 
-#make-reserve-button {
+#make-reserve-button-active {
     width: 150px;
     height: 30px;
     box-shadow: 3px 3px 5px rgb(126, 128, 130);
     color: #FFFFFF;
     background-color: #E87676;
+    border-radius: 5px;
+    cursor: pointer;
+    margin: 10px 0;
+}
+
+#make-reserve-button-disabled {
+    width: 150px;
+    height: 30px;
+    box-shadow: 3px 3px 5px rgb(126, 128, 130);
+    color: #FFFFFF;
+    background-color: rgb(224, 218, 218);
     border-radius: 5px;
     cursor: pointer;
     margin: 10px 0;
