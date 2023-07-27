@@ -142,7 +142,7 @@ router.get('/', async (req, res, next) => {
     // console.log("startDate and endDate not in the if statement", {startDate, endDate})
     if (checkInDate && checkOutDate) {
         // console.log("startDate and endDate", {startDate, endDate})
-        const bookedSpots = await Spot.findAll(query, {
+        const bookedSpots = await Spot.findAll({
             include: [
               {
                 model: Booking,
@@ -151,10 +151,10 @@ router.get('/', async (req, res, next) => {
                   [Op.or]: [
                     {
                       startDate: {
-                        [Op.lte]: checkOutDate
+                        [Op.lt]: checkOutDate
                       },
                       endDate: {
-                        [Op.gte]: checkInDate
+                        [Op.gt]: checkInDate
                       }
                     }
                   ]
@@ -164,29 +164,46 @@ router.get('/', async (req, res, next) => {
           });
         
           const bookedSpotIds = bookedSpots.map(spot => spot.id);
+
         
-          const availableSpots = await Spot.findAll({
-            where: {
-                [Op.and]: [
-                  Sequelize.literal(query), // Include any additional filters from the query
-                  {
-                    id: {
-                      [Op.notIn]: bookedSpotIds
-                    },
-                    startDate: {
-                        [Op.gt]: checkOutDate
-                      },
-                      endDate: {
-                        [Op.lt]: checkInDate
-                      }
-                  }
-                ]
-              }
+          const availableSpots = await Spot.findAll(query, {
             // where: {
+            //     [Op.and]: [
+            //       Sequelize.literal(query), // Include any additional filters from the query
+            //       {
             //         id: {
             //           [Op.notIn]: bookedSpotIds
-            //         }
+            //         },
+            //         startDate: {
+            //             // [Op.gt]: checkOutDate
+            //             [Op.or]: [
+            //                 {
+            //                   [Op.gt]: checkOutDate
+            //                 },
+            //                 {
+            //                   [Op.eq]: null // Include spots with no bookings
+            //                 }
+            //               ]
+            //           },
+            //           endDate: {
+            //             // [Op.lt]: checkInDate
+            //             [Op.or]: [
+            //                 {
+            //                   [Op.lt]: checkInDate
+            //                 },
+            //                 {
+            //                   [Op.eq]: null // Include spots with no bookings
+            //                 }
+            //               ]
+            //           }
             //       }
+            //     ]
+            //   }
+            where: {
+                    id: {
+                      [Op.notIn]: bookedSpotIds
+                    }
+                  }
           });
         
           spotResults = availableSpots;

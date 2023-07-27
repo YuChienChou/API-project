@@ -19,6 +19,10 @@ function ProfileButton({ user }) {
     setShowMenu(true);
   };
 
+  const hideMenu = () => {
+    setShowMenu(false);
+  };
+
   useEffect(() => {
     if (!showMenu) return;
 
@@ -52,7 +56,7 @@ function ProfileButton({ user }) {
       >
         <i className="fas fa-user-circle" />
       </button>
-      <ul className={ulClassName} ref={ulRef}>
+      <ul className={ulClassName} ref={ulRef} onMouseLeave={hideMenu}>
         {user ? (
           <>
             <li className='profile-li'>{`Hello, ${user.username}`}</li>
@@ -60,7 +64,7 @@ function ProfileButton({ user }) {
             <li className='profile-li'>{user.email}</li>
             <div id='manage-spot-link'>
               <NavLink to='/spots/current'>
-                Manage Spotss
+                Manage Spots
               </NavLink>
             </div>
             <div id='update-review-link'>
