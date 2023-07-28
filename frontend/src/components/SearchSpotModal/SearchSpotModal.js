@@ -125,7 +125,7 @@ export default function SearchSpotModal() {
                 </label>
             </div>
         </div>
-        <div className="search-item-div">
+        {/* <div className="search-item-div">
             <h4>Search By Preferred Schedule</h4>
             <div className="search-criteria-div">
                 <label>
@@ -153,8 +153,8 @@ export default function SearchSpotModal() {
                     />
                 </label>
             </div>
-        </div>
-        <div className='search-item-div'>
+        </div> */}
+        {/* <div className='search-item-div'>
             <h4>Search by Latitude Range</h4>
             <div className="search-criteria-div">
                 <label>
@@ -184,8 +184,8 @@ export default function SearchSpotModal() {
                     />
                 </label> 
             </div>
-        </div>
-        <div className="search-item-div">
+        </div> */}
+        {/* <div className="search-item-div">
             <h4>Search By Longitude Range</h4>
             <div className="search-criteria-div">
                 <label>
@@ -215,7 +215,7 @@ export default function SearchSpotModal() {
                     />
                 </label>
             </div>
-        </div>
+        </div> */}
        
        
        
