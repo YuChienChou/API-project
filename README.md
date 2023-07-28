@@ -23,7 +23,19 @@ Manage spots of the spot owner:
 
 Search for a spot: 
 
-![image](https://github.com/YuChienChou/HaveFunBnb/assets/108157183/6595008e-8a56-4de5-bbe5-105a730d25c3)
+![image](https://github.com/YuChienChou/HaveFunBnb/assets/108157183/851e841a-5a01-4dd6-abf7-3499111826c2)
 
 
+## Features - logged-in users
+- Create / update / delete spots
+- Create / update / delete reviews for spots
+- Create / update / delete bookings
+- Search for spots by spot name, min/max price.
+
+## Technologies Used
+- Express
+- React
+- Redux
+- SQL
+- Sequelize
 
