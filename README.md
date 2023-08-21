@@ -1,5 +1,5 @@
 # HaveFunBnb
-HaveFunBnb is an app that allows users to book accommodations and unique lodging experiences. HaveFunBnb is made wit Javascript, Express, React, and Redux.
+HaveFunBnb is an online app that allows users to post/manage/review/book spots for accommodations.
 - Live Link: [HaveFunBnb](https://have-fun-bnb.onrender.com/)
 <br></br>
 
