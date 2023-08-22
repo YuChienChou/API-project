@@ -42,7 +42,7 @@ export default function SearchSpotModal() {
     
         const query = queryArr.join('&');
 
-        console.log("qurey in SearchSpotModal: ", query);
+        // console.log("qurey in SearchSpotModal: ", query);
         
 
         const spotResults = await dispatch(searchSpotThunk(query));
@@ -51,9 +51,9 @@ export default function SearchSpotModal() {
 
         if(spotResults.errors) {
             setErrors(spotResults.errors);
-            console.log("errors in SearchSpotModal: ", errors)
+            // console.log("errors in SearchSpotModal: ", errors)
         } else {
-            console.log("query in searchSpotModal", query);
+            // console.log("query in searchSpotModal", query);
             history.push(`/spots/query`);
             // <SearchSpots query={query} />
             closeModal();

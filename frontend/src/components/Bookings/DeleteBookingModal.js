@@ -18,12 +18,12 @@ export default function DeleteBookingModal({ booking }) {
         setHasSubmit(true);
 
         const deleteBooking = await dispatch(deleteBookingThunk(booking.id));
-        console.log("deleteBooking in DeleteBookingModal: ", deleteBooking)
+        // console.log("deleteBooking in DeleteBookingModal: ", deleteBooking)
 
         if(deleteBooking && deleteBooking.message) {
-            console.log("deleteBooking in handleBookingDelete funciton: ", deleteBooking);
+            // console.log("deleteBooking in handleBookingDelete funciton: ", deleteBooking);
             setErrors(deleteBooking);
-            console.log("errors: ", errors);
+            // console.log("errors: ", errors);
         } else {
             window.alert("Reservation deleted!");
             closeModal(); 

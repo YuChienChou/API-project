@@ -187,17 +187,17 @@ export const searchSpotThunk = (query) => async (dispatch) => {
     try {
         const res = await csrfFetch(`/api/spots?${query}`);
 
-        console.log("query in thunk: ", `/api/spots/${query}`)
+        // console.log("query in thunk: ", `/api/spots/${query}`);
 
         if(res.ok) {
             const spots = await res.json();
-            console.log("spots in Spot Thunk: ", spots)
+            // console.log("spots in Spot Thunk: ", spots);
             dispatch(loadSearchSpotsAction(spots));
             return spots;
         }
     } catch(err) {
         const errors = await err.json();
-        console.log("errors in spot reducer: ", errors)
+        // console.log("errors in spot reducer: ", errors);
         return errors;
     }
 }
@@ -249,7 +249,7 @@ const spotsReducer = (state = initialState, action) => {
             return spotsState;
         };
         case SEARCH_SPOTS: {
-            console.log("Search spots in reducer: ", action.spots);
+            // console.log("Search spots in reducer: ", action.spots);
             const spotState = {...state, allState: {...state.allState}, singleSpot: {...state.singleSpot}, searchSpot: {}};
             // console.log("action.spots in reducer: ", action.spots);
             action.spots.Spots.forEach((spot) => {

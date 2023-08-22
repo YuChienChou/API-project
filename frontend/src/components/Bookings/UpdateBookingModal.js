@@ -36,8 +36,8 @@ export default function UpdateBookingMadal({ booking }) {
             startDate: editStartDate,
             endDate: editEndDate,
         }
-        console.log("editStartDate in UpdateBooking onSubmit function: ", editStartDate);
-        console.log("editEndDate in UpdateBooking onSubmit function: ", editEndDate);
+        // console.log("editStartDate in UpdateBooking onSubmit function: ", editStartDate);
+        // console.log("editEndDate in UpdateBooking onSubmit function: ", editEndDate);
         // const errorLi = {};
         // if(editStartDate === undefined) errorLi.editStartDate = "Please enter new check-in date.";
         // if(editEndDate === undefined) errorLi.editEndDate = "Please enter new check-out date.";
@@ -50,9 +50,9 @@ export default function UpdateBookingMadal({ booking }) {
         // console.log("EditBooking in UpdateBookingModal: ", editBooking)
 
         if(editBooking.message) {
-            console.log("editBooking in onSubmit function: ", editBooking);
+            // console.log("editBooking in onSubmit function: ", editBooking);
             setErrors(editBooking);
-            console.log("errors : ", errors);
+            // console.log("errors : ", errors);
         } else {
             dispatch(getCurrentUserBookingsThunk());
             dispatch(fetchDetailedSpotThunk(booking.Spot.id));

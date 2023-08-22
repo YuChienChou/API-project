@@ -16,7 +16,7 @@ export default function CreateBookingModal({ spot }) {
     const history = useHistory();
     const { closeModal } = useModal();
     const currentDate = new Date()
-    console.log(currentDate)
+    // console.log(currentDate)
     
     const user = useSelector((state) => state.session.user);
     // console.log("user in createBookingModal: ", user);

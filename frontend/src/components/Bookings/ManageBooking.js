@@ -10,14 +10,14 @@ import './ManageBooking.css'
 export default function ManageBookings () {
 
     const userBookingStore = useSelector((state) => state.bookings.userBookings);
-    console.log("userBookings in ManageBooking: ", userBookingStore);
+    // console.log("userBookings in ManageBooking: ", userBookingStore);
     const userBookingsArr = Object.values(userBookingStore);
-    console.log("useBookingsArr in ManageBooking: ", userBookingsArr);
+    // console.log("useBookingsArr in ManageBooking: ", userBookingsArr);
 
     const dispatch = useDispatch();
 
     useEffect(() => {
-        console.log("getCurrentUserBookingsThuns runs in the ManageBooking useEffect");
+        // console.log("getCurrentUserBookingsThuns runs in the ManageBooking useEffect");
         dispatch(getCurrentUserBookingsThunk());
     }, [dispatch]);
 

@@ -55,7 +55,7 @@ export const loadBookingThunk = (spotId) => async (dispatch) => {
 
         if(res.ok) {
             const bookings = await res.json();
-            console.log("Bookings in booking reducer: ", bookings);
+            // console.log("Bookings in booking reducer: ", bookings);
             dispatch(loadBookingAction(bookings));
             return bookings;
         }
@@ -73,10 +73,10 @@ export const createBookingThunk = (spotId, booking) => async (dispatch) => {
             body: JSON.stringify(booking)
         });
 
-        console.log("response from createBookingThunk: ", res);
+        // console.log("response from createBookingThunk: ", res);
         if(res.ok) {
             const newBooking = await res.json();
-            console.log("newBooking in createBookingThunk: ", newBooking);
+            // console.log("newBooking in createBookingThunk: ", newBooking);
             dispatch(createBookingAction(newBooking));
             return newBooking;
         }
@@ -112,7 +112,7 @@ export const deleteBookingThunk = (bookingId) => async (dispatch) => {
         });
 
         if(res.ok) {
-            console.log("res in deleteBookingThunk: ", res)
+            // console.log("res in deleteBookingThunk: ", res);
             dispatch(deleteBookingAction(bookingId));
             return;
         }
@@ -129,7 +129,7 @@ export const getCurrentUserBookingsThunk = () => async (dispatch) => {
 
         if(res.ok) {
             const userBookings = await res.json();
-            console.log("userBookings in the thunk: ", userBookings);
+            // console.log("userBookings in the thunk: ", userBookings);
             dispatch(getCurrentUserBookingsAction(userBookings));
             return userBookings;
         }
@@ -153,7 +153,7 @@ const bookingReducer = (state = initialState, action) => {
                 newState.allBookings[booking.id] = booking;
             })
 
-            console.log("newState in booking reducer: ", newState);
+            // console.log("newState in booking reducer: ", newState);
             return newState;
         }
         case CREATE_BOOKING: {
@@ -172,7 +172,7 @@ const bookingReducer = (state = initialState, action) => {
             return newState;
         }
         case GET_CURRENT_USER_BOOKINGS: {
-            console.log("userBookings in the reducer function: ", action.bookings);
+            // console.log("userBookings in the reducer function: ", action.bookings);
             const newState = {...state, allBookings: {...state.allBookings}, singleBooking : {}, userBookings : {}};
             action.userBookings.Bookings.forEach((booking) => {
                 newState.userBookings[booking.id] = booking;
