@@ -5,15 +5,15 @@ import { useEffect } from 'react';
 
 const SearchSpots = ({query}) => {
     const spotsStore =useSelector((state) => state.spots.searchSpot);
-    console.log("spotStore in SearchSpots:", spotsStore);
+    // console.log("spotStore in SearchSpots:", spotsStore);
     
     const spots = Object.values(spotsStore);
     // console.log('SPOTS IN SPOTSINDEX: ', spots);
-    console.log("spotResult in SearchSpots: ", spots);
+    // console.log("spotResult in SearchSpots: ", spots);
     const dispatch = useDispatch();
 
     useEffect(() => {
-        console.log("loadSpotsThunk running in SearchSpots");
+        // console.log("loadSpotsThunk running in SearchSpots");
         // dispatch(loadSpotsThunk());
         
         // return () => dispatch(actionClearSpot());

@@ -694,7 +694,7 @@ router.post('/:spotId/bookings', requireAuth, async(req, res, next) => {
         endDate,
     });
 
-    console.log("newBooking in the route: ", newBooking);
+    // console.log("newBooking in the route: ", newBooking);
 
     return res.status(200).json(newBooking)
 

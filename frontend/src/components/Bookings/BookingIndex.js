@@ -9,9 +9,9 @@ import './BookingIndex.css'
 
 export default function BookingIndex () {
     const spotStore = useSelector((state) => state.spots.singleSpot);
-    console.log("spotStore in BookingIndex: ", spotStore);
+    // console.log("spotStore in BookingIndex: ", spotStore);
     const spot = Object.values(spotStore);
-    console.log("spot in BookingIndex: ", spot);
+    // console.log("spot in BookingIndex: ", spot);
 
     const user = useSelector((state) => state.session.user);
 

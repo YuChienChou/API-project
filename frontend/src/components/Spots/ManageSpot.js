@@ -11,7 +11,7 @@ const ManageSpot = () => {
  
     const dispatch = useDispatch();
     const spotsStore = useSelector((state) => state.spots.allState);
-    console.log("spotStore in ManageSpot: ", spotsStore);
+    // console.log("spotStore in ManageSpot: ", spotsStore);
     const spots = Object.values(spotsStore);
 
 
